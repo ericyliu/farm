@@ -23,5 +23,8 @@
     "path": "^0.12.7",
     "require": "^2.4.20",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1"
   }
 }
