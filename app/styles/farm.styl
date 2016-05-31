@@ -1,0 +1,52 @@
+.game .farm
+  flex-grow 1
+  height 100%
+  margin-right 15px
+  position relative
+  max-width calc(100% - 220px)
+
+  .pen, .field-container
+    border 1px solid black
+
+  .pen
+    box-sizing border-box
+    height 100px
+    margin-bottom 15px
+    overflow-x auto
+    padding 10px
+    white-space nowrap
+    width 100%
+
+    .animal
+      border 1px solid black
+      box-sizing border-box
+      display inline-block
+      height 80px
+      margin-right 10px
+      width 160px
+
+  .field-container
+    align-items center
+    display flex
+    flex-grow 1
+    flex-wrap wrap
+    height calc(100% - 118px)
+    overflow auto
+    text-align center
+    width 100%
+
+    .scrollable
+      margin auto
+
+    .field
+      display table
+
+      .row
+        display table-row
+        height 50px
+
+        .tile
+          border 1px solid black
+          display table-cell
+          min-height 50px
+          min-width 50px
