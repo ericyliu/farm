@@ -20,4 +20,4 @@ class Tile
     @nitrogen -= returnedNitrigen;
     returnedNitrigen
 
-module.exports = Animal
+module.exports = Tile
