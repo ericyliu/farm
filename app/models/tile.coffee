@@ -1,10 +1,8 @@
 _ = require 'lodash'
 
-class Tile =
+class Tile
 
-  constructor: () ->
-    @water = 0
-    @nitrogen = 0
+  constructor: (@water = 0, @nitrogen = 0) ->
 
   addWater: (amount) ->
     @water += amount
@@ -13,8 +11,13 @@ class Tile =
     @nitrogen += amount
 
   getWater: () ->
-    returnedWater = @water / 3
+    returnedWater = Math.floor @water / 3
     @water -= returnedWater
-    return returnedWater
+    returnedWater
+
+  getNitrigen: () ->
+    returnedNitrigen = Math.floor @nitrogen / 3
+    @nitrogen -= returnedNitrigen;
+    returnedNitrigen
 
 module.exports = Animal
