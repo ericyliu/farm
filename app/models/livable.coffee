@@ -2,7 +2,7 @@ _ = require 'lodash'
 
 class Livable
 
-  constructor: (@dailyFoodUsed, @havestables) ->
+  constructor: (@type, @dailyFoodUsed, @havestables) ->
     # DayInTheLife[]
     @lifespan = []
 
@@ -15,6 +15,6 @@ class Livable
     @checkLife
 
   checkLife: () ->
-    
 
-module.exports = Animal
+
+module.exports = Livable

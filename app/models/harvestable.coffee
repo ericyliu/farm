@@ -1,6 +1,6 @@
 class Harvestable
 
-  constructor: (@amount, @cooldown, @type, @onDeath = true) ->
+  constructor: (@type, @amount, @cooldown, @onDeath = true) ->
 
 
 module.exports = Harvestable
