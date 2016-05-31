@@ -1,5 +1,5 @@
 _ = require 'lodash'
-Livable = require 'livable'
+Livable = require 'models/livable'
 DayInTheLife = require 'dayInTheLife'
 
 class Plant extends Livable

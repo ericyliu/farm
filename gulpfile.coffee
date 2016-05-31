@@ -37,7 +37,7 @@ gulp.task 'compile:jade', ->
 
 
 gulp.task 'compile:js', ->
-  compiler = browserify 'app.coffee', basedir: src, debug: true
+  compiler = browserify 'app.coffee', basedir: src, debug: true, paths: ['./']
     .transform coffeeify
     .transform browserifyNgAnnotate, ext: '.coffee'
     .bundle()
