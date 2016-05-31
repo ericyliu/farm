@@ -7,7 +7,7 @@ class Livable =
 
 
   getYieldOnDeath: ->
-    _.filter @harvests, (harvest) -> harvest.cooldown is 0
+    _.filter @harvests, onDeath
 
 
 module.exports = Animal
