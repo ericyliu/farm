@@ -2,12 +2,19 @@ _ = require 'lodash'
 
 class Livable
 
-  constructor: (@health, @requirements, @harvests) ->
+  constructor: (@dailyFoodUsed, @havestables) ->
+    # DayInTheLife[]
     @lifespan = []
 
 
-  getYieldOnDeath: ->
+  getHarvestOnDeath: ->
     _.filter @harvests, onDeath
 
+  handleDay: (foodGiven) ->
+    @lifespan.push new DayInTheLife @dailyFoodUsed @foodGiven
+    @checkLife
+
+  checkLife: () ->
+    
 
 module.exports = Animal
