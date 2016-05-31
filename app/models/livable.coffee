@@ -1,6 +1,6 @@
 _ = require 'lodash'
 
-class Livable =
+class Livable
 
   constructor: (@health, @requirements, @harvests) ->
     @lifespan = []

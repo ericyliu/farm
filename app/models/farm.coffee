@@ -1,4 +1,4 @@
-class Farm =
+class Farm
 
   constructor: (@animals, @tiles) ->
 

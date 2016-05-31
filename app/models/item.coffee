@@ -1,4 +1,4 @@
-class Item =
+class Item
 
   constructor: (@amount, @type) ->
 

@@ -1,4 +1,4 @@
-class Harvestable =
+class Harvestable
 
   constructor: (@amount, @cooldown, @type) ->
 

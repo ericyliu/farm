@@ -1,4 +1,4 @@
-class MarketListing =
+class MarketListing
 
   constructor: (@amount, @price, @type) ->
 

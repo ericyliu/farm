@@ -1,4 +1,4 @@
-class Market =
+class Market
 
   constructor: (@listings) ->
 
