@@ -22,6 +22,14 @@ class GameController
 
 
   update: ->
+    return if @paused
+    @game.timeElapsed += 1 if @game
+
+
+  togglePause: ->
+    @paused = not @paused
+
+
 
 
 module.exports = GameController

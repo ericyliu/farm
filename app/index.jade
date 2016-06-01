@@ -1,10 +1,10 @@
 head
   title Farm
-  script(src='app.js')
   link(rel='stylesheet' href='app.css')
 body
   .header
-    h1 Farm
+    include ./views/hud.jade
   .game
     include ./views/farm.jade
     include ./views/inventory.jade
+  script(src='app.js')

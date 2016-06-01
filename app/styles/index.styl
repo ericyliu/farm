@@ -1,11 +1,21 @@
 .header
   height 50px
-  text-align center
-
-  h1
-    margin 0
+  position relative
 
 .game
   display flex
   height calc(100vh - 70px)
   width 100%
+
+.btn
+  border 1px solid black
+  cursor pointer
+  display inline-block
+  padding 7px 15px
+
+  &:hover
+    background-color gray
+    color white
+
+  &:active
+    background-color lighten(gray, 20)

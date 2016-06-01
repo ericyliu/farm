@@ -5,6 +5,7 @@ class Game
 
   constructor: (@name = 'Player 1') ->
     @player = new Player @name, new Farm()
+    @timeElapsed = 0
 
 
 module.exports = Game
