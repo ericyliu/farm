@@ -5,4 +5,7 @@ module.exports =
       nitrogen: 1
     harvestables:
       grass: 1
-    daysToMaturity: 3
+    lifeStages:
+      child: 2
+      adult: 8
+      death: 20
