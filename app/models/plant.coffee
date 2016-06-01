@@ -1,6 +1,6 @@
 _ = require 'lodash'
 Livable = require 'models/livable.coffee'
-DayInTheLife = require 'models/dayInTheLife.coffee'
+DayInTheLife = require 'models/day-in-the-life.coffee'
 
 class Plant extends Livable
 

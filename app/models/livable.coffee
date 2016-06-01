@@ -1,5 +1,5 @@
 _ = require 'lodash'
-DayInTheLife = require 'models/dayInTheLife.coffee'
+DayInTheLife = require 'models/day-in-the-life.coffee'
 
 class Livable
 
