@@ -12,4 +12,7 @@ module.exports =
       manure:
         amount: 3
         cooldown: 1
-    daysToMaturity: 10
+    lifeStages:
+      child: 2
+      adult: 8
+      death: 20
