@@ -1,6 +1,6 @@
 class Farm
 
-  constructor: (@animals, @tiles) ->
+  constructor: (@animals = [], @tiles = []) ->
 
 
 module.exports = Farm
