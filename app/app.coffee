@@ -6,6 +6,7 @@ window.peek = (thing) ->
 
 FPS = 60
 GameController = require 'controllers/game-controller.coffee'
+CommandLineController = require 'util/command-line-controller.coffee'
 
 views = [
   require 'views/hud-view.coffee'
@@ -25,3 +26,5 @@ window.Farm = gameController: new GameController()
 _.map views, (view) -> view.setup?()
 window.Farm.viewUpdateLoop = setInterval updateViews, 1000 / FPS
 window.Farm.gameUpdateLoop = setInterval updateGame, 1000
+
+window.f = new CommandLineController()

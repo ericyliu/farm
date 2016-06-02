@@ -25,13 +25,17 @@ class GameController
 
   update: ->
     return if @paused
-    @game.timeElapsed += 1 if @game
-
+    @game.timeElapsed += 1
 
   togglePause: ->
     @paused = not @paused
+    console.log JSON.stringify @game
 
+  saveGame: ->
+    localStorage.setItem JSON.stringify @game, "game-save"
 
+  loadGame: ->
+    savedState = localStorage.getItem "game-save"
 
 
 module.exports = GameController
