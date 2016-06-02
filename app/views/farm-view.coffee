@@ -5,7 +5,11 @@ getRowDom = (row) ->
   $("<div class='row'></div>").append _.map row, getTileDom
 
 getTileDom = (tile) ->
-  tileDom = $ "<div class='tile'>#{tile.crop?.type or ''}</div>"
+  tileDom = $ """
+    <div class='tile'>
+      <div class='crop crop-#{tile.crop?.type or ''}'></div>
+    </div>
+  """
   tileDom.on 'click', (evt) -> TileMenuView.openTileMenu evt, tile
   tileDom
 
