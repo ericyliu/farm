@@ -7,9 +7,8 @@ module.exports =
 
   update: ->
     items = window.Farm.gameController.game.player.items
-    return if items is @previousItems
+    return if @previousItems is JSON.stringify items
     inventoryView = $ '#Inventory'
     itemDoms = _.map items, getItemDom
     inventoryView.html _.join itemDoms
-    @previousItems = items
-
+    @previousItems = JSON.stringify items

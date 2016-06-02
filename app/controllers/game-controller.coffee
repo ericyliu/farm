@@ -1,4 +1,5 @@
-DataController = require 'controllers/data-controller.coffee'
+DataService = require 'services/data-service.coffee'
+FarmController = require 'controllers/farm-controller.coffee'
 Game = require 'models/game.coffee'
 Item = require 'models/item.coffee'
 Tile = require 'models/tile.coffee'
@@ -9,15 +10,16 @@ createStartingFarm = ->
       new Tile()
 
 givePlayerStartingItems = (player) ->
-  player.farm.animals = [DataController.createAnimal 'goat']
+  player.farm.animals = [DataService.createAnimal 'goat']
   player.farm.tiles = createStartingFarm()
-  player.items = [new Item 3, 'grassSeeds']
+  player.items = [new Item 'grassSeed', 3]
 
 
 class GameController
 
   constructor: ->
     @game = new Game()
+    @farmController = new FarmController @
     givePlayerStartingItems @game.player
 
 

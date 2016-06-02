@@ -1,5 +1,9 @@
 _ = require 'lodash'
 
+window.peek = (thing) ->
+  console.log thing
+  thing
+
 FPS = 60
 GameController = require 'controllers/game-controller.coffee'
 

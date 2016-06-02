@@ -5,7 +5,8 @@ Livable = require '../models/livable.coffee'
 
 data =
   animals: require '../data/animal-data.coffee'
-  plants: require '../data/plant-data.coffee'
+  crops: require '../data/crop-data.coffee'
+  items: require '../data/item-data.coffee'
 
 create = (id, type) ->
   return unless data[type]?[id]?
@@ -20,4 +21,8 @@ module.exports =
 
   createAnimal: (id) -> create id, 'animals'
 
-  createPlant: (id) -> create id, 'plants'
+  createCrop: (id) -> create id, 'crops'
+
+  isItemPlantable: (item) -> data.items[item.type].plantable
+
+  itemToCrop: (item) -> @createCrop data.items[item.type].livable

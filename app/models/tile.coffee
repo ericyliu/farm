@@ -2,7 +2,7 @@ _ = require 'lodash'
 
 class Tile
 
-  constructor: (@water = 0, @nitrogen = 0) ->
+  constructor: (@water = 0, @nitrogen = 0, @crop) ->
 
   addWater: (amount) ->
     @water += amount
