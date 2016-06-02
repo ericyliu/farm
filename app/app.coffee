@@ -11,6 +11,7 @@ views = [
   require 'views/hud-view.coffee'
   require 'views/inventory-view.coffee'
   require 'views/farm-view.coffee'
+  require 'views/tile-menu-view.coffee'
 ]
 
 updateViews = -> _.map views, (view) ->
