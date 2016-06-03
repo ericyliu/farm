@@ -20,6 +20,7 @@ class Livable
     # DayInTheLife[]
     @lifespan = []
     @todaysFoodGiven = {}
+    @_className = 'Livable'
 
 
   update: ->

@@ -1,0 +1,12 @@
+module.exports =
+  'DayInTheLife': require 'models/day-in-the-life.coffee'
+  'Farm': require 'models/farm.coffee'
+  'Game': require 'models/game.coffee'
+  'Harvestable': require 'models/harvestable.coffee'
+  'Item': require 'models/item.coffee'
+  'Livable': require 'models/livable.coffee'
+  'MarketListing': require 'models/market-listing.coffee'
+  'Market': require 'models/market.coffee'
+  'Plant': require 'models/plant.coffee'
+  'Player': require 'models/player.coffee'
+  'Tile': require 'models/tile.coffee'

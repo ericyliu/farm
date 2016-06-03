@@ -6,6 +6,7 @@ class Item
   #                     and in most cases should be around 5. A 10 should be almost
   #                     impossible to get
   constructor: (@type, @amount = 1, qualityLevel = 5) ->
+    @_className = 'Item'
 
 
 module.exports = Item
