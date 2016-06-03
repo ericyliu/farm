@@ -4,7 +4,7 @@ module.exports =
 
 
   getHumanTime: (minutes) ->
-    minute = Math.floor minutes
+    minute = Math.floor minutes % 60
     hour = Math.floor(minutes / 60) % 24
     day = Math.floor(Math.floor(minutes / 60) / 24) + 1
 
