@@ -3,6 +3,7 @@ FarmController = require 'controllers/farm-controller.coffee'
 Game = require 'models/game.coffee'
 Item = require 'models/item.coffee'
 Tile = require 'models/tile.coffee'
+Unserializer = require 'util/unserializer.coffee'
 
 createStartingFarm = ->
   _.map _.range(3), ->
@@ -19,7 +20,7 @@ class GameController
 
   constructor: ->
     @game = new Game()
-    @farmController = new FarmController @, @game.player.farm
+    @farmController = new FarmController @
     givePlayerStartingItems @game.player
 
 
@@ -29,17 +30,21 @@ class GameController
     @farmController.update()
 
 
+  getFarm: ->
+    @game.player.farm
+
   togglePause: ->
     @paused = not @paused
-    console.log JSON.stringify @game
 
 
   saveGame: ->
-    localStorage.setItem JSON.stringify @game, "game-save"
+    localStorage.setItem 'game-save', JSON.stringify @game
 
 
   loadGame: ->
-    savedState = localStorage.getItem "game-save"
+    savedState = JSON.parse localStorage.getItem "game-save"
+    @game = (new Unserializer()).unserialize savedState
+
 
 
 module.exports = GameController

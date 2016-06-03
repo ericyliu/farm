@@ -9,6 +9,11 @@ class CommandLineController
 
 
   save: ->
+    @gameController.saveGame()
+
+
+  load: ->
+    @gameController.loadGame()
 
 
   pause: ->

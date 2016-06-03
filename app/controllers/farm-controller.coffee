@@ -18,7 +18,7 @@ updateLivables = (farm) ->
 
 class FarmController
 
-  constructor: (@gameController, @farm) ->
+  constructor: (@gameController) ->
 
 
   plant: (tile, item) ->
@@ -32,7 +32,7 @@ class FarmController
 
 
   update: ->
-    updateLivables @farm
+    updateLivables @gameController.getFarm()
 
 
 module.exports = FarmController
