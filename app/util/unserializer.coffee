@@ -25,7 +25,6 @@ class Unserializer
       return instance
     if @isArray jsonData
       return _.map jsonData, (data) => @unserialize data
-    debugger
     return _.mapValues jsonData, (data) => @unserialize data
 
 
