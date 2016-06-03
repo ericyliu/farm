@@ -14,6 +14,7 @@ class Livable
     # DayInTheLife[]
     @lifespan = []
     @todaysFoodGiven = {}
+    @_className = 'Livable'
 
   getHarvestOnDeath: ->
     _.filter @harvests, onDeath

@@ -1,6 +1,7 @@
 class DayInTheLife
 
   constructor: (@required, @given) ->
+    @_className = 'DayInTheLife'
 
   getNetResult: () ->
     result = {}
