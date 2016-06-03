@@ -1,6 +1,12 @@
 _ = require 'lodash'
 DayInTheLife = require 'models/day-in-the-life.coffee'
 
+updateHarvestables = (harvestables) ->
+  _.map harvestables, (harvestable) ->
+    return unless harvestable?.maxCooldown and harvestable.cooldown > 0
+    harvestable.cooldown -= 1
+
+
 class Livable
 
   ###
@@ -10,13 +16,27 @@ class Livable
   @param {string stage : int days in that stage} lifeStages - the different stages of life that an
     that a given livable has
   ###
-  constructor: (@type, @dailyFoodUsed, @havestables, @lifeStages) ->
+  constructor: (@type, @dailyFoodUsed, @harvestables, @lifeStages) ->
     # DayInTheLife[]
     @lifespan = []
     @todaysFoodGiven = {}
 
+
+  update: ->
+    updateHarvestables @harvestables
+
+
+  getHarvestsReady: ->
+    _.filter @harvestables, (harvestable) -> harvestable.cooldown is 0
+
+
   getHarvestOnDeath: ->
-    _.filter @harvests, onDeath
+    _.filter @harvestables, onDeath
+
+
+  harvest: (harvestable) ->
+    harvestable.cooldown = harvestable.maxCooldown
+
 
   ###
   used to take all the things that happened in a day and save its state.
@@ -25,6 +45,7 @@ class Livable
   handleDay: () ->
     @lifespan.push new DayInTheLife @dailyFoodUsed, @todaysFoodGiven
     @todaysFoodGiven = {}
+
 
   ###
   @param {string foodType: int amount} allFoodGiven - the food given to an animal.
@@ -35,6 +56,7 @@ class Livable
       foodGiven = allFoodGiven[foodId] ? 0
       @todaysFoodGiven[foodId] = 0 unless @todaysFoodGiven[foodId]?
       @todaysFoodGiven[foodId] += foodGiven
+
 
   ###
   @return {string foodType: int amount} - the state of a livabele at any given time
@@ -51,6 +73,7 @@ class Livable
       return result
     _.reduce @lifespan, reducer, requiredFoods
 
+
   ###
   Used to determine if a livable is alive. meaning there was never a day when
   one of its requiredFood amounts went to 0
@@ -63,11 +86,13 @@ class Livable
         return false
     true
 
+
   ###
   @return int - the age of the livable in days
   ###
   getAge: () ->
     @lifespan.length
+
 
   ###
   @return string - the current life stage of a livable
@@ -80,7 +105,9 @@ class Livable
       currentLifeStage = lifeStage if age >= 0
     currentLifeStage
 
+
   getRequiredFoodIds: () ->
     Object.keys @dailyFoodUsed
+
 
 module.exports = Livable

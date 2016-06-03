@@ -19,13 +19,14 @@ class GameController
 
   constructor: ->
     @game = new Game()
-    @farmController = new FarmController @
+    @farmController = new FarmController @, @game.player.farm
     givePlayerStartingItems @game.player
 
 
   update: ->
     return if @paused
     @game.timeElapsed += 1 if @game
+    @farmController.update()
 
 
   togglePause: ->

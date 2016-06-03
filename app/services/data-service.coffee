@@ -1,6 +1,7 @@
 _ = require 'lodash'
 Harvestable = require '../models/harvestable.coffee'
 Livable = require '../models/livable.coffee'
+Item = require '../models/item.coffee'
 
 
 data =
@@ -22,6 +23,8 @@ module.exports =
   createAnimal: (id) -> create id, 'animals'
 
   createCrop: (id) -> create id, 'crops'
+
+  createItem: (id, amount, quality) -> new Item id, amount, quality
 
   isItemPlantable: (item) -> data.items[item.type].plantable
 
