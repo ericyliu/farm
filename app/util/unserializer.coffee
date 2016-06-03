@@ -1,4 +1,4 @@
-ModelClassMap = require('models/model-class-map.coffee')
+ModelClassMap = require('util/model-class-map.coffee')
 
 class Unserializer
 
@@ -17,12 +17,12 @@ class Unserializer
     if @isPrimitive jsonData
       return jsonData
     if jsonData['_className']
-      c = ModelClassMap(jsonData['_className'])
-      o = new c()
+      klass = ModelClassMap[jsonData['_className']]
+      instance = new klass()
       _.forOwn jsonData, (value, key) =>
-        o[key] = @unserialize(value)
+        instance[key] = @unserialize(value)
         x = 8
-      return o
+      return instance
     if @isArray jsonData
       return _.map jsonData, (data) => @unserialize data
     debugger

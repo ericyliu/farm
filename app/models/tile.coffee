@@ -3,6 +3,7 @@ _ = require 'lodash'
 class Tile
 
   constructor: (@water = 0, @nitrogen = 0, @crop) ->
+    @_className = 'Tile'
 
   addWater: (amount) ->
     @water += amount

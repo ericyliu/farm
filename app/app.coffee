@@ -29,7 +29,7 @@ window.Farm.gameUpdateLoop = setInterval updateGame, 1000
 
 window.f = new CommandLineController()
 
-Unserializer = require 'models/unserializer.coffee'
+Unserializer = require 'util/unserializer.coffee'
 DayInTheLife = require 'models/day-in-the-life.coffee'
 Livable = require 'models/livable.coffee'
 
