@@ -13,6 +13,12 @@ replace = require 'gulp-replace'
 source = require 'vinyl-source-stream'
 stylus = require 'gulp-stylus'
 
+map = require 'map-stream'
+gutil = require 'gulp-util'
+promise = require 'promise'
+_ = require 'lodash'
+fs = require 'fs'
+
 
 dest = 'dist'
 env = 'local'
@@ -36,7 +42,36 @@ gulp.task 'compile:jade', ->
     .pipe connect.reload()
 
 
+files = []
+
 gulp.task 'compile:js', ->
+  (new Promise (resolve, reject) ->
+    gulp.src '**/models/*.coffee'
+      .pipe map (file, callback) ->
+        # gutil.log file.path
+        filePath = file.path
+        fileName = (filePath.split '/models/')[1]
+        file = (fileName.split '.')[0]
+        files.push file
+        # gutil.log files
+        callback(false, file)
+      .on 'end', resolve
+  ).then () ->
+    requirePaths = _.map files, (file) ->
+      "models/#{file}.coffee"
+    formatted = _.map files, (file) ->
+      split = _.map (file.split "-"), (i) ->
+        i[0].toUpperCase() + i.substring(1)
+      split.join("");
+    zipped = _.zip formatted, requirePaths
+    classMap = _.map zipped, (pair) ->
+      "  '#{pair[0]}': require \'#{pair[1]}\'"
+    classMap = classMap.join "\n"
+    result = "module.exports =\n#{classMap}"
+    fs.writeFile 'app/util/model-class-map.coffee', result
+    # clear the files for the next build
+    files = []
+
   compiler = browserify 'app.coffee', basedir: src, debug: true, paths: ['./']
     .transform coffeeify
     .transform browserifyNgAnnotate, ext: '.coffee'
@@ -47,6 +82,7 @@ gulp.task 'compile:js', ->
     .pipe replace /'ngInject';/g, ''
     .pipe gulp.dest 'dist'
     .pipe connect.reload()
+
 
 
 gulp.task 'compile:stylus', ->
