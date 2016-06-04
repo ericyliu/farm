@@ -51,5 +51,5 @@ givePlayerStartingItems = (player) ->
   player.farm.tiles = createStartingFarm()
   player.items = [new Item 'grassSeed', 3]
 
-isEndOfDay: (game) ->
-  return game.timeElapsed != 0 and @game.timeElapsed % (60 * 24) == 0
+isEndOfDay = (game) ->
+  return game.timeElapsed != 0 and game.timeElapsed % (60 * 24) == 0

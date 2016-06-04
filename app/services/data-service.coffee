@@ -15,7 +15,8 @@ create = (id, type) ->
   harvestables = _.map stats.harvestables, (harvestable, id) ->
     onDeath = not harvestable.cooldown?
     new Harvestable id, harvestable.amount, harvestable.cooldown, onDeath
-  new Livable id, stats.dailyFoodUsed, harvestables
+  lifeStages = stats.lifeStages
+  new Livable id, stats.dailyFoodUsed, harvestables, lifeStages
 
 
 module.exports =

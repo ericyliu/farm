@@ -100,11 +100,10 @@ class Livable
   ###
   getCurrentLifeStage: () ->
     age = @getAge()
-    currentLifeStage = 'baby'
-    _.forOwn @lifeStages, (lifeStageLength, lifeStage) ->
-      age -= lifeStageLength
-      currentLifeStage = lifeStage if age >= 0
-    currentLifeStage
+    reducer = (result, lifeStageLength, lifeStage) ->
+      lifeStage if lifeStageLength < age else result
+    result = _.reduce @lifeStages, reducer, 'baby'
+    return result
 
 
   getRequiredFoodIds: () ->

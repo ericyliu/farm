@@ -1,7 +1,19 @@
+baby-color = rgba(206, 255, 204, 0.45)
+child-color = rgba(63, 252, 53, .45)
+adult-color = rgba(38, 161, 31, 0.45)
+death-color = rgba(120, 161, 31, 0.45)
+
 .crop
   background-defaults()
   height 50px
   width 50px
 
   &.crop-grass
-    background-image url('assets/grass.png')
+    &.life-stage-baby
+      background linear-gradient(baby-color, baby-color), url('assets/grass.png')
+    &.life-stage-child
+      background linear-gradient(baby-color, child-color), url('assets/grass.png')
+    &.life-stage-adult
+      background linear-gradient(baby-color, adult-color), url('assets/grass.png')
+    &.life-stage-death
+      background linear-gradient(baby-color, death-color), url('assets/grass.png')

@@ -7,7 +7,7 @@ getRowDom = (row) ->
 getTileDom = (tile) ->
   tileDom = $ """
     <div class='tile'>
-      <div class='crop crop-#{tile.crop?.type or ''}'></div>
+      <div class='crop crop-#{tile.crop?.type or ''} life-stage-#{tile.crop?.getCurrentLifeStage()}'></div>
     </div>
   """
   tileDom.on 'click', (evt) -> TileMenuView.openTileMenu evt, tile
