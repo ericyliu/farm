@@ -53,6 +53,7 @@ givePlayerStartingItems = (player) ->
   player.items = [
     DataService.createItem 'grassSeed', 3
     DataService.createItem 'goatManure', 3
+    DataService.createItem 'wateringCan', 3
   ]
 
 isEndOfDay = (game) ->

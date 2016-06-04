@@ -46,7 +46,7 @@ class Livable
   ###
   handleDay: () ->
     if not @isAlive() then return
-    @lifespan.push new DayInTheLife @dailyNutrientsNeeded, @todaysNutrientsGiven
+    @lifespan.push (new DayInTheLife @dailyNutrientsNeeded, @todaysNutrientsGiven)
     @todaysNutrientsGiven = {}
 
 
@@ -57,9 +57,8 @@ class Livable
   giveNutrients: (allNutrientsGiven) ->
     for nutrientId in @getRequiredNutrientIds()
       nutrientsGiven = allNutrientsGiven[nutrientId] ? 0
-      @todaysNutrientsGiven[nutrientId] = 0 unless @todaysNutrientsGiven[nutrientId]?
+      if not @todaysNutrientsGiven[nutrientId]? then @todaysNutrientsGiven[nutrientId] = 0
       @todaysNutrientsGiven[nutrientId] += nutrientsGiven
-
 
   ###
   @retrun {sting nutrientType: int amount} the nutrient that the plant wants for the day
@@ -74,7 +73,8 @@ class Livable
   getCurrentState: () ->
     requiredNutrients = {}
     for nutrientId in @getRequiredNutrientIds()
-      requiredNutrients[nutrientId] = 0
+      todaysNutrients = @todaysNutrientsGiven[nutrientId]
+      requiredNutrients[nutrientId] = todaysNutrients ? 0
 
     reducer = (result, dayInTheLife, index) =>
       netDayInTheLife = dayInTheLife.getNetResult()
@@ -94,7 +94,7 @@ class Livable
     if @getAge() == 0 then return true
     currentState = @getCurrentState()
     for nutrientId in @getRequiredNutrientIds()
-      if currentState[nutrientId] <= 0
+      if currentState[nutrientId] < 0
         return false
     true
 

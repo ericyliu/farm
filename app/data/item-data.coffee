@@ -11,3 +11,7 @@ module.exports =
 
   grass:
     food: true
+
+  wateringCan:
+    fertilizer: true
+    nutrients: water: 3
