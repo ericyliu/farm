@@ -2,14 +2,15 @@ FarmController = require 'controllers/farm-controller.coffee'
 
 describe 'FarmController', ->
   beforeEach ->
-    @farm = animals: ['livable1']
-    @tiles = [
-        crop: 'livable2'
-      ,
-        crop: 'livable3'
-      ,
-        crop: undefined
-    ]
+    @farm =
+      animals: ['livable1']
+      tiles: [
+          crop: 'livable2'
+        ,
+          crop: 'livable3'
+        ,
+          crop: undefined
+      ]
     @gameController =
       getFarm: sinon.stub().returns @farm
       getTiles: sinon.stub().returns @tiles
@@ -21,4 +22,4 @@ describe 'FarmController', ->
       @livables = @controller.getAllLivables()
 
     it 'gets all livables', ->
-      @livables = ['livable1', 'livable2', 'livable3']
+      expect(@livables).to.eql ['livable1', 'livable2', 'livable3']
