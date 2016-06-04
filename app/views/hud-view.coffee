@@ -46,10 +46,16 @@ module.exports =
           @playSpeed *= 2
           f.fastForward @playSpeed
           setPlaybackInfoDom true, @playSpeed
+      ,
+        label: 'Market'
+        method: =>
+          $('#Hud .market').show()
+          @marketOpen = true
     ]
     setPlaybackInfoDom true, 1
     $('#Hud .right').append getButtonDoms()
 
 
   update: ->
-    $('#Hud .time').html [getTimeDom(), getMoneyDom()]
+    $('#Hud .status').html [getTimeDom(), getMoneyDom()]
+    $('#Hud .market').html() if @marketOpen

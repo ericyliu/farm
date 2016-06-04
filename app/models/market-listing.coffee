@@ -1,6 +1,6 @@
 class MarketListing
 
-  constructor: (@amount, @price, @type) ->
+  constructor: (@price, @item) ->
     @_className = 'MarketListing'
 
 

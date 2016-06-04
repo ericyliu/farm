@@ -1,6 +1,6 @@
 class Market
 
-  constructor: (@listings) ->
+  constructor: (@listings = []) ->
     @_className = 'Market'
 
 module.exports = Market
