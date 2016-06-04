@@ -5,17 +5,6 @@ Item = require 'models/item.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
 
-createStartingFarm = ->
-  _.map _.range(3), ->
-    _.map _.range(3), ->
-      new Tile()
-
-givePlayerStartingItems = (player) ->
-  player.farm.animals = [DataService.createAnimal 'goat']
-  player.farm.tiles = createStartingFarm()
-  player.items = [new Item 'grassSeed', 3]
-
-
 class GameController
 
   constructor: ->
@@ -28,6 +17,8 @@ class GameController
     return if @paused
     @game.timeElapsed += 1
     @farmController.update()
+    if isEndOfDay @game
+      @farmController.handleLivableDays @farmController.getAllLivables()
 
 
   getFarm: ->
@@ -46,5 +37,19 @@ class GameController
     @game = (new Unserializer()).unserialize savedState
 
 
-
 module.exports = GameController
+
+
+createStartingFarm = ->
+  _.map _.range(3), ->
+    _.map _.range(3), ->
+      new Tile()
+
+
+givePlayerStartingItems = (player) ->
+  player.farm.animals = [DataService.createAnimal 'goat']
+  player.farm.tiles = createStartingFarm()
+  player.items = [new Item 'grassSeed', 3]
+
+isEndOfDay: (game) ->
+  return game.timeElapsed != 0 and @game.timeElapsed % (60 * 24) == 0

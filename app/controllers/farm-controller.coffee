@@ -7,10 +7,10 @@ cropsFromTiles = (tiles) ->
     .map (tile) -> tile.crop
     .value()
 
-updateLivables = (farm) ->
+
+updateLivables = (livables) ->
   _.chain []
-    .concat farm.animals
-    .concat cropsFromTiles farm.tiles
+    .concat livables
     .filter()
     .map (livable) -> livable.update()
     .value()
@@ -32,7 +32,21 @@ class FarmController
 
 
   update: ->
-    updateLivables @gameController.getFarm()
+    updateLivables @getAllLivables()
+
+
+  getAllLivables: ->
+    _.chain []
+    .concat @gameController.getFarm().animals
+    .concat cropsFromTiles @gameController.getFarm().tiles
+    .filter()
+    .value()
+
+
+  handleLivableDays: (livables) ->
+    _.map livables, (livable) ->
+      livable.handleDay()
+
 
 
 module.exports = FarmController
