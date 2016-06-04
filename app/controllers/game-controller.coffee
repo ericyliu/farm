@@ -23,7 +23,8 @@ class GameController
   getFarm: ->
     @game.player.farm
 
-  togglePause: ->
+  togglePause: (pause) ->
+    return @paused = pause if pause isnt undefined
     @paused = not @paused
 
 

@@ -1,18 +1,49 @@
 $ = require 'jquery'
+_ = require 'lodash'
 TimeService = require 'services/time-service.coffee'
+
+playbackButtons = []
+
+setPlaybackInfoDom = (playing, speed) ->
+  $('#Hud .right .playback-info').html $ """
+    <div class='play-status'>#{if playing then 'Playing' else 'Paused'}</div>
+    <div class='speed'>x#{speed}</div>
+  """
+
+getButtonDoms = ->
+  _.map playbackButtons, (button) ->
+    $ "<div class='btn'>#{button.label}</div>"
+      .on 'click', -> button.method()
+
 
 module.exports =
 
+  playSpeed: 1
+
   setup: ->
-    $('#Hud .pause').on 'click', ->
-      window.Farm.gameController.togglePause()
+    playbackButtons = [
+        label: '||'
+        method: =>
+          window.Farm.gameController.togglePause true
+          setPlaybackInfoDom false, @playSpeed
+      ,
+        label: '>'
+        method: =>
+          window.Farm.gameController.togglePause false
+          f.normalSpeed()
+          setPlaybackInfoDom true, 1
+          @playSpeed = 1
+      ,
+        label: '>>'
+        method: =>
+          window.Farm.gameController.togglePause false
+          @playSpeed *= 2
+          f.fastForward @playSpeed
+          setPlaybackInfoDom true, @playSpeed
+    ]
+    setPlaybackInfoDom true, 1
+    $('#Hud .right').append getButtonDoms()
 
 
   update: ->
-    gameController = @getGameController()
     $('#Hud .time').html "Time: #{TimeService.getHumanTime window.Farm.gameController.game.timeElapsed}"
-    $('#Hud .pause').html "#{if gameController.paused then 'Unpause' else 'Pause'}"
-
-
-  getGameController: ->
-    window.Farm.gameController
