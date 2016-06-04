@@ -27,6 +27,11 @@ module.exports =
 
   createItem: (id, amount, quality) -> new Item id, amount, quality
 
+  isItemFertilizer: (item) -> data.items[item.type].fertilizer
+
   isItemPlantable: (item) -> data.items[item.type].plantable
 
   itemToCrop: (item) -> @createCrop data.items[item.type].livable
+
+  getNutrients: (item) -> data.items[item.type].nutrients
+

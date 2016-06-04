@@ -16,7 +16,7 @@ class Livable
   @param {string stage : int days in that stage} lifeStages - the different stages of life that an
     that a given livable has
   ###
-  constructor: (@type, @dailyFoodUsed, @harvestables, @lifeStages) ->
+  constructor: (@type, @dailyFoodUsed, @harvestables, @lifeStages, @willEat) ->
     # DayInTheLife[]
     @lifespan = []
     @todaysFoodGiven = {}

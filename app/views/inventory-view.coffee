@@ -10,5 +10,5 @@ module.exports =
     return if @previousItems is JSON.stringify items
     inventoryView = $ '#Inventory'
     itemDoms = _.map items, getItemDom
-    inventoryView.html _.join itemDoms
+    inventoryView.html _.join itemDoms, ''
     @previousItems = JSON.stringify items

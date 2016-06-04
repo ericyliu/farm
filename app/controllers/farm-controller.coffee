@@ -26,6 +26,11 @@ class FarmController
     @gameController.game.player.removeItem item
 
 
+  fertilize: (tile, item) ->
+    tile.addNutrients DataService.getNutrients item
+    @gameController.game.player.removeItem item
+
+
   harvest: (livable, harvestable) ->
     livable.harvest harvestable
     @gameController.game.player.addItem DataService.createItem harvestable.type, harvestable.amount

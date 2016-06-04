@@ -2,23 +2,27 @@ _ = require 'lodash'
 
 class Tile
 
-  constructor: (@water = 0, @nitrogen = 0, @crop) ->
+  constructor: (@nutrients = {}, @crop) ->
     @_className = 'Tile'
 
-  addWater: (amount) ->
-    @water += amount
 
-  addNitrogen: (amount) ->
-    @nitrogen += amount
+  addNutrients: (nutrients) ->
+    _.map (nutrients), (amount, type) => @addNutrient amount, type
 
-  getWater: () ->
-    returnedWater = Math.floor @water / 3
-    @water -= returnedWater
-    returnedWater
 
-  getNitrigen: () ->
-    returnedNitrigen = Math.floor @nitrogen / 3
-    @nitrogen -= returnedNitrigen;
-    returnedNitrigen
+  addNutrient: (amount, type) ->
+    return @nutrients[type] = amount unless @nutrients[type]
+    @nutrients[type] += amount
+
+
+  getNutrients: (nutrients) ->
+    _.map (nutrients), @getNutrient
+
+
+  getNutrient: (amount, type) ->
+    return 0 unless @nutrients[type]
+    @nutrients[type] -= amount
+    amount
+
 
 module.exports = Tile

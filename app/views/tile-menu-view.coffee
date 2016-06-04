@@ -8,22 +8,19 @@ repositionMenu = (evt) ->
     'left': _.min [evt.clientX, $(window).width() - 220]
 
 getMenuDom = (tile) ->
-  tileMenu = getTileMenu tile
+  tileMenu = $ '<div class="menu"></div>'
+  statsMenu = getStatsMenu tile
   if tile.crop
     cropMenu = getCropMenu tile.crop
   else
     plantMenu = getPlantMenu tile
-  tileMenu.append _.flatten [cropMenu, plantMenu]
+    fertilizerMenu = getFertilizerMenu tile
+  tileMenu.append _.flatten [statsMenu, cropMenu, plantMenu, fertilizerMenu]
 
-getTileMenu = (tile) ->
-  $ """
-    <div class='menu'>
-      <div class='stats'>
-        <div class='stat nitrogen'>N - #{tile.nitrogen}</div>
-        <div class='stat water'>W - #{tile.water}</div>
-      </div>
-    </div>
-  """
+getStatsMenu = (tile) ->
+  statsMenuDom = $ '<div class="stats"><div>Stats:</div></div>'
+  statsMenuDom.append _.map tile.nutrients, (amount, nutrient) ->
+    $ "<div class='stat #{nutrient}'>#{_.toUpper nutrient[0]} - #{amount}</div>"
 
 getCropMenu = (crop) ->
   cropDoms = [
@@ -37,18 +34,29 @@ getCropMenu = (crop) ->
   _.concat cropDoms, harvestableDoms
 
 getPlantMenu = (tile) ->
-  plantMenuDoms = [$ '<div>Plant</div>']
+  plantMenuDom = [$ '<div>Plant</div>']
   plantables = _.filter window.Farm.gameController.game.player.items, DataService.isItemPlantable
   plantableDoms = _.map plantables, (item) ->
     $ "<div class='btn plant'>#{item.type} x#{item.amount}</div>"
       .on 'click', -> plant tile, item
-  _.concat plantMenuDoms, plantableDoms
+  _.concat plantMenuDom, plantableDoms
+
+getFertilizerMenu = (tile) ->
+  fertilizerMenuDom = [$ '<div>Fertilizers</div>']
+  fertilizers = _.filter window.Farm.gameController.game.player.items, DataService.isItemFertilizer
+  fertilizerDoms = _.map fertilizers, (item) ->
+    $ "<div class='btn fertilizer'>#{item.type} x#{item.amount}</div>"
+      .on 'click', -> fertilize tile, item
+  _.concat fertilizerMenuDom, fertilizerDoms
 
 harvest = (crop, harvestable) ->
   window.Farm.gameController.farmController.harvest crop, harvestable
 
 plant = (tile, item) ->
   window.Farm.gameController.farmController.plant tile, item
+
+fertilize = (tile, item) ->
+  window.Farm.gameController.farmController.fertilize tile, item
 
 
 module.exports =

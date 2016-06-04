@@ -1,6 +1,13 @@
 module.exports =
+  dew: {}
+
   grassSeed:
     plantable: true
     livable: 'grass'
 
-  dew: {}
+  goatManure:
+    fertilizer: true
+    nutrients: nitrogen: 5
+
+  grass:
+    food: true

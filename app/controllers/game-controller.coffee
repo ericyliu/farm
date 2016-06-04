@@ -1,7 +1,6 @@
 DataService = require 'services/data-service.coffee'
 FarmController = require 'controllers/farm-controller.coffee'
 Game = require 'models/game.coffee'
-Item = require 'models/item.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
 
@@ -49,7 +48,10 @@ createStartingFarm = ->
 givePlayerStartingItems = (player) ->
   player.farm.animals = [DataService.createAnimal 'goat']
   player.farm.tiles = createStartingFarm()
-  player.items = [new Item 'grassSeed', 3]
+  player.items = [
+    DataService.createItem 'grassSeed', 3
+    DataService.createItem 'goatManure', 3
+  ]
 
 isEndOfDay = (game) ->
   return game.timeElapsed != 0 and game.timeElapsed % (60 * 24) == 0
