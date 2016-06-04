@@ -6,6 +6,10 @@ class Tile
     @_className = 'Tile'
 
 
+  update: ->
+
+
+
   addNutrients: (nutrients) ->
     _.map (nutrients), (amount, type) => @addNutrient amount, type
 
@@ -21,6 +25,7 @@ class Tile
 
   getNutrient: (amount, type) ->
     return 0 unless @nutrients[type]
+    # this needs to make sure the tile has enough nutrients
     @nutrients[type] -= amount
     amount
 

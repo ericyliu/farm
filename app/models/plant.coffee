@@ -4,7 +4,7 @@ DayInTheLife = require 'models/day-in-the-life.coffee'
 
 class Plant extends Livable
 
-  constructor: (@dailyFoodUsed, @havestables) ->
+  constructor: (@dailyNutrientsNeeded, @havestables) ->
     @_className = 'Plant'
 
 

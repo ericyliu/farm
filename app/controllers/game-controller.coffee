@@ -17,14 +17,14 @@ class GameController
     @game.timeElapsed += 1
     @farmController.update()
     if isEndOfDay @game
+      @farmController.feedCrops()
       @farmController.handleLivableDays @farmController.getAllLivables()
 
 
   getFarm: ->
     @game.player.farm
 
-  togglePause: (pause) ->
-    return @paused = pause if pause isnt undefined
+  togglePause: ->
     @paused = not @paused
 
 

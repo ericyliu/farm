@@ -2,7 +2,7 @@ time = require 'services/time-service.coffee'
 
 module.exports =
   grass:
-    dailyFoodUsed:
+    dailyNutrientsNeeded:
       water: 1
       nitrogen: 1
     harvestables:
