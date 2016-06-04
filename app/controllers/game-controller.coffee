@@ -49,6 +49,7 @@ createStartingFarm = ->
 givePlayerStartingItems = (player) ->
   player.farm.animals = [DataService.createAnimal 'goat']
   player.farm.tiles = createStartingFarm()
+  player.money = 100
   player.items = [
     DataService.createItem 'grassSeed', 3
     DataService.createItem 'goatManure', 3

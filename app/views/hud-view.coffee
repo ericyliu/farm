@@ -15,6 +15,12 @@ getButtonDoms = ->
     $ "<div class='btn'>#{button.label}</div>"
       .on 'click', -> button.method()
 
+getTimeDom = ->
+  $ "<div class='time'>Time: #{TimeService.getHumanTime window.Farm.gameController.game.timeElapsed}</div>"
+
+getMoneyDom = ->
+  $ "<div class='money'>Gold: #{window.Farm.gameController.game.player.money}</div>"
+
 
 module.exports =
 
@@ -46,4 +52,4 @@ module.exports =
 
 
   update: ->
-    $('#Hud .time').html "Time: #{TimeService.getHumanTime window.Farm.gameController.game.timeElapsed}"
+    $('#Hud .time').html [getTimeDom(), getMoneyDom()]
