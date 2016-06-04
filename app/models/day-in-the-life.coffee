@@ -5,9 +5,9 @@ class DayInTheLife
 
   getNetResult: () ->
     result = {}
-    for foodId in Object.keys @required
-      givenFood = @given[foodId] ? 0
-      result[foodId] = givenFood - @required[foodId]
+    for nutrientId in Object.keys @required
+      givenNutrient = @given[nutrientId] ? 0
+      result[nutrientId] = givenNutrient - @required[nutrientId]
     result
 
 module.exports = DayInTheLife

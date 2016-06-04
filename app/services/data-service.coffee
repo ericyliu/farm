@@ -16,7 +16,7 @@ create = (id, type) ->
     onDeath = not harvestable.cooldown?
     new Harvestable id, harvestable.amount, harvestable.cooldown, onDeath
   lifeStages = stats.lifeStages
-  new Livable id, stats.dailyFoodUsed, harvestables, lifeStages
+  new Livable id, stats.dailyNutrientsNeeded, harvestables, lifeStages
 
 
 module.exports =
@@ -34,4 +34,3 @@ module.exports =
   itemToCrop: (item) -> @createCrop data.items[item.type].livable
 
   getNutrients: (item) -> data.items[item.type].nutrients
-

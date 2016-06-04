@@ -11,16 +11,17 @@ class Livable
 
   ###
   @param string type - the type of livable eg. "goat"
-  @param {string foodType: int amount} dailyFoodUsed - the food used up by the livable everyday
+  @param {string nutrientType: int amount} dailyNutrientsNeeded - the nutrient used up by the livable everyday
   @param [harvestable] harvestables - the resources you can get from this livable
   @param {string stage : int days in that stage} lifeStages - the different stages of life that an
     that a given livable has
   ###
-  constructor: (@type, @dailyFoodUsed, @harvestables, @lifeStages, @willEat) ->
+  constructor: (@type, @dailyNutrientsNeeded, @harvestables, @lifeStages, @willEat) ->
     # DayInTheLife[]
     @lifespan = []
-    @todaysFoodGiven = {}
+    @todaysNutrientsGiven = {}
     @_className = 'Livable'
+    @wasKilled = 0
 
 
   update: ->
@@ -44,46 +45,56 @@ class Livable
   also resets the livable for the next day
   ###
   handleDay: () ->
-    @lifespan.push new DayInTheLife @dailyFoodUsed, @todaysFoodGiven
-    @todaysFoodGiven = {}
+    if not @isAlive() then return
+    @lifespan.push new DayInTheLife @dailyNutrientsNeeded, @todaysNutrientsGiven
+    @todaysNutrientsGiven = {}
 
 
   ###
-  @param {string foodType: int amount} allFoodGiven - the food given to an animal.
+  @param {string nutrientType: int amount} allNutrientGiven - the nutrient given to an animal.
     can be called multiple times per day and will get merged together at days end
   ###
-  giveFood: (allFoodGiven) ->
-    for foodId in @getRequiredFoodIds()
-      foodGiven = allFoodGiven[foodId] ? 0
-      @todaysFoodGiven[foodId] = 0 unless @todaysFoodGiven[foodId]?
-      @todaysFoodGiven[foodId] += foodGiven
+  giveNutrients: (allNutrientsGiven) ->
+    for nutrientId in @getRequiredNutrientIds()
+      nutrientsGiven = allNutrientsGiven[nutrientId] ? 0
+      @todaysNutrientsGiven[nutrientId] = 0 unless @todaysNutrientsGiven[nutrientId]?
+      @todaysNutrientsGiven[nutrientId] += nutrientsGiven
 
 
   ###
-  @return {string foodType: int amount} - the state of a livabele at any given time
+  @retrun {sting nutrientType: int amount} the nutrient that the plant wants for the day
+  ###
+  getDesiredNutrients: () ->
+    @dailyNutrientsNeeded
+
+
+  ###
+  @return {string nutrientType: int amount} - the state of a livabele at any given time
   ###
   getCurrentState: () ->
-    requiredFoods = {}
-    for foodId in @getRequiredFoodIds()
-      requiredFoods[foodId] = 0
+    requiredNutrients = {}
+    for nutrientId in @getRequiredNutrientIds()
+      requiredNutrients[nutrientId] = 0
 
     reducer = (result, dayInTheLife, index) =>
       netDayInTheLife = dayInTheLife.getNetResult()
-      for foodId in @getRequiredFoodIds()
-        result[foodId] += netDayInTheLife[foodId]
+      for nutrientId in @getRequiredNutrientIds()
+        result[nutrientId] += netDayInTheLife[nutrientId]
       return result
-    _.reduce @lifespan, reducer, requiredFoods
+    _.reduce @lifespan, reducer, requiredNutrients
 
 
   ###
   Used to determine if a livable is alive. meaning there was never a day when
-  one of its requiredFood amounts went to 0
+  one of its requiredNutrient amounts went to 0
   @return bool
   ###
   isAlive: () ->
+    if @wasKilled then return false
+    if @getAge() == 0 then return true
     currentState = @getCurrentState()
-    for foodId in @getRequiredFoodIds()
-      if currentState[foodId] <= 0
+    for nutrientId in @getRequiredNutrientIds()
+      if currentState[nutrientId] <= 0
         return false
     true
 
@@ -99,6 +110,7 @@ class Livable
   @return string - the current life stage of a livable
   ###
   getCurrentLifeStage: () ->
+    if not @isAlive() then return 'death'
     age = @getAge()
     reducer = (result, lifeStageLength, lifeStage) ->
       if lifeStageLength <= age
@@ -108,8 +120,8 @@ class Livable
     _.reduce @lifeStages, reducer, 'baby'
 
 
-  getRequiredFoodIds: () ->
-    Object.keys @dailyFoodUsed
+  getRequiredNutrientIds: () ->
+    Object.keys @dailyNutrientsNeeded
 
 
 module.exports = Livable

@@ -2,20 +2,15 @@ ModelClassMap = require('util/model-class-map.coffee')
 
 class Unserializer
 
-  isPrimitive: (value) ->
-    typeof value == 'undefined' or
-    typeof value == 'number' or
-    typeof value == 'string'
-
   isArray: (value) ->
     value instanceof Array
 
+
   isNormalObject: (value) ->
-    !value['_className']
+    !value['_className'] and value instanceof Object
+
 
   unserialize: (jsonData) ->
-    if @isPrimitive jsonData
-      return jsonData
     if jsonData['_className']
       klass = ModelClassMap[jsonData['_className']]
       instance = new klass()
@@ -25,7 +20,9 @@ class Unserializer
       return instance
     if @isArray jsonData
       return _.map jsonData, (data) => @unserialize data
-    return _.mapValues jsonData, (data) => @unserialize data
+    if @isNormalObject jsonData
+      return _.mapValues jsonData, (data) => @unserialize data
+    return jsonData
 
 
 module.exports = Unserializer

@@ -13,7 +13,6 @@ updateLivables = (livables) ->
     .concat livables
     .filter()
     .map (livable) -> livable.update()
-    .value()
 
 
 class FarmController
@@ -43,9 +42,24 @@ class FarmController
   getAllLivables: ->
     _.chain []
     .concat @gameController.getFarm().animals
-    .concat cropsFromTiles @gameController.getFarm().tiles
+    .concat cropsFromTiles @getTiles()
     .filter()
     .value()
+
+
+  feedCrops: ->
+    _.chain []
+    .concat @getTiles()
+    .filter()
+    .map (tile) ->
+      crop = tile.crop
+      desiredNutrients = crop.getDesiredNutrients()
+      suppliedNutrients = tile.getNutrients desiredNutrients
+      crop.giveNutrients suppliedNutrients
+
+
+  getTiles: ->
+    @gameController.getFarm().tiles
 
 
   handleLivableDays: (livables) ->
