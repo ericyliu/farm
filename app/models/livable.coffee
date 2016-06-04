@@ -101,8 +101,12 @@ class Livable
   getCurrentLifeStage: () ->
     age = @getAge()
     reducer = (result, lifeStageLength, lifeStage) ->
-      lifeStage if lifeStageLength < age else result
+      if lifeStageLength < age
+        return lifeStage
+      else
+        result
     result = _.reduce @lifeStages, reducer, 'baby'
+    console.log result
     return result
 
 
