@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "test"
+    "test": "mycha"
   },
   "author": "",
   "license": "ISC",
@@ -11,6 +11,7 @@
     "autoprefixer-stylus": "^0.9.3",
     "browserify": "^13.0.1",
     "browserify-ngannotate": "^2.0.0",
+    "chai": "^3.5.0",
     "coffeeify": "^2.0.1",
     "colors": "^1.1.2",
     "del": "^2.2.0",
@@ -20,8 +21,11 @@
     "gulp-jade": "^1.1.0",
     "gulp-replace": "^0.5.4",
     "gulp-stylus": "^2.4.0",
+    "mycha": "^2.0.1",
     "path": "^0.12.7",
     "require": "^2.4.20",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {

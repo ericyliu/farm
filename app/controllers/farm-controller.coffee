@@ -41,10 +41,10 @@ class FarmController
 
   getAllLivables: ->
     _.chain []
-    .concat @gameController.getFarm().animals
-    .concat cropsFromTiles @getTiles()
-    .filter()
-    .value()
+      .concat @gameController.getFarm().animals
+      .concat cropsFromTiles @getTiles()
+      .filter()
+      .value()
 
 
   feedCrops: ->

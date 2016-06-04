@@ -1,0 +1,16 @@
+# Environment variables to add to process.env when running mocha
+mochaEnv:
+  NODE_PATH: 'app/'
+
+# Default options to pass to mocha (can be overridden by command line options)
+mochaOptions:
+  colors: true
+  compilers: 'coffee:coffee-script/register'
+  reporter: dot
+
+# Path patten used for finding tests (see https://github.com/isaacs/minimatch)
+testFilePattern: 'app/**/*-spec.coffee'
+
+# Files to include before all tests
+testHelpers:
+  - spec/spec_helper.coffee
