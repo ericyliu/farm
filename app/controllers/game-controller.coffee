@@ -5,6 +5,7 @@ Game = require 'models/game.coffee'
 MarketListing = require 'models/market-listing.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
+eventBus = require 'services/event-bus.coffee'
 
 class GameController
 
@@ -34,11 +35,13 @@ class GameController
 
   saveGame: ->
     localStorage.setItem 'game-save', JSON.stringify @game
+    eventBus.trigger(eventBus.events.SAVE)
 
 
   loadGame: ->
     savedState = JSON.parse localStorage.getItem "game-save"
     @game = (new Unserializer()).unserialize savedState
+    eventBus.trigger(eventBus.events.LOAD)
 
 
 module.exports = GameController

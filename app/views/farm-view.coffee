@@ -1,5 +1,6 @@
 $ = require 'jquery'
 TileMenuView = require 'views/tile-menu-view.coffee'
+eventBus = require 'services/event-bus.coffee'
 
 getRowDom = (row) ->
   $("<div class='row'></div>").append _.map row, getTileDom
@@ -17,22 +18,34 @@ getAnimalDom = (animal) ->
   $ "<div class='animal'>#{animal.type}</div>"
 
 
-module.exports =
-
+FarmView =
   update: ->
     @updateField()
     @updatePen()
 
 
+  reset: ->
+    @previousState = {}
+
+
   updateField: ->
+    @previousState = {} if not @previousState?
     field = window.Farm?.gameController.game.player.farm.tiles
-    return if _.isEqual @previousField, JSON.stringify field
+    @reset()
+    return if _.isEqual @previousState.field, JSON.stringify field
     $('#Farm .field').html _.map field, getRowDom
-    @previousField = JSON.stringify field
+    @previousState.field = JSON.stringify field
 
 
   updatePen: ->
+    @previousState = {} if not @previousState?
     pen = window.Farm?.gameController.game.player.farm.animals
-    return if _.isEqual @previousPen, JSON.stringify pen
+    return if _.isEqual @previousState.pen, JSON.stringify pen
     $('#Farm .pen').html _.map pen, getAnimalDom
-    @previousPen = JSON.stringify pen
+    @previousState.pen = JSON.stringify pen
+
+
+eventBus.registerCallback eventBus.events.LOAD, FarmView.reset, FarmView
+eventBus.debug(true)
+
+module.exports = FarmView
