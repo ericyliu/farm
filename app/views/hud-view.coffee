@@ -1,5 +1,6 @@
 $ = require 'jquery'
 _ = require 'lodash'
+DataService = require 'services/data-service.coffee'
 TimeService = require 'services/time-service.coffee'
 
 playbackButtons = []
@@ -20,6 +21,63 @@ getTimeDom = ->
 
 getMoneyDom = ->
   $ "<div class='money'>Gold: #{window.Farm.gameController.game.player.money}</div>"
+
+
+getPlayerItems = ->
+  window.Farm.gameController.game.player.items
+
+getMarketListings = ->
+  window.Farm.gameController.game.market.listings
+
+
+getMarketBuyDom = (listings) ->
+  rowDoms = _.map listings, (listing) ->
+    rowDom = $ """
+      <tr>
+        <td>#{listing.item.type}</td>
+        <td>#{listing.item.amount}</td>
+        <td>#{listing.item.quality}</td>
+        <td>#{listing.price}</td>
+      </tr>
+    """
+    buyDom = $('<td><div class="btn">Buy</div></td>').on 'click', ->
+      buyItem listing
+    rowDom.append buyDom
+  _.concat [getHeaderDom()], rowDoms
+
+getMarketSellDom = (items) ->
+  rowDoms = _.map items, (item) ->
+    price = DataService.getPrice item
+    rowDom = $ """
+      <tr>
+        <td>#{item.type}</td>
+        <td>#{item.amount}</td>
+        <td>#{item.quality}</td>
+        <td>#{price}</td>
+      </tr>
+    """
+    buyDom = $('<td><div class="btn">Sell</div></td>').on 'click', ->
+      sellItem item, price
+    rowDom.append buyDom
+  _.concat [getHeaderDom()], rowDoms
+
+getHeaderDom = ->
+  $ """
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Quality</th>
+      <th>Price</th>
+    </tr>
+  """
+
+buyItem = (listing) ->
+  status = window.Farm.gameController.playerController.buy listing.item, listing.price
+  $('#Hud .market .market-status').html status.err if status.err
+
+sellItem = (item, price) ->
+  status = window.Farm.gameController.playerController.sell item, price
+  $('#Hud .market .market-status').html status.err if status.err
 
 
 module.exports =
@@ -48,14 +106,38 @@ module.exports =
           setPlaybackInfoDom true, @playSpeed
       ,
         label: 'Market'
-        method: =>
-          $('#Hud .market').show()
-          @marketOpen = true
+        method: => @toggleMarket true
     ]
     setPlaybackInfoDom true, 1
     $('#Hud .right').append getButtonDoms()
+    $('#Hud .market .close').on 'click', => @toggleMarket false
 
 
   update: ->
     $('#Hud .status').html [getTimeDom(), getMoneyDom()]
-    $('#Hud .market').html() if @marketOpen
+    @updateMarket() if @marketOpen
+
+
+  updateMarket: ->
+    @updateBuyTable()
+    @updateSellTable()
+
+
+  updateBuyTable: ->
+    marketListingsHash = JSON.stringify getMarketListings()
+    return if @previousListings is marketListingsHash
+    $('#Hud .market table.buy').html getMarketBuyDom getMarketListings()
+    @previousListings = marketListingsHash
+
+
+  updateSellTable: ->
+    playerItemsHash = JSON.stringify getPlayerItems()
+    return if @previousItems is playerItemsHash
+    $('#Hud .market table.sell').html getMarketSellDom getPlayerItems()
+    @previousItems = playerItemsHash
+
+
+  toggleMarket: (show) ->
+    if show then $('.Hud .market').show()
+    else $('.Hud .market').hide()
+    @marketOpen = show

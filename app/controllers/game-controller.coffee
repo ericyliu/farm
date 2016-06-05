@@ -1,6 +1,8 @@
 DataService = require 'services/data-service.coffee'
 FarmController = require 'controllers/farm-controller.coffee'
+PlayerController = require 'controllers/player-controller.coffee'
 Game = require 'models/game.coffee'
+MarketListing = require 'models/market-listing.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
 
@@ -9,7 +11,9 @@ class GameController
   constructor: ->
     @game = new Game()
     @farmController = new FarmController @
+    @playerController = new PlayerController @
     givePlayerStartingItems @game.player
+    populateMarket @game.market
 
 
   update: ->
@@ -57,3 +61,8 @@ givePlayerStartingItems = (player) ->
 
 isEndOfDay = (game) ->
   return game.timeElapsed != 0 and game.timeElapsed % (60 * 24) == 0
+
+populateMarket = (market) ->
+  market.listings = [
+    new MarketListing DataService.createItem('grassSeed', 3), 10
+  ]

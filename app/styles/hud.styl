@@ -29,6 +29,37 @@
 
     h1
       text-align center
+      height 50px
+      margin 0
+
+    .listings
+      box-sizing border-box
+      height calc(100% - 50px)
+      padding 10px
+
+      .container
+        box-sizing border-box
+        float left
+        padding 5px
+        position relative
+        width 50%
+
+        h2
+          width 50%
+
+        .buy, .sell
+          border 1px solid black
+          overflow auto
+          width 100%
+
+          th
+            text-align left
+
+        .buy
+          margin-right 5px
+
+        .sell
+          margin-left 5px
 
     .close
       position absolute

@@ -22,12 +22,12 @@ class FarmController
 
   plant: (tile, item) ->
     tile.crop = DataService.itemToCrop item
-    @gameController.game.player.removeItem item
+    @gameController.game.player.removeItem item, 1
 
 
   fertilize: (tile, item) ->
     tile.addNutrients DataService.getNutrients item
-    @gameController.game.player.removeItem item
+    @gameController.game.player.removeItem item, 1
 
 
   harvest: (livable, harvestable) ->

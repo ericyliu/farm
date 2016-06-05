@@ -8,13 +8,15 @@ class Player
 
   addItem: (item) ->
     existingItem = _.find @items, (i) -> i.type is item.type and i.quality is i.quality
-    return existingItem.amount += 1 if existingItem
+    return existingItem.amount += item.amount if existingItem
     @items = _.concat @items, item
 
 
-  removeItem: (item) ->
-    if item.amount is 1 then _.remove @items, (i) -> i is item
-    else item.amount -= 1
+  removeItem: (item, amount) ->
+    itemToRemove = _.find @items, (playerItem) -> playerItem.type is item.type
+    return unless itemToRemove
+    itemToRemove.amount -= amount or item.amount
+    _.remove @items, itemToRemove if itemToRemove.amount <= 0
 
 
 module.exports = Player

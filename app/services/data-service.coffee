@@ -34,3 +34,5 @@ module.exports =
   itemToCrop: (item) -> @createCrop data.items[item.type].livable
 
   getNutrients: (item) -> data.items[item.type].nutrients
+
+  getPrice: (item) -> (data.items[item.type].price or 1) * item.amount
