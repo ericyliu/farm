@@ -46,7 +46,7 @@ files = []
 
 gulp.task 'compile:js', ->
   (new Promise (resolve, reject) ->
-    gulp.src '**/models/*.coffee'
+    gulp.src '**/app/models/*.coffee'
       .pipe map (file, callback) ->
         # gutil.log file.path
         filePath = file.path

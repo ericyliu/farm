@@ -1,4 +1,5 @@
 ModelClassMap = require('util/model-class-map.coffee')
+_ = require 'lodash'
 
 class Unserializer
 

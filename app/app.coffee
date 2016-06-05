@@ -28,5 +28,3 @@ window.Farm.viewUpdateLoop = setInterval updateViews, 1000 / FPS
 window.Farm.gameUpdateLoop = setInterval updateGame, 1000
 
 window.f = new CommandLineController()
-
-TestRunner = require 'tests/test-runner.coffee'
