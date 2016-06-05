@@ -14,7 +14,7 @@ getMenuDom = (tile) ->
     cropMenu = getCropMenu tile.crop
   else
     plantMenu = getPlantMenu tile
-    fertilizerMenu = getFertilizerMenu tile
+  fertilizerMenu = getFertilizerMenu tile
   tileMenu.append _.flatten [statsMenu, cropMenu, plantMenu, fertilizerMenu]
 
 getStatsMenu = (tile) ->
