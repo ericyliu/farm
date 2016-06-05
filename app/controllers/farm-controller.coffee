@@ -9,10 +9,10 @@ cropsFromTiles = (tiles) ->
 
 
 updateLivables = (livables) ->
-  _.chain []
-    .concat livables
+  _.chain livables
     .filter()
     .map (livable) -> livable.update()
+    .value()
 
 
 class FarmController
