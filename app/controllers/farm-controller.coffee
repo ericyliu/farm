@@ -49,13 +49,16 @@ class FarmController
 
   feedCrops: ->
     _.chain []
-    .concat @getTiles()
-    .filter()
-    .map (tile) ->
-      crop = tile.crop
-      desiredNutrients = crop.getDesiredNutrients()
-      suppliedNutrients = tile.getNutrients desiredNutrients
-      crop.giveNutrients suppliedNutrients
+      .concat @getTiles()
+      .flatten()
+      .filter (tile) ->
+        return tile.crop?
+      .map (tile) ->
+        crop = tile.crop
+        desiredNutrients = crop.getDesiredNutrients()
+        suppliedNutrients = tile.getNutrients desiredNutrients
+        crop.giveNutrients suppliedNutrients
+      .value()
 
 
   getTiles: ->

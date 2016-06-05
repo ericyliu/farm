@@ -20,14 +20,15 @@ class Tile
 
 
   getNutrients: (nutrients) ->
-    _.map (nutrients), @getNutrient
+    _.mapValues (nutrients), (amount, type) => @getNutrient(amount, type)
 
 
   getNutrient: (amount, type) ->
     return 0 unless @nutrients[type]
     # this needs to make sure the tile has enough nutrients
-    @nutrients[type] -= amount
-    amount
+    giveAmount = Math.min(amount, @nutrients[type])
+    @nutrients[type] -= giveAmount
+    giveAmount
 
 
 module.exports = Tile
