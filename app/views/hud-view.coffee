@@ -107,6 +107,12 @@ module.exports =
       ,
         label: 'Market'
         method: => @toggleMarket true
+      ,
+        label: 'Load'
+        method: => f.load()
+      ,
+        label: 'Save'
+        method: => f.save()
     ]
     setPlaybackInfoDom true, 1
     $('#Hud .right').append getButtonDoms()
