@@ -1,5 +1,6 @@
 $ = require 'jquery'
 DataService = require 'services/data-service.coffee'
+eventBus = require 'services/event-bus.coffee'
 
 repositionMenu = (evt) ->
   menuDom = $('#Farm .tile-menu .menu-container')
@@ -15,7 +16,8 @@ getMenuDom = (tile) ->
   else
     plantMenu = getPlantMenu tile
   fertilizerMenu = getFertilizerMenu tile
-  tileMenu.append _.flatten [statsMenu, cropMenu, plantMenu, fertilizerMenu]
+  foodMenu = getFoodMenu tile
+  tileMenu.append _.flatten [statsMenu, cropMenu, plantMenu, fertilizerMenu, foodMenu]
 
 getStatsMenu = (tile) ->
   statsMenuDom = $ '<div class="stats"><div>Stats:</div></div>'
@@ -49,6 +51,14 @@ getFertilizerMenu = (tile) ->
       .on 'click', -> fertilize tile, item
   _.concat fertilizerMenuDom, fertilizerDoms
 
+getFoodMenu = (tile) ->
+  foodMenuDom = [$ '<div>Food</div>']
+  foods = _.filter window.Farm.gameController.game.player.items, DataService.isItemFood
+  foodDoms = _.map foods, (item) ->
+    $ "<div class='btn fertilizer'>#{item.type} x#{item.amount}</div>"
+      .on 'click', -> feed tile, item
+  _.concat foodMenuDom, foodDoms
+
 harvest = (crop, harvestable) ->
   window.Farm.gameController.farmController.harvest crop, harvestable
 
@@ -58,12 +68,15 @@ plant = (tile, item) ->
 fertilize = (tile, item) ->
   window.Farm.gameController.farmController.fertilize tile, item
 
+feed = (tile, item) ->
+  window.Farm.gameController.farmController.feed tile, item
 
-module.exports =
 
+TileMenuView =
   setup: ->
     @open = false
     $('#Farm .tile-menu .background').on 'click', @hideTileMenu
+    @previousTile = null
 
 
   update: ->
@@ -87,3 +100,8 @@ module.exports =
   hideTileMenu: ->
     @open = false
     $('#Farm .tile-menu').css 'visibility', 'hidden'
+
+
+eventBus.registerCallback eventBus.events.LOAD, TileMenuView.setup, TileMenuView
+
+module.exports = TileMenuView

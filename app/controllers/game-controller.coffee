@@ -23,6 +23,7 @@ class GameController
     @farmController.update()
     if isEndOfDay @game
       @farmController.feedCrops()
+      @farmController.feedAnimals()
       @farmController.handleLivableDays @farmController.getAllLivables()
 
 
@@ -58,9 +59,10 @@ givePlayerStartingItems = (player) ->
   player.farm.tiles = createStartingFarm()
   player.money = 100
   player.items = [
-    DataService.createItem 'grassSeed', 3
-    DataService.createItem 'goatManure', 3
-    DataService.createItem 'wateringCan', 3
+    DataService.createItem 'grassSeed', 5
+    DataService.createItem 'goatManure', 5
+    DataService.createItem 'wateringCan', 5
+    DataService.createItem 'grass', 5
   ]
 
 isEndOfDay = (game) ->

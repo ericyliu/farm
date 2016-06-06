@@ -1,5 +1,6 @@
 _ = require 'lodash'
 DataService = require 'services/data-service.coffee'
+Tile = require 'models/tile.coffee'
 
 cropsFromTiles = (tiles) ->
   _.chain tiles
@@ -18,6 +19,7 @@ updateLivables = (livables) ->
 class FarmController
 
   constructor: (@gameController) ->
+    @animalTrough = new Tile()
 
 
   plant: (tile, item) ->
@@ -27,6 +29,11 @@ class FarmController
 
   fertilize: (tile, item) ->
     tile.addNutrients DataService.getNutrients item
+    @gameController.game.player.removeItem item, 1
+
+
+  feed: (tile, item) ->
+    tile.addNutrients DataService.getFood item
     @gameController.game.player.removeItem item, 1
 
 
@@ -41,7 +48,7 @@ class FarmController
 
   getAllLivables: ->
     _.chain []
-      .concat @gameController.getFarm().animals
+      .concat @getAnimals()
       .concat cropsFromTiles @getTiles()
       .filter()
       .value()
@@ -61,8 +68,23 @@ class FarmController
       .value()
 
 
+  feedAnimals: ->
+    animalTrough = @animalTrough
+    _.chain []
+      .concat @getAnimals()
+      .map (animal) ->
+        desiredNutrients = animal.getDesiredNutrients()
+        suppliedNutrients = animalTrough.getNutrients desiredNutrients
+        animal.giveNutrients suppliedNutrients
+      .value()
+
+
   getTiles: ->
     @gameController.getFarm().tiles
+
+
+  getAnimals: ->
+    @gameController.getFarm().animals
 
 
   handleLivableDays: (livables) ->

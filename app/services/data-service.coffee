@@ -31,8 +31,12 @@ module.exports =
 
   isItemPlantable: (item) -> data.items[item.type].plantable
 
+  isItemFood: (item) -> data.items[item.type].food
+
   itemToCrop: (item) -> @createCrop data.items[item.type].livable
 
   getNutrients: (item) -> data.items[item.type].nutrients
+
+  getFood: (item) -> "#{item.type}": 1
 
   getPrice: (item) -> (data.items[item.type].price or 1) * item.amount
