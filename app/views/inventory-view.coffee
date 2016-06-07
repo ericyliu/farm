@@ -31,4 +31,5 @@ module.exports =
 
 
 createItemDom = (item) ->
+  console.log item
   $ "<div class='item #{item.type}' id='#{item.id}'>#{item.type} - #{item.amount} - #{item.quality}</div>"
