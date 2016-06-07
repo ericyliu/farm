@@ -1,17 +1,13 @@
 _ = require 'lodash'
 
-class EventBus
+module.exports =
 
-  constructor: ->
-    @registeredEvents = {}
-    @shouldDebug = false
-    @events =
-      SAVE: 'save'
-      LOAD: 'load'
+  registeredEvents: {}
+  shouldDebug: false
 
 
-  registerCallback: (event, callback, context) ->
-    @log "Registering callback: #{callback}"
+  register: (event, callback, context) ->
+    @log "Registering callback: #{callback} under event #{event}"
     @registeredEvents[event] = [] unless @registeredEvents.event?
     @registeredEvents[event].push _.bind callback, context
 
@@ -31,6 +27,3 @@ class EventBus
 
   log: (message) ->
     console.log message if @shouldDebug
-
-eventBus = new EventBus()
-module.exports = eventBus

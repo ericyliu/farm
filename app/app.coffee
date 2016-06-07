@@ -4,27 +4,18 @@ window.peek = (thing) ->
   console.log thing
   thing
 
-FPS = 60
+# Initialize Game
 GameController = require 'controllers/game-controller.coffee'
-CommandLineController = require 'util/command-line-controller.coffee'
-
-views = [
-  require 'views/hud-view.coffee'
-  require 'views/inventory-view.coffee'
-  require 'views/farm-view.coffee'
-  require 'views/tile-menu-view.coffee'
-]
-
-updateViews = -> _.map views, (view) ->
-  return unless window.Farm?.gameController
-  view.update?()
-
-updateGame = ->
-  window.Farm.gameController.update()
-
-window.Farm = gameController: new GameController()
-_.map views, (view) -> view.setup?()
-window.Farm.viewUpdateLoop = setInterval updateViews, 1000 / FPS
+gameController = new GameController()
+updateGame = -> gameController.update()
 window.Farm.gameUpdateLoop = setInterval updateGame, 1000
 
+
+# Initialize View
+window.FarmEventService = require 'services/event-bus.coffee'
+require('views/view.coffee').start()
+
+
+# Initialize Dev Tools
+CommandLineController = require 'util/command-line-controller.coffee'
 window.f = new CommandLineController()

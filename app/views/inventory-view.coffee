@@ -1,14 +1,34 @@
 $ = require 'jquery'
 
-getItemDom = (item) ->
-  "<div class='item #{item.type}'>#{item.type} - #{item.amount}</div>"
-
 module.exports =
 
-  update: ->
-    items = window.Farm.gameController.game.player.items
-    return if @previousItems is JSON.stringify items
-    inventoryView = $ '#Inventory'
-    itemDoms = _.map items, getItemDom
-    inventoryView.html _.join itemDoms, ''
-    @previousItems = JSON.stringify items
+  start: (game, ViewService) ->
+    @inventoryDom = $ '#Inventory'
+    @updateItems game.player.items
+    ViewService.registerListeners @listeners(), @
+
+
+  listeners: ->
+    'player/itemAdded': @addItem
+    'player/itemRemoved': @removeItem
+    'item/attributesUpdated': @updateItem
+
+
+  updateItems: (items) ->
+    @inventoryDom.html _.map items, (item) -> createItemDom item
+
+
+  addItem: (item) ->
+    @inventoryDom.append createItemDom item
+
+
+  removeItem: (item) ->
+    @inventoryDom.find(".item##{item.id}").remove()
+
+
+  updateItem: (item) ->
+    @inventoryDom.find(".item##{item.id}").replaceWith createItemDom item
+
+
+createItemDom = (item) ->
+  $ "<div class='item #{item.type}' id='#{item.id}'>#{item.type} - #{item.amount} - #{item.quality}</div>"

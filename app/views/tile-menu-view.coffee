@@ -1,6 +1,5 @@
 $ = require 'jquery'
 DataService = require 'services/data-service.coffee'
-eventBus = require 'services/event-bus.coffee'
 
 repositionMenu = (evt) ->
   menuDom = $('#Farm .tile-menu .menu-container')
@@ -101,7 +100,5 @@ TileMenuView =
     @open = false
     $('#Farm .tile-menu').css 'visibility', 'hidden'
 
-
-eventBus.registerCallback eventBus.events.LOAD, TileMenuView.setup, TileMenuView
 
 module.exports = TileMenuView

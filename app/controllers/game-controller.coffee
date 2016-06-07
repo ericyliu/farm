@@ -5,7 +5,7 @@ Game = require 'models/game.coffee'
 MarketListing = require 'models/market-listing.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
-eventBus = require 'services/event-bus.coffee'
+EventBus = require 'services/event-bus.coffee'
 
 class GameController
 
@@ -15,6 +15,7 @@ class GameController
     @playerController = new PlayerController @
     givePlayerStartingItems @game.player
     populateMarket @game.market
+    EventBus.register 'game/onViewConnect', @onViewConnected, @
 
 
   update: ->
@@ -27,8 +28,13 @@ class GameController
       @farmController.handleLivableDays @farmController.getAllLivables()
 
 
+  onViewConnected: ->
+    EventBus.trigger 'game/onViewConnected', @game
+
+
   getFarm: ->
     @game.player.farm
+
 
   togglePause: ->
     @paused = not @paused
@@ -36,13 +42,13 @@ class GameController
 
   saveGame: ->
     localStorage.setItem 'game-save', JSON.stringify @game
-    eventBus.trigger(eventBus.events.SAVE)
+    EventBus.trigger 'game/save'
 
 
   loadGame: ->
     savedState = JSON.parse localStorage.getItem "game-save"
     @game = (new Unserializer()).unserialize savedState
-    eventBus.trigger(eventBus.events.LOAD)
+    EventBus.trigger 'game/load'
 
 
 module.exports = GameController
@@ -52,7 +58,6 @@ createStartingFarm = ->
   _.map _.range(3), ->
     _.map _.range(3), ->
       new Tile()
-
 
 givePlayerStartingItems = (player) ->
   player.farm.animals = [DataService.createAnimal 'goat']
