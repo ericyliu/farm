@@ -5,6 +5,7 @@ Market = require 'models/market.coffee'
 class Game
 
   constructor: (@name = 'Player 1') ->
+    super()
     @_className = 'Game'
     @player = new Player @name, new Farm()
     @timeElapsed = 0

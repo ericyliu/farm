@@ -3,6 +3,7 @@ _ = require 'lodash'
 class Player
 
   constructor: (@name, @farm, @money = 0, @items = {}) ->
+    super()
     @_className = 'Player'
 
 

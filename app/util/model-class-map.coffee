@@ -1,4 +1,5 @@
 module.exports =
+  'Base': require 'models/base.coffee'
   'DayInTheLife': require 'models/day-in-the-life.coffee'
   'Farm': require 'models/farm.coffee'
   'Game': require 'models/game.coffee'

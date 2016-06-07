@@ -6,6 +6,7 @@ class Item
   #                     and in most cases should be around 5. A 10 should be almost
   #                     impossible to get
   constructor: (@type, @amount = 1, @quality = 5) ->
+    super()
     @_className = 'Item'
 
 

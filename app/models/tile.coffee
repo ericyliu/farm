@@ -3,6 +3,7 @@ _ = require 'lodash'
 class Tile
 
   constructor: (@nutrients = {}, @crop) ->
+    super()
     @_className = 'Tile'
 
 

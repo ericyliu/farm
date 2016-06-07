@@ -1,6 +1,7 @@
 class Farm
 
   constructor: (@animals = [], @tiles = []) ->
+    super()
     @_className = Farm
 
 

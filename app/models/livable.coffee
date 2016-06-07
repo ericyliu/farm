@@ -17,6 +17,7 @@ class Livable
     that a given livable has
   ###
   constructor: (@type, @dailyNutrientsNeeded, @harvestables, @lifeStages, @willEat) ->
+    super()
     # DayInTheLife[]
     @lifespan = []
     @todaysNutrientsGiven = {}
