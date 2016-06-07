@@ -3,7 +3,7 @@ _ = require 'lodash'
 class EventBus
 
   constructor: ->
-    @registered_events = {}
+    @registeredEvents = {}
     @shouldDebug = false
     @events =
       SAVE: 'save'
@@ -12,16 +12,16 @@ class EventBus
 
   registerCallback: (event, callback, context) ->
     @log "Registering callback: #{callback}"
-    @registered_events[event] = [] if not @registered_events.event?
-    @registered_events[event].push _.bind callback, context
+    @registeredEvents[event] = [] unless @registeredEvents.event?
+    @registeredEvents[event].push _.bind callback, context
 
 
   trigger: (event, data) ->
     @log "Triggering event: #{event}"
     @log data if data?
-    if not @registered_events[event]?
+    unless @registeredEvents[event]?
       console.info "Triggering event that has no registered callbacks: #{event}"
-    _.map @registered_events[event], (callback) ->
+    _.map @registeredEvents[event], (callback) ->
       callback data
 
 
