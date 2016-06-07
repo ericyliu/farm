@@ -2,21 +2,25 @@ _ = require 'lodash'
 
 class Player
 
-  constructor: (@name, @farm, @money = 0, @items = []) ->
+  constructor: (@name, @farm, @money = 0, @items = {}) ->
     @_className = 'Player'
 
 
   addItem: (item) ->
-    existingItem = _.find @items, (i) -> i.type is item.type and i.quality is i.quality
-    return existingItem.amount += item.amount if existingItem
-    @items = _.concat @items, item
+    existingItem = @items[item.type]
+    if existingItem?
+      existingItem.amount += item.amount
+    else
+      @items[item.type] = item
 
 
   removeItem: (item, amount) ->
-    itemToRemove = _.find @items, (playerItem) -> playerItem.type is item.type
-    return unless itemToRemove
-    itemToRemove.amount -= amount or item.amount
-    _.remove @items, itemToRemove if itemToRemove.amount <= 0
+    itemToRemove = @items[item.type]
+    if not itemToRemove?
+      throw "Removing non-existent item #{item.type}"
+    else if itemToRemove.amount < amount
+      throw "Removing more of an item than exists #{item.type}"
+    itemToRemove -= amount
 
 
 module.exports = Player

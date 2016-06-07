@@ -58,12 +58,14 @@ givePlayerStartingItems = (player) ->
   player.farm.animals = [DataService.createAnimal 'goat']
   player.farm.tiles = createStartingFarm()
   player.money = 100
-  player.items = [
+  startItems = [
     DataService.createItem 'grassSeed', 5
     DataService.createItem 'goatManure', 5
     DataService.createItem 'wateringCan', 5
     DataService.createItem 'grass', 5
   ]
+  _.map startItems, (item) ->
+    player.addItem item
 
 isEndOfDay = (game) ->
   return game.timeElapsed != 0 and game.timeElapsed % (60 * 24) == 0
