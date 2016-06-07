@@ -1,9 +1,17 @@
 _ = require 'lodash'
+Base = require 'models/base.coffee'
 
-class Tile
+class Tile extends Base
 
-  constructor: (@nutrients = {}, @crop) ->
-    @_className = 'Tile'
+  constructor: (options) ->
+    super(options)
+
+
+  spec: () ->
+    nutrients: {}
+    crop: null
+    # private
+    _className: 'Tile'
 
 
   update: ->
@@ -15,19 +23,23 @@ class Tile
 
 
   addNutrient: (amount, type) ->
-    return @nutrients[type] = amount unless @nutrients[type]
-    @nutrients[type] += amount
+    if not @nutrients[type]?
+      @nutrients[type] = amount
+    else
+      @nutrients[type] += amount
+    @set('nutrients', @nutrients)
 
 
-  getNutrients: (nutrients) ->
-    _.mapValues (nutrients), (amount, type) => @getNutrient(amount, type)
+  takeNutrients: (nutrients) ->
+    _.mapValues (nutrients), (amount, type) => @takeNutrient(amount, type)
 
 
-  getNutrient: (amount, type) ->
+  takeNutrient: (amount, type) ->
     return 0 unless @nutrients[type]
     # this needs to make sure the tile has enough nutrients
     giveAmount = Math.min(amount, @nutrients[type])
     @nutrients[type] -= giveAmount
+    @set('nutrients', @nutrients)
     giveAmount
 
 

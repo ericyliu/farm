@@ -1,4 +1,5 @@
 module.exports =
+  'Base': require 'models/base.coffee'
   'DayInTheLife': require 'models/day-in-the-life.coffee'
   'Farm': require 'models/farm.coffee'
   'Game': require 'models/game.coffee'
@@ -7,6 +8,5 @@ module.exports =
   'Livable': require 'models/livable.coffee'
   'MarketListing': require 'models/market-listing.coffee'
   'Market': require 'models/market.coffee'
-  'Plant': require 'models/plant.coffee'
   'Player': require 'models/player.coffee'
   'Tile': require 'models/tile.coffee'

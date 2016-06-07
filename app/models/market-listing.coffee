@@ -1,7 +1,16 @@
-class MarketListing
+Base = require 'models/base.coffee'
 
-  constructor: (@item, @price) ->
-    @_className = 'MarketListing'
+class MarketListing extends Base
+
+  constructor: (options) ->
+    super(options)
+
+
+  spec: () ->
+    item: null
+    price: null
+    # private
+    _className: 'MarketListing'
 
 
 module.exports = MarketListing

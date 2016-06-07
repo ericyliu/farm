@@ -20,7 +20,7 @@ class GameController
 
   update: ->
     return if @paused
-    @game.timeElapsed += 1
+    @game.set 'timeElapsed', @game.timeElapsed + 1
     @farmController.update()
     if isEndOfDay @game
       @farmController.feedCrops()
@@ -76,6 +76,6 @@ isEndOfDay = (game) ->
   return game.timeElapsed != 0 and game.timeElapsed % (60 * 24) == 0
 
 populateMarket = (market) ->
-  market.listings = [
-    new MarketListing DataService.createItem('grassSeed', 3), 10
+  market.addListings [
+    new MarketListing item: DataService.createItem('grassSeed', 3), price: 10
   ]

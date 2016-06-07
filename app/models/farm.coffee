@@ -1,7 +1,15 @@
-class Farm
+Base = require 'models/base.coffee'
 
-  constructor: (@animals = [], @tiles = []) ->
-    @_className = Farm
+class Farm extends Base
+
+  constructor: (options) ->
+    super(options)
+
+  spec: () ->
+    animals: []
+    tiles: []
+    #private
+    _className: 'Farm'
 
 
 module.exports = Farm

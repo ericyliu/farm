@@ -1,12 +1,22 @@
-class Item
+Base = require 'models/base.coffee'
+
+class Item extends Base
 
   # type: string
   # amount: int
   # quality: int - the quality of the item. this is a number between 1 and 10
   #                     and in most cases should be around 5. A 10 should be almost
   #                     impossible to get
-  constructor: (@type, @amount = 1, @quality = 5) ->
-    @_className = 'Item'
+  constructor: (options) ->
+    super(options)
+
+
+  spec: () ->
+    type: null
+    amount: 1
+    quality: 5
+    #private
+    _className: 'Item'
 
 
 module.exports = Item

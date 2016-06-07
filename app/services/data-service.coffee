@@ -14,9 +14,17 @@ create = (id, type) ->
   stats = data[type][id]
   harvestables = _.map stats.harvestables, (harvestable, id) ->
     onDeath = not harvestable.cooldown?
-    new Harvestable id, harvestable.amount, harvestable.cooldown, onDeath
+    new Harvestable
+      type: id
+      amount: harvestable.amount
+      cooldown: harvestable.cooldown
+      onDeath: onDeath
   lifeStages = stats.lifeStages
-  new Livable id, stats.dailyNutrientsNeeded, harvestables, lifeStages
+  new Livable
+    type: id
+    dailyNutrientsNeeded: stats.dailyNutrientsNeeded
+    harvestables: harvestables
+    lifeStages: lifeStages
 
 
 module.exports =
@@ -25,7 +33,7 @@ module.exports =
 
   createCrop: (id) -> create id, 'crops'
 
-  createItem: (id, amount, quality) -> new Item id, amount, quality
+  createItem: (id, amount, quality) -> new Item (type: id, amount: amount, quality: quality)
 
   isItemFertilizer: (item) -> data.items[item.type].fertilizer
 
