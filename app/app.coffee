@@ -13,7 +13,7 @@ window.Farm.gameUpdateLoop = setInterval updateGame, 1000
 
 # Initialize View
 window.FarmEventService = require 'services/event-bus.coffee'
-require('views/view.coffee').start()
+require('views/main.coffee').start()
 
 
 # Initialize Dev Tools
