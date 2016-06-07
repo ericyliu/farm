@@ -12,12 +12,14 @@ class Unserializer
 
 
   unserialize: (jsonData) ->
+    # might not want this...
+    return jsonData if not jsonData?
+
     if jsonData['_className']
       klass = ModelClassMap[jsonData['_className']]
       instance = new klass()
       _.forOwn jsonData, (value, key) =>
         instance[key] = @unserialize(value)
-        x = 8
       return instance
     if @isArray jsonData
       return _.map jsonData, (data) => @unserialize data

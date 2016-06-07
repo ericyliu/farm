@@ -1,13 +1,8 @@
+Base = require 'models/base.coffee'
 _ = require 'lodash'
 DayInTheLife = require 'models/day-in-the-life.coffee'
 
-updateHarvestables = (harvestables) ->
-  _.map harvestables, (harvestable) ->
-    return unless harvestable?.maxCooldown and harvestable.cooldown > 0
-    harvestable.cooldown -= 1
-
-
-class Livable
+class Livable extends Base
 
   ###
   @param string type - the type of livable eg. "goat"
@@ -16,13 +11,21 @@ class Livable
   @param {string stage : int days in that stage} lifeStages - the different stages of life that an
     that a given livable has
   ###
-  constructor: (@type, @dailyNutrientsNeeded, @harvestables, @lifeStages, @willEat) ->
-    super()
-    # DayInTheLife[]
-    @lifespan = []
-    @todaysNutrientsGiven = {}
-    @_className = 'Livable'
-    @wasKilled = 0
+  constructor: (options) ->
+    super(options)
+
+
+  spec: ->
+    type: null
+    dailyNutrientsNeeded: null
+    harvestables: null
+    lifeStages: null
+    willEat: null
+    #private
+    lifespan: [] # DayInTheLife[]
+    _className: 'Livable'
+    todaysNutrientsGiven: {}
+    wasKilled: false
 
 
   update: ->
@@ -38,7 +41,7 @@ class Livable
 
 
   harvest: (harvestable) ->
-    harvestable.cooldown = harvestable.maxCooldown
+    harvestable.set 'cooldown', harvestable.maxCooldown
 
 
   ###
@@ -47,8 +50,8 @@ class Livable
   ###
   handleDay: () ->
     if not @isAlive() then return
-    @lifespan.push (new DayInTheLife @dailyNutrientsNeeded, @todaysNutrientsGiven)
-    @todaysNutrientsGiven = {}
+    @lifespan.push (new DayInTheLife required_nutrients: @dailyNutrientsNeeded, given_nutrients: @todaysNutrientsGiven)
+    @set 'todaysNutrientsGiven', {}
 
 
   ###
@@ -60,6 +63,7 @@ class Livable
       nutrientsGiven = allNutrientsGiven[nutrientId] ? 0
       if not @todaysNutrientsGiven[nutrientId]? then @todaysNutrientsGiven[nutrientId] = 0
       @todaysNutrientsGiven[nutrientId] += nutrientsGiven
+      @set 'todaysNutrientsGiven', @todaysNutrientsGiven
 
   ###
   @retrun {sting nutrientType: int amount} the nutrient that the plant wants for the day
@@ -123,6 +127,12 @@ class Livable
 
   getRequiredNutrientIds: () ->
     Object.keys @dailyNutrientsNeeded
+
+
+updateHarvestables = (harvestables) ->
+  _.map harvestables, (harvestable) ->
+    return unless harvestable?.maxCooldown and harvestable.cooldown > 0
+    harvestable.cooldown -= 1
 
 
 module.exports = Livable

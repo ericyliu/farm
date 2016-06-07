@@ -1,3 +1,5 @@
 id = 0
 
-module.exports = get: () -> id ++
+module.exports = get: () ->
+  id++
+  id

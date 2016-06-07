@@ -8,6 +8,5 @@ module.exports =
   'Livable': require 'models/livable.coffee'
   'MarketListing': require 'models/market-listing.coffee'
   'Market': require 'models/market.coffee'
-  'Plant': require 'models/plant.coffee'
   'Player': require 'models/player.coffee'
   'Tile': require 'models/tile.coffee'

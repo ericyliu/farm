@@ -2,20 +2,6 @@ _ = require 'lodash'
 DataService = require 'services/data-service.coffee'
 Tile = require 'models/tile.coffee'
 
-cropsFromTiles = (tiles) ->
-  _.chain tiles
-    .flatten()
-    .map (tile) -> tile.crop
-    .value()
-
-
-updateLivables = (livables) ->
-  _.chain livables
-    .filter()
-    .map (livable) -> livable.update()
-    .value()
-
-
 class FarmController
 
   constructor: (@gameController) ->
@@ -23,7 +9,7 @@ class FarmController
 
 
   plant: (tile, item) ->
-    tile.crop = DataService.itemToCrop item
+    tile.set 'crop', DataService.itemToCrop item
     @gameController.game.player.removeItem item, 1
 
 
@@ -63,7 +49,7 @@ class FarmController
       .map (tile) ->
         crop = tile.crop
         desiredNutrients = crop.getDesiredNutrients()
-        suppliedNutrients = tile.getNutrients desiredNutrients
+        suppliedNutrients = tile.takeNutrients desiredNutrients
         crop.giveNutrients suppliedNutrients
       .value()
 
@@ -74,7 +60,7 @@ class FarmController
       .concat @getAnimals()
       .map (animal) ->
         desiredNutrients = animal.getDesiredNutrients()
-        suppliedNutrients = animalTrough.getNutrients desiredNutrients
+        suppliedNutrients = animalTrough.takeNutrients desiredNutrients
         animal.giveNutrients suppliedNutrients
       .value()
 
@@ -91,6 +77,19 @@ class FarmController
     _.map livables, (livable) ->
       livable.handleDay()
 
+
+cropsFromTiles = (tiles) ->
+  _.chain tiles
+    .flatten()
+    .map (tile) -> tile.crop
+    .value()
+
+
+updateLivables = (livables) ->
+  _.chain livables
+    .filter()
+    .map (livable) -> livable.update()
+    .value()
 
 
 module.exports = FarmController

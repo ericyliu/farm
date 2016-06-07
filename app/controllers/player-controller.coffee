@@ -7,15 +7,15 @@ class PlayerController
     player = @getPlayer()
     return err: 'Not Enough Money' if player.money < price
     player.addItem item
-    player.money -= price
+    player.set 'money', player.money - price
 
 
   sell: (item, price) ->
     player = @getPlayer()
     itemToSell = _.find player.items, (playerItem) -> playerItem.type is item.type
-    return err: 'Not enough of item' if itemToSell?.amount < item.amount
+    return throw "Not enough of item #{item.type}" if itemToSell?.amount < item.amount
     player.removeItem item
-    player.money += price
+    player.set 'money', player.money + price
 
 
   getPlayer: ->
@@ -23,4 +23,3 @@ class PlayerController
 
 
 module.exports = PlayerController
-

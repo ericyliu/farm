@@ -1,10 +1,19 @@
+Base = require 'models/base.coffee'
 _ = require 'lodash'
 
-class Player
+class Player extends Base
 
-  constructor: (@name, @farm, @money = 0, @items = {}) ->
-    super()
-    @_className = 'Player'
+  constructor: (options) ->
+    super(options)
+
+
+  spec: () ->
+    name: null
+    farm: null
+    money: 0
+    items: {}
+    # private
+    _className: 'Player'
 
 
   addItem: (item) ->
@@ -21,7 +30,7 @@ class Player
       throw "Removing non-existent item #{item.type}"
     else if itemToRemove.amount < amount
       throw "Removing more of an item than exists #{item.type}"
-    itemToRemove -= amount
+    itemToRemove.set 'amount', itemToRemove.amount - amount
 
 
 module.exports = Player
