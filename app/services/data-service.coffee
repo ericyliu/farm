@@ -33,7 +33,12 @@ module.exports =
 
   createCrop: (id) -> create id, 'crops'
 
-  createItem: (id, amount, quality) -> new Item (type: id, amount: amount, quality: quality)
+  createItem: (id, amount, quality) -> new Item (
+    type: id
+    amount: amount
+    quality: quality
+    price: data.items[id].price
+  )
 
   isItemFertilizer: (item) -> data.items[item.type].fertilizer
 

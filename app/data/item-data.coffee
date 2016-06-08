@@ -8,6 +8,7 @@ module.exports =
   goatManure:
     fertilizer: true
     nutrients: nitrogen: 5
+    price: 5
 
   grass:
     food: true
