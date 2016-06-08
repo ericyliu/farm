@@ -43,7 +43,7 @@ module.exports =
 
   listeners: ->
     'model/Game/attributesUpdated': @updateTime
-    'model/Plyaer/attributesUpdated': @updateMoney
+    'model/Player/attributesUpdated': @updateMoney
 
 
   updateAttributes: (game) ->

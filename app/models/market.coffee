@@ -1,4 +1,5 @@
 Base = require 'models/base.coffee'
+EventBus = require 'util/event-bus.coffee'
 
 class Market extends Base
 
@@ -8,7 +9,7 @@ class Market extends Base
 
   spec: () ->
     _className: 'Market'
-    
+
     listings: []
     # private
 
@@ -16,8 +17,8 @@ class Market extends Base
   addListings: (listings) ->
     _.map listings, (listing) =>
       @listings.push listing
+      EventBus.trigger 'model/Market/listingAdded', listing
       #todo needs dedupe logic
-    @set 'listings', @listings
 
 
 module.exports = Market

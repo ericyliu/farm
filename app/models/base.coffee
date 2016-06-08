@@ -5,11 +5,12 @@ _ = require 'lodash'
 class ModelBase
   constructor: (options) ->
     @id = IdService.get()
-    _.map @spec(), (value, key) => @set key, value
-    _.map options, (value, key) => @set key, value if value?
+    _.map @spec(), (value, key) => @[key] = value
+    _.map options, (value, key) => @[key] = value if value?
 
 
   set: (key, value) ->
+    console.error "#{key} not in spec" unless _.includes _.keys(@spec()), key
     @[key] = value
     if not @_className?
       throw "model does not have _className defined"
