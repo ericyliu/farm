@@ -12,6 +12,10 @@ class CommandLineController
     window.Farm.gameController
 
 
+  listEventBusEvents: ->
+    _.keys require('util/event-bus.coffee').registeredEvents
+
+
   save: ->
     @gameController.saveGame()
 

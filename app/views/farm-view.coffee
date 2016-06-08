@@ -13,12 +13,12 @@ module.exports =
 
 
   listeners: ->
-    'farm/fieldUpdated': @updateField
-    'farm/animalAdded': @addAnimal
-    'farm/animalRemoved': @removeAnimal
-    'tile/attributesUpdated': @updateTile
-    'crop/attributesUpdated': @updateCrop
-    'animal/attributesUpdated': @updateAnimal
+    'model/Farm/fieldUpdated': @updateField
+    'model/Farm/animalAdded': @addAnimal
+    'model/Farm/animalRemoved': @removeAnimal
+    'model/Tile/attributesUpdated': @updateTile
+    'model/Crop/attributesUpdated': @updateCrop
+    'model/Animal/attributesUpdated': @updateAnimal
 
 
   updateField: (tiles) ->

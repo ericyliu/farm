@@ -6,8 +6,8 @@ window.peek = (thing) ->
 
 # Initialize Game
 GameController = require 'controllers/game-controller.coffee'
-gameController = new GameController()
-updateGame = -> gameController.update()
+window.Farm = gameController: new GameController()
+updateGame = -> window.Farm.gameController.update()
 window.Farm.gameUpdateLoop = setInterval updateGame, 1000
 
 

@@ -5,6 +5,7 @@ views = [
   require 'views/inventory-view.coffee'
   require 'views/farm-view.coffee'
   require 'views/tile-menu-view.coffee'
+  require 'views/market-view.coffee'
 ]
 
 module.exports =

@@ -10,9 +10,9 @@ module.exports =
 
 
   listeners: ->
-    'player/itemAdded': @addItem
-    'player/itemRemoved': @removeItem
-    'item/attributesUpdated': @updateItem
+    'model/Player/itemAdded': @addItem
+    'model/Player/itemRemoved': @removeItem
+    'model/Item/attributesUpdated': @updateItem
 
 
   updateItems: (items) ->
