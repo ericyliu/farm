@@ -1,5 +1,5 @@
 IdService = require 'services/id-service.coffee'
-EventBus = require 'services/event-bus.coffee'
+EventBus = require 'util/event-bus.coffee'
 _ = require 'lodash'
 
 class ModelBase

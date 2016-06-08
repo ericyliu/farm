@@ -1,3 +1,5 @@
+EventBus = require 'util/event-bus.coffee'
+
 views = [
   require 'views/hud-view.coffee'
   require 'views/inventory-view.coffee'
@@ -8,18 +10,12 @@ views = [
 module.exports =
 
   start: ->
-    window.FarmEventService.register 'game/onViewConnected', @onConnected, @
+    EventBus.register 'game/onViewConnected', @onConnected, @
     @tryConnectionInterval = setInterval (->
-      window.FarmEventService.trigger 'game/onViewConnect'
+      EventBus.trigger 'game/onViewConnect'
     ), 1000
 
 
   onConnected: (data) ->
     clearInterval @tryConnectionInterval
-    # game = JSON.parse data
     _.map views, (view) => view.start? data, @
-
-
-  registerListeners: (listeners, context) ->
-    _.map listeners, (fn, event) ->
-      window.FarmEventService.register event, fn, context

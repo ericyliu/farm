@@ -13,6 +13,10 @@ module.exports =
     @registeredEvents[event].push _.bind callback, context
 
 
+  registerMany: (listeners, context) ->
+    _.map listeners, (callback, event) => @register event, callback, context
+
+
   trigger: (event, data, shouldStripSubModels = true) ->
     @log "Triggering event: #{event}"
     @log data if data?
@@ -20,8 +24,6 @@ module.exports =
     unless @registeredEvents[event]?
       console.info "Triggering event that has no registered callbacks: #{event}"
     _.map @registeredEvents[event], (callback) ->
-      console.log event
-      console.log data
       if serializedData? then callback (JSON.parse serializedData) else callback()
 
 

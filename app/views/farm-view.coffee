@@ -1,14 +1,15 @@
 $ = require 'jquery'
+EventBus = require 'util/event-bus.coffee'
 TileMenuView = require 'views/tile-menu-view.coffee'
 
 module.exports =
 
-  start: (game, ViewService) ->
+  start: (game) ->
     @fieldDom = $ '#Farm .field'
     @penDom = $ '#Farm .pen'
     @updateField game.player.farm.tiles
     @updatePen game.player.farm.animals
-    ViewService.registerListeners @listeners(), @
+    EventBus.registerMany @listeners(), @
 
 
   listeners: ->
@@ -62,4 +63,4 @@ createCropDom = (crop) ->
 
 
 createAnimalDom = (animal) ->
-  animalDom = $ "<div class='animal #{animal.type}' id='#{animal.id}'>#{animal.type}</div>"
+  animalDom = $ "<div class='animal #{animal.type}' id='#{animal.id}'></div>"

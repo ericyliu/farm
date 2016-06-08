@@ -5,7 +5,7 @@ Game = require 'models/game.coffee'
 MarketListing = require 'models/market-listing.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
-EventBus = require 'services/event-bus.coffee'
+EventBus = require 'util/event-bus.coffee'
 
 class GameController
 

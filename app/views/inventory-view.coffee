@@ -1,11 +1,12 @@
 $ = require 'jquery'
+EventBus = require 'util/event-bus.coffee'
 
 module.exports =
 
-  start: (game, ViewService) ->
+  start: (game) ->
     @inventoryDom = $ '#Inventory'
     @updateItems game.player.items
-    ViewService.registerListeners @listeners(), @
+    EventBus.registerMany @listeners(), @
 
 
   listeners: ->
