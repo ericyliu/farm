@@ -13,7 +13,7 @@ class ModelBase
     @[key] = value
     if not @_className?
       throw "model does not have _className defined"
-    EventBus.trigger("model/#{@_className}/#{@id}", @)
+    EventBus.trigger("model/#{@_className}/attributesUpdated", @)
 
 
   spec: () ->
