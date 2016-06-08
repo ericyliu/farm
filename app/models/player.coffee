@@ -8,12 +8,13 @@ class Player extends Base
 
 
   spec: () ->
+    _className: 'Player'
+
     name: null
     farm: null
     money: 0
     items: {}
     # private
-    _className: 'Player'
 
 
   addItem: (item) ->

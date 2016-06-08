@@ -6,10 +6,11 @@ class Farm extends Base
     super(options)
 
   spec: () ->
+    _className: 'Farm'
+    
     animals: []
     tiles: []
     #private
-    _className: 'Farm'
 
 
 module.exports = Farm

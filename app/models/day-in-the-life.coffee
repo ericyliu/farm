@@ -7,10 +7,11 @@ class DayInTheLife extends Base
 
 
   spec: () ->
+    _className: 'DayInTheLife'
+    
     required_nutrients: null
     given_nutrients: null
     # private
-    _className: 'DayInTheLife'
 
 
   getNetResult: () ->

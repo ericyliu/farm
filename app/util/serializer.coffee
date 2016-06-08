@@ -1,26 +1,30 @@
 _ = require 'lodash'
 
-class Serializer
+Serializer =
 
   ###
   Serializes an object to sent to the ui. This serializes everything except
   child model classes
   ###
   serialize: (object) ->
-    objectToSerialize = _.pick object, (value, key) ->
-      isModel = objectIsModel object
-      isModelCollection = _.reduce value, (isModel, subValue) -> isModel or objectIsModel subValue, false
-      not (isModel or isModelCollection)
-    validateThereAreNoModels object
+    objectToSerialize = _.pickBy object, (value, key) ->
+      isObjectModel = objectIsModel value
+      if value instanceof Object
+        reducer = (isModel, subValue) -> isModel or objectIsModel(subValue)
+        isObjectModel = isObjectModel or _.reduce(value, reducer, false)
+      not isObjectModel
+    validateThereAreNoModels objectToSerialize
     JSON.stringify objectToSerialize
 
 
 
-objectIsModel = (object) -> object['_className']?
+objectIsModel = (object) -> object? and object['_className']?
 
 validateThereAreNoModels = (object) ->
   flattened = _.flatMapDeep object
-  _.map flattened (x) ->
+  _.map flattened, (x) ->
     if objectIsModel x
       throw "Serializing a sub model"
       console.log object
+
+module.exports = Serializer

@@ -1,4 +1,7 @@
 IdService = require 'services/id-service.coffee'
+EventBus = require 'services/event-bus.coffee'
+Serializer = require 'util/serializer.coffee'
+_ = require 'lodash'
 
 class ModelBase
   constructor: (options) ->
@@ -9,6 +12,9 @@ class ModelBase
 
   set: (key, value) ->
     @[key] = value
+    if not @_className?
+      throw "model does not have _className defined"
+    EventBus.trigger("model/#{@_className}/#{@id}", Serializer.serialize(@))
 
 
   spec: () ->

@@ -7,9 +7,10 @@ class Market extends Base
 
 
   spec: () ->
+    _className: 'Market'
+    
     listings: []
     # private
-    _className: 'Market'
 
 
   addListings: (listings) ->

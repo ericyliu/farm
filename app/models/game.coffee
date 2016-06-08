@@ -10,12 +10,13 @@ class Game extends Base
 
 
   spec: () ->
+    _className: 'Game'
+    
     name: 'Player 1'
     #private
     player: new Player {name: 'Player 1', farm: new Farm()}
     timeElapsed: 0
     market: new Market()
-    _className: 'Game'
 
 
 module.exports = Game

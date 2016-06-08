@@ -7,10 +7,11 @@ class MarketListing extends Base
 
 
   spec: () ->
+    _className: 'MarketListing'
+    
     item: null
     price: null
     # private
-    _className: 'MarketListing'
 
 
 module.exports = MarketListing

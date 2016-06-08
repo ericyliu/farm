@@ -12,11 +12,12 @@ class Item extends Base
 
 
   spec: () ->
+    _className: 'Item'
+    
     type: null
     amount: 1
     quality: 5
     #private
-    _className: 'Item'
 
 
 module.exports = Item

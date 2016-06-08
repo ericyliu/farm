@@ -2,7 +2,11 @@ Livable = require 'models/livable.coffee'
 
 describe 'Livable', ->
   beforeEach ->
-    @livable = new Livable 'goat', grass: 1, [], child: 3
+    @livable = new Livable
+      id:'goat'
+      dailyNutrientsNeeded:{grass: 1},
+      harvestables: [],
+      lifeStages: {child: 3}
 
   describe 'isAlive', ->
     it 'is alive after 0 days', ->

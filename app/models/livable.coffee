@@ -16,6 +16,8 @@ class Livable extends Base
 
 
   spec: ->
+    _className: 'Livable'
+
     type: null
     dailyNutrientsNeeded: null
     harvestables: null
@@ -23,7 +25,6 @@ class Livable extends Base
     willEat: null
     #private
     lifespan: [] # DayInTheLife[]
-    _className: 'Livable'
     todaysNutrientsGiven: {}
     wasKilled: false
 
