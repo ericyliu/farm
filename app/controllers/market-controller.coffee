@@ -11,10 +11,10 @@ class MarketController
     'controller/Market/sellItem': @sellItem
 
 
-  buyListing: ({item, price}) ->
+  buyListing: (listing) ->
     player = @gameController.game.player
-    player.addItem item
-    player.set 'money', player.money - price
+    player.addItem listing.item
+    player.set 'money', player.money - listing.price
 
 
   sellItem: (item) ->

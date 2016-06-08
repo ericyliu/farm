@@ -17,8 +17,8 @@ module.exports =
     'model/Market/listingRemoved': @removeListing
     'model/Player/itemAdded': @addItem
     'model/Player/itemRemoved': @removeItem
-    'model/listing/attributesUpdated': @updateListing
-    'model/item/attributesUpdated': @updateItem
+    'model/Listing/attributesUpdated': @updateListing
+    'model/Item/attributesUpdated': @updateItem
 
 
   addListing: (listing) ->
@@ -63,7 +63,7 @@ createListingDom = (listing) ->
   rowDom.append buyDom
 
 buyListing = (listing) ->
-  EventBus.trigger 'controller/Market/buyListing', listing
+  EventBus.trigger 'controller/Market/buyListing', listing, false
 
 createMarketSellDom = (items) ->
   rowDoms = _.map items, createItemDom

@@ -21,9 +21,10 @@ class Player extends Base
   addItem: (item) ->
     existingItem = @items[item.type]
     if existingItem?
-      existingItem.amount += item.amount
+      existingItem.set 'amount', existingItem.amount + item.amount
     else
       @items[item.type] = item
+      EventBus.trigger 'model/Player/itemAdded', item
 
 
   removeItem: (item, amount) ->
