@@ -42,7 +42,8 @@ module.exports =
 
 
   listeners: ->
-    'model/Game/attributesUpdated': @updateAttributes
+    'model/Game/attributesUpdated': @updateTime
+    'model/Plyaer/attributesUpdated': @updateMoney
 
 
   updateAttributes: (game) ->
@@ -50,6 +51,15 @@ module.exports =
       createTimeDom game.timeElapsed
       createMoneyDom game.player.money
     ]
+
+
+  updateTime: (game) ->
+    $('#Hud .left .time').html "Time: #{formatTime game.timeElapsed}"
+
+
+  updateMoney: (player) ->
+     $('#Hud .left .money').html "Gold: #{player.money}"
+
 
 
 setPlaybackInfoDom = (playing, speed) ->
