@@ -59,7 +59,11 @@ createListingDom = (listing) ->
     </tr>
   """
   buyDom = $('<td><div class="btn">Buy</div></td>')
+    .on 'click', -> buyListing listing
   rowDom.append buyDom
+
+buyListing = (listing) ->
+  EventBus.trigger 'controller/Market/buyListing', listing
 
 createMarketSellDom = (items) ->
   rowDoms = _.map items, createItemDom
@@ -74,8 +78,12 @@ createItemDom = (item) ->
       <td>#{item.price * item.amount}</td>
     </tr>
   """
-  buyDom = $('<td><div class="btn">Sell</div></td>')
-  rowDom.append buyDom
+  sellDom = $('<td><div class="btn">Sell</div></td>')
+    .on 'click', -> sellItem item
+  rowDom.append sellDom
+
+sellItem = (item) ->
+  EventBus.trigger 'controller/Market/sellItem', item
 
 createHeaderDom = ->
   $ """

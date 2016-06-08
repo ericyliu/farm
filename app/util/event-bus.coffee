@@ -9,7 +9,7 @@ module.exports =
 
   register: (event, callback, context) ->
     @log "Registering callback: #{callback} under event #{event}"
-    @registeredEvents[event] = [] unless @registeredEvents.event?
+    @registeredEvents[event] = [] unless @registeredEvents[event]?
     @registeredEvents[event].push _.bind callback, context
 
 

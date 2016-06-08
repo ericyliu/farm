@@ -1,5 +1,6 @@
-Base = require 'models/base.coffee'
 _ = require 'lodash'
+Base = require 'models/base.coffee'
+EventBus = require 'util/event-bus.coffee'
 
 class Player extends Base
 
@@ -31,7 +32,11 @@ class Player extends Base
       throw "Removing non-existent item #{item.type}"
     else if itemToRemove.amount < amount
       throw "Removing more of an item than exists #{item.type}"
-    itemToRemove.set 'amount', itemToRemove.amount - amount
+    if not amount? or itemToRemove.amount is amount
+      delete @items[item.type]
+      EventBus.trigger 'model/Player/itemRemoved', item
+    else
+      itemToRemove.set 'amount', itemToRemove.amount - amount
 
 
 module.exports = Player

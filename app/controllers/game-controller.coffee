@@ -1,18 +1,22 @@
 DataService = require 'services/data-service.coffee'
-FarmController = require 'controllers/farm-controller.coffee'
-PlayerController = require 'controllers/player-controller.coffee'
 Game = require 'models/game.coffee'
 MarketListing = require 'models/market-listing.coffee'
 Tile = require 'models/tile.coffee'
 Unserializer = require 'util/unserializer.coffee'
 EventBus = require 'util/event-bus.coffee'
 
+FarmController = require 'controllers/farm-controller.coffee'
+PlayerController = require 'controllers/player-controller.coffee'
+MarketController = require 'controllers/market-controller.coffee'
+
 class GameController
 
   constructor: ->
     @game = new Game()
-    @farmController = new FarmController @
-    @playerController = new PlayerController @
+    @controllers =
+      farm: new FarmController @
+      player: new PlayerController @
+      market: new MarketController @
     givePlayerStartingItems @game.player
     populateMarket @game.market
     EventBus.register 'game/onViewConnect', @onViewConnected, @
@@ -21,7 +25,7 @@ class GameController
   update: ->
     return if @paused
     @game.set 'timeElapsed', @game.timeElapsed + 1
-    @farmController.update()
+    @controllers.farm.update()
     if isEndOfDay @game
       @farmController.feedCrops()
       @farmController.feedAnimals()
