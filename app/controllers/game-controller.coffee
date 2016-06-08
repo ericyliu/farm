@@ -29,7 +29,7 @@ class GameController
 
 
   onViewConnected: ->
-    EventBus.trigger 'game/onViewConnected', @game
+    EventBus.trigger 'game/onViewConnected', @game, false
 
 
   getFarm: ->

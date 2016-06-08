@@ -1,6 +1,5 @@
 IdService = require 'services/id-service.coffee'
 EventBus = require 'services/event-bus.coffee'
-Serializer = require 'util/serializer.coffee'
 _ = require 'lodash'
 
 class ModelBase
@@ -14,7 +13,7 @@ class ModelBase
     @[key] = value
     if not @_className?
       throw "model does not have _className defined"
-    EventBus.trigger("model/#{@_className}/#{@id}", Serializer.serialize(@))
+    EventBus.trigger("model/#{@_className}/#{@id}", @)
 
 
   spec: () ->
