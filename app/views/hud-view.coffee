@@ -28,6 +28,9 @@ module.exports =
         label: 'Market'
         method: => $('#Market').show()
       ,
+        label: 'End Day'
+        method: => @endDay()
+      ,
         label: 'Load'
         method: => f.load()
       ,
@@ -46,6 +49,13 @@ module.exports =
     'model/Player/attributesUpdated': @updateMoney
 
 
+  endDay: ->
+    $('#DayEnd').show()
+    $('#DayEnd .previous-day').html "Day - #{@day}, End"
+    $('#DayEnd .next-day').html "Day - #{@day + 1}, Start"
+    setTimeout -> EventBus.trigger 'controller/Game/endDay'
+
+
   updateAttributes: (game) ->
     $('#Hud .left').html [
       createTimeDom game.timeElapsed
@@ -54,6 +64,7 @@ module.exports =
 
 
   updateTime: (game) ->
+    @day = Math.floor(Math.floor(game.timeElapsed / 60) / 24) + 1
     $('#Hud .left .time').html "Time: #{formatTime game.timeElapsed}"
 
 

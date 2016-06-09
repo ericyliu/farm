@@ -19,7 +19,14 @@ class GameController
       market: new MarketController @
     givePlayerStartingItems @game.player
     populateMarket @game
-    EventBus.register 'game/onViewConnect', @onViewConnected, @
+    EventBus.registerMany @listeners(), @
+
+
+  listeners: ->
+    'controller/Game/endDay': @endDay
+    'controller/Game/pause': => @paused = true
+    'controller/Game/unpause': => @paused = false
+    'controller/Game/onViewConnect': @onViewConnected
 
 
   update: ->
@@ -27,13 +34,24 @@ class GameController
     @game.set 'timeElapsed', @game.timeElapsed + 1
     @controllers.farm.update()
     if isEndOfDay @game
-      @farmController.feedCrops()
-      @farmController.feedAnimals()
-      @farmController.handleLivableDays @farmController.getAllLivables()
+      @controllers.farm.feedCrops()
+      @controllers.farm.feedAnimals()
+      @controllers.farm.handleLivableDays @controllers.farm.getAllLivables()
 
 
   onViewConnected: ->
-    EventBus.trigger 'game/onViewConnected', @game
+    EventBus.trigger 'controller/Game/onViewConnected', @game
+
+
+  endDay: ->
+    minutesInDay = 24 * 60
+    day = _.floor @game.timeElapsed / minutesInDay
+    nextDayAt7 = day + ((7 + 24) * 60)
+    minutesUntilNextDayAt7 = nextDayAt7 - @game.timeElapsed
+    for x in [0...minutesUntilNextDayAt7] by 1
+      @update()
+    @paused = true
+    EventBus.trigger 'controller/Game/dayEnded'
 
 
   getFarm: ->

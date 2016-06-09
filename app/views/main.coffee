@@ -6,14 +6,15 @@ views = [
   require 'views/farm-view.coffee'
   require 'views/tile-menu-view.coffee'
   require 'views/market-view.coffee'
+  require 'views/day-end-view.coffee'
 ]
 
 module.exports =
 
   start: ->
-    EventBus.register 'game/onViewConnected', @onConnected, @
+    EventBus.register 'controller/Game/onViewConnected', @onConnected, @
     @tryConnectionInterval = setInterval (->
-      EventBus.trigger 'game/onViewConnect'
+      EventBus.trigger 'controller/Game/onViewConnect'
     ), 1000
 
 
