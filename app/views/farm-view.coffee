@@ -9,6 +9,7 @@ module.exports =
     @penDom = $ '#Farm .pen'
     @tiles = game.player.farm.tiles
     @animals = game.player.farm.animals
+    @animalTrough = game.player.farm.animalTrough
     @updateField @tiles
     @updatePen @animals
     EventBus.registerMany @listeners(), @
@@ -30,14 +31,13 @@ module.exports =
 
 
   updatePen: (animals) ->
-    @penDom.html _.map animals, createAnimalDom
+    @penDom.html _.map animals, (animal) => @createAnimalDom(animal)
 
 
   updateTile: (updatedTile) ->
-    _.map @tiles, (tileRow) ->
-      _.map tileRow, (tile) ->
-        if tile.id == updatedTile.id then updateAttributes updatedTile, tile
-
+    tiles = _.concat _.flatten(@tiles), @animalTrough
+    _.map tiles, (tile) ->
+      if tile.id == updatedTile.id then updateAttributes updatedTile, tile
 
 
   addAnimal: (animal) ->
@@ -74,6 +74,11 @@ module.exports =
       .value()
 
 
+  createAnimalDom: (animal) ->
+    animalDom = $ "<div class='animal #{animal.type}' id='#{animal.id}'>#{animal.type}</div>"
+    animalTrough = @animalTrough
+    animalDom.on 'click', (evt) -> TileMenuView.openTileMenu evt, animalTrough
+
 
 createFieldRowDom = (row) ->
   $("<div class='row'></div>").append _.map row, createTileDom
@@ -87,11 +92,6 @@ createTileDom = (tile) ->
 createCropDom = (crop) ->
   cropClass = "crop #{crop.type} life-stage-#{crop.lifeStage}"
   $ "<div class='#{cropClass}' id='#{crop.id}'></div>"
-
-
-createAnimalDom = (animal) ->
-  animalDom = $ "<div class='animal #{animal.type}' id='#{animal.id}'>#{animal.type}</div>"
-
 
 updateAttributes = (updatedObject, oldObject) ->
   _.map updatedObject, (value, key) ->

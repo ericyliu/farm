@@ -14,6 +14,7 @@ class Farm extends Base
 
     animals: []
     tiles: []
+    @animalTrough = new Tile()
     #private
 
 

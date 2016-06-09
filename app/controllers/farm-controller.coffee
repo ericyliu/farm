@@ -6,7 +6,6 @@ EventBus = require 'util/event-bus.coffee'
 class FarmController
 
   constructor: (@gameController) ->
-    @animalTrough = new Tile()
     EventBus.registerMany @listeners(), @
 
 
@@ -66,7 +65,8 @@ class FarmController
 
   getTileWithId: (tileId) ->
     tiles = _.flatten @gameController.game.player.farm.tiles
-    _.find tiles, (tile) -> tile.id == tileId
+    allTiles = _.concat tiles, @gameController.getFarm().animalTrough
+    _.find allTiles, (tile) -> tile.id == tileId
 
 
   getItemWithId: (itemId) ->
@@ -106,7 +106,7 @@ class FarmController
 
 
   feedAnimals: ->
-    animalTrough = @animalTrough
+    animalTrough = @gameController.getFarm().animalTrough
     _.chain []
       .concat @getAnimals()
       .map (animal) ->
