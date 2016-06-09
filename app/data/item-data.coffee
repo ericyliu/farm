@@ -2,17 +2,17 @@ module.exports =
   dew: {}
 
   grassSeed:
-    plantable: true
+    category: 'plantable'
     livable: 'grass'
 
   goatManure:
-    fertilizer: true
+    category: 'fertilizer'
     nutrients: nitrogen: 5
     price: 5
 
   grass:
-    food: true
+    category: 'food'
 
   wateringCan:
-    fertilizer: true
+    category: 'fertilizer'
     nutrients: water: 3

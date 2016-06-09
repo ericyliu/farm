@@ -40,6 +40,7 @@ module.exports =
     amount: amount
     quality: quality
     price: data.items[id].price
+    category: data.items[id].category
   )
 
   createExpandFarmListing: (farm) ->

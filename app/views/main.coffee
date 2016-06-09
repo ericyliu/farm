@@ -19,4 +19,4 @@ module.exports =
 
   onConnected: (data) ->
     clearInterval @tryConnectionInterval
-    _.map views, (view) => view.start? data, @
+    _.map views, (view) => view.start data, @

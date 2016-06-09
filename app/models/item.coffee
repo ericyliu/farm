@@ -18,6 +18,7 @@ class Item extends Base
     amount: 1
     quality: 5
     price: 1
+    category: 'unspecified_category'
     #private
 
 
