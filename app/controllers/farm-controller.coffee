@@ -1,15 +1,50 @@
 _ = require 'lodash'
 DataService = require 'services/data-service.coffee'
 Tile = require 'models/tile.coffee'
+EventBus = require 'util/event-bus.coffee'
 
 class FarmController
 
   constructor: (@gameController) ->
     @animalTrough = new Tile()
+    EventBus.registerMany @listeners(), @
+
+
+  listeners: ->
+    'action/plant': @onPlant
+    'action/fertilize': @onFertilize
+    'action/feed': @onFeed
+    'action/harvest': @onHarvest
+
+
+  onPlant: (data) ->
+    tile = @getTileWithId data.tileId
+    plant = @getItemWithId data.itemId
+    @plant tile, plant
+
+
+  onFertilize: (data) ->
+    tile = @getTileWithId data.tileId
+    fertilizer = @getItemWithId data.itemId
+    @fertilize tile, fertilizer
+
+
+  onFeed: (data) ->
+    tile = @getTileWithId data.tileId
+    food = @getItemWithId data.itemId
+    @feed tile, food
+
+
+  onHarvest: (data) ->
+    livable = @getLivableWithId data.livableId
+    harvestable = @getItemWithId data.itemId
+    @harvest livable, harvestable
 
 
   plant: (tile, item) ->
-    tile.set 'crop', DataService.itemToCrop item
+    crop = DataService.itemToCrop item
+    tile.set 'crop', crop
+    EventBus.trigger 'model/Farm/cropAdded', tile: tile, crop: crop
     @gameController.game.player.removeItem item, 1
 
 
@@ -26,6 +61,20 @@ class FarmController
   harvest: (livable, harvestable) ->
     livable.harvest harvestable
     @gameController.game.player.addItem DataService.createItem harvestable.type, harvestable.amount
+
+
+  getTileWithId: (tileId) ->
+    tiles = _.flatten @gameController.game.player.farm.tiles
+    _.find tiles, (tile) -> tile.id == tileId
+
+
+  getItemWithId: (itemId) ->
+    items = @gameController.game.player.items
+    _.find items, (item) -> item.id == itemId
+
+
+  getLivableWithId: (livableId) ->
+    _.find @getAllLivables, (livable) -> livable.id == livableId
 
 
   update: ->

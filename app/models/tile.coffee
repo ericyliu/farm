@@ -9,14 +9,13 @@ class Tile extends Base
 
   spec: () ->
     _className: 'Tile'
-      
+
     nutrients: {}
     crop: null
     # private
 
 
   update: ->
-
 
 
   addNutrients: (nutrients) ->

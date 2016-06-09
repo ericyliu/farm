@@ -27,6 +27,14 @@ class Livable extends Base
     lifespan: [] # DayInTheLife[]
     todaysNutrientsGiven: {}
     wasKilled: false
+    lifeStage: 'baby'
+
+
+  # this allows having derived data get sent over to the views
+  set: (key, value) ->
+    lifeStage = @getCurrentLifeStage()
+    super(key, value)
+
 
 
   update: ->
