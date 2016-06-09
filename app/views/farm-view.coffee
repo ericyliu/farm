@@ -18,7 +18,7 @@ module.exports =
   listeners: ->
     'model/Farm/fieldUpdated': @updateField
     'model/Farm/animalAdded': @addAnimal
-    'model/Farm/expanded': @updateField
+    'model/Farm/expanded': @onFarmExpanded
     'model/Tile/attributesUpdated': @updateTile
     'model/Crop/attributesUpdated': @updateLivable
     'model/Animal/attributesUpdated': @updateLivable
@@ -28,6 +28,11 @@ module.exports =
 
   updateField: (tiles) ->
     @fieldDom.html _.map tiles, createFieldRowDom
+
+
+  onFarmExpanded: (tiles) ->
+    @tiles = tiles
+    @updateField @tiles
 
 
   updatePen: (animals) ->
