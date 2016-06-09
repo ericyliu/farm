@@ -17,7 +17,7 @@ class Game extends Base
     name: 'Player 1'
     #private
     player: new Player {name: 'Player 1', farm: new Farm()}
-    timeElapsed: 0
+    timeElapsed: 7 * 60
     market: new Market()
 
 

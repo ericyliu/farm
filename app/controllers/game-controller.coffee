@@ -45,8 +45,8 @@ class GameController
 
   endDay: ->
     minutesInDay = 24 * 60
-    day = _.floor @game.timeElapsed / minutesInDay
-    nextDayAt7 = day + ((7 + 24) * 60)
+    startOfDay = _.floor(@game.timeElapsed / minutesInDay) * minutesInDay
+    nextDayAt7 = startOfDay + ((7 + 24) * 60)
     minutesUntilNextDayAt7 = nextDayAt7 - @game.timeElapsed
     for x in [0...minutesUntilNextDayAt7] by 1
       @update()
