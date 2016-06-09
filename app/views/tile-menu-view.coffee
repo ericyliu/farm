@@ -34,13 +34,13 @@ TileMenuView =
 
 
   updateItem: (item) ->
-    @items[item.id] = item
+    updateAttributes @items[item.id], item
     @update()
 
 
   updateTile: (tile) ->
     if tile.id == @tile.id
-      @tile = tile
+      updateAttributes tile, @tile
       @update()
 
 
@@ -49,13 +49,13 @@ TileMenuView =
     crop = data.crop
     if tile.id == @tile.id
       @tile.crop = crop
-    @update()
+      @update()
 
 
   updateCrop: (crop) ->
     if @tile.crop.id == crop.id
-      @tile.crop = crop
-    @update()
+      updateAttributes crop, @tile.crop
+      @update()
 
 
   updateHarvestable: (updatedHarvestable) ->
