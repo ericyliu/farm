@@ -16,6 +16,7 @@ module.exports =
     'model/Farm/fieldUpdated': @updateField
     'model/Farm/animalAdded': @addAnimal
     'model/Farm/animalRemoved': @removeAnimal
+    'model/Farm/expanded': @updateField
     'model/Tile/attributesUpdated': @updateTile
     'model/Crop/attributesUpdated': @updateCrop
     'model/Animal/attributesUpdated': @updateAnimal

@@ -17,7 +17,7 @@ module.exports =
     _.map listeners, (callback, event) => @register event, callback, context
 
 
-  trigger: (event, data, shouldStripSubModels = true) ->
+  trigger: (event, data, shouldStripSubModels) ->
     @log "Triggering event: #{event}"
     @log data if data?
     serializedData = if data? then Serializer.serialize(data, shouldStripSubModels) else null

@@ -8,8 +8,9 @@ class MarketListing extends Base
 
   spec: () ->
     _className: 'MarketListing'
-    
+
     item: null
+    type: 'item'
     price: null
     # private
 

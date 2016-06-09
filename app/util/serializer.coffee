@@ -6,7 +6,7 @@ Serializer =
   Serializes an object to sent to the ui. This serializes everything except
   child model classes
   ###
-  serialize: (object, shouldStripSubModels = true) ->
+  serialize: (object, shouldStripSubModels) ->
     if not shouldStripSubModels then return JSON.stringify object
     objectToSerialize = _.pickBy object, (value, key) ->
       isObjectModel = objectIsModel value

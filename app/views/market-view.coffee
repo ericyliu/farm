@@ -46,18 +46,30 @@ module.exports =
 
 
 createMarketBuyDom = (listings) ->
-  rowDoms = _.map listings, createListingDom
-  _.concat [createHeaderDom()], rowDoms
+  listingDoms = _.map listings, createListingDom
+  _.concat [createHeaderDom()], listingDoms
 
 createListingDom = (listing) ->
-  rowDom = $ """
-    <tr class='listing' id='#{listing.id}'>
+  rowDom = $ "<tr class='listing' id='#{listing.id}'>"
+  if listing.type is 'item'
+    rowDom.append """
       <td>#{listing.item.type}</td>
       <td>#{listing.item.amount}</td>
       <td>#{listing.item.quality}</td>
-      <td>#{listing.price}</td>
-    </tr>
-  """
+    """
+  else if listing.type is 'expandFarm'
+    rowDom.append """
+      <td>Expand Your Farm</td>
+      <td></td>
+      <td></td>
+    """
+  else
+    rowDom.append """
+      <td>#{listing.type}</td>
+      <td></td>
+      <td></td>
+    """
+  rowDom.append "<td>#{listing.price}</td>"
   buyDom = $('<td><div class="btn">Buy</div></td>')
     .on 'click', -> buyListing listing
   rowDom.append buyDom
@@ -66,8 +78,8 @@ buyListing = (listing) ->
   EventBus.trigger 'controller/Market/buyListing', listing, false
 
 createMarketSellDom = (items) ->
-  rowDoms = _.map items, createItemDom
-  _.concat [createHeaderDom()], rowDoms
+  itemDoms = _.map items, createItemDom
+  _.concat [createHeaderDom()], itemDoms
 
 createItemDom = (item) ->
   rowDom = $ """

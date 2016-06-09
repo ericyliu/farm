@@ -1,4 +1,5 @@
 EventBus = require 'util/event-bus.coffee'
+DataService = require 'services/data-service.coffee'
 
 class MarketController
 
@@ -13,7 +14,14 @@ class MarketController
 
   buyListing: (listing) ->
     player = @gameController.game.player
-    player.addItem listing.item
+    market = @gameController.game.market
+    return if player.money < listing.price
+    if listing.type is 'item'
+      player.addItem listing.item
+    else if listing.type is 'expandFarm'
+      player.farm.expand()
+      market.removeListing listing
+      market.addListing DataService.createExpandFarmListing player.farm
     player.set 'money', player.money - listing.price
 
 

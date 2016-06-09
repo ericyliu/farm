@@ -18,7 +18,7 @@ class GameController
       player: new PlayerController @
       market: new MarketController @
     givePlayerStartingItems @game.player
-    populateMarket @game.market
+    populateMarket @game
     EventBus.register 'game/onViewConnect', @onViewConnected, @
 
 
@@ -33,7 +33,7 @@ class GameController
 
 
   onViewConnected: ->
-    EventBus.trigger 'game/onViewConnected', @game, false
+    EventBus.trigger 'game/onViewConnected', @game
 
 
   getFarm: ->
@@ -79,7 +79,8 @@ givePlayerStartingItems = (player) ->
 isEndOfDay = (game) ->
   return game.timeElapsed != 0 and game.timeElapsed % (60 * 24) == 0
 
-populateMarket = (market) ->
-  market.addListings [
+populateMarket = (game) ->
+  game.market.addListings [
     new MarketListing item: DataService.createItem('grassSeed', 3), price: 10
+    new MarketListing DataService.createExpandFarmListing game.player.farm
   ]
