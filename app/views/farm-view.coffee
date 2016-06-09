@@ -17,12 +17,12 @@ module.exports =
   listeners: ->
     'model/Farm/fieldUpdated': @updateField
     'model/Farm/animalAdded': @addAnimal
-    'model/Farm/animalRemoved': @removeAnimal
     'model/Farm/expanded': @updateField
     'model/Tile/attributesUpdated': @updateTile
     'model/Crop/attributesUpdated': @updateLivable
     'model/Animal/attributesUpdated': @updateLivable
     'model/Farm/cropAdded': @addCrop
+    'model/Harvestable/attributesUpdated': @updateHarvestable
 
 
   updateField: (tiles) ->
@@ -34,25 +34,20 @@ module.exports =
 
 
   updateTile: (updatedTile) ->
-    newTiles = _.map @tiles, (tileRow) ->
+    _.map @tiles, (tileRow) ->
       _.map tileRow, (tile) ->
-        if tile.id == updatedTile.id then updatedTile else tile
+        if tile.id == updatedTile.id then updateAttributes updatedTile, tile
 
-    @tiles = newTiles
 
 
   addAnimal: (animal) ->
     @penDom.append createAnimalDom animal
 
 
-  removeAnimal: (animal) ->
-    @penDom.find(".animal ##{animal.id}").remove()
-
-
   updateLivable: (livable) ->
     _ @tiles
       .flatten()
-      .map (tile) -> if tile.crop.id = livable.id then tile.crop = livable
+      .map (tile) -> if tile.crop.id = livable.id then updateAttributes livable, tile.crop
       .value()
 
 
@@ -65,6 +60,19 @@ module.exports =
       .map (tile) -> tile.crop = crop
       .value()
     @updateField @tiles
+
+
+  updateHarvestable: (updatedHarvestable) ->
+    _ @tiles
+      .flatten()
+      .filter (tile) ->
+        tile.crop? and tile.crop.harvestables?
+      .map (tile) ->
+        _.map tile.crop.harvestables, (harvestable) ->
+          if harvestable.id == updatedHarvestable.id
+            updateAttributes updatedHarvestable, harvestable
+      .value()
+
 
 
 createFieldRowDom = (row) ->
@@ -83,3 +91,8 @@ createCropDom = (crop) ->
 
 createAnimalDom = (animal) ->
   animalDom = $ "<div class='animal #{animal.type}' id='#{animal.id}'>#{animal.type}</div>"
+
+
+updateAttributes = (updatedObject, oldObject) ->
+  _.map updatedObject, (value, key) ->
+    oldObject[key] = value

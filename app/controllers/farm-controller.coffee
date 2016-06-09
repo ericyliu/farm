@@ -37,7 +37,8 @@ class FarmController
 
   onHarvest: (data) ->
     livable = @getLivableWithId data.livableId
-    harvestable = @getItemWithId data.itemId
+    harvestable = _.find livable.harvestables, (harvestable) ->
+      harvestable.id == data.harvestableId
     @harvest livable, harvestable
 
 
@@ -74,7 +75,8 @@ class FarmController
 
 
   getLivableWithId: (livableId) ->
-    _.find @getAllLivables, (livable) -> livable.id == livableId
+    _.find @getAllLivables(), (livable) ->
+      livable.id == livableId
 
 
   update: ->

@@ -20,6 +20,7 @@ TileMenuView =
     'model/Tile/attributesUpdated': @updateTile
     'model/Farm/cropAdded': @addCrop
     'model/Farm/cropUpdated': @updateCrop
+    'model/Harvestable/attributesUpdated': @updateHarvestable
 
 
   addItem: (item) ->
@@ -48,12 +49,22 @@ TileMenuView =
     crop = data.crop
     if tile.id == @tile.id
       @tile.crop = crop
+    @update()
 
 
   updateCrop: (crop) ->
-    debugger
     if @tile.crop.id == crop.id
       @tile.crop = crop
+    @update()
+
+
+  updateHarvestable: (updatedHarvestable) ->
+    return if not @tile? or not @tile.crop?
+    _.map @tile.crop.harvestables, (harvestable) ->
+      if harvestable.id == updatedHarvestable.id
+        updateAttributes updatedHarvestable, harvestable
+    @update()
+
 
 
   setup: ->
@@ -82,7 +93,7 @@ TileMenuView =
 
 
   addItem: (item) ->
-    @items.push item
+    @items[item.id] = item
 
 
 repositionMenu = (evt) ->
@@ -143,7 +154,7 @@ getFoodMenu = (tile, items) ->
   _.concat foodMenuDom, foodDoms
 
 harvest = (crop, harvestable) ->
-  EventBus.trigger('action/harvest', {tileId: tile.id, itemId: item.id})
+  EventBus.trigger('action/harvest', {livableId: crop.id, harvestableId: harvestable.id})
 
 plant = (tile, item) ->
   EventBus.trigger('action/plant', {tileId: tile.id, itemId: item.id})
@@ -154,5 +165,8 @@ fertilize = (tile, item) ->
 feed = (tile, item) ->
   EventBus.trigger('action/feed', {tileId: tile.id, itemId: item.id})
 
+updateAttributes = (updatedObject, oldObject) ->
+  _.map updatedObject, (value, key) ->
+    oldObject[key] = value
 
 module.exports = TileMenuView

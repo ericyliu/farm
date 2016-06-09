@@ -141,7 +141,7 @@ class Livable extends Base
 updateHarvestables = (harvestables) ->
   _.map harvestables, (harvestable) ->
     return unless harvestable?.maxCooldown and harvestable.cooldown > 0
-    harvestable.cooldown -= 1
+    harvestable.set 'cooldown', harvestable.cooldown - 1
 
 
 module.exports = Livable
