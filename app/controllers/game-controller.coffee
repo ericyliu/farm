@@ -70,7 +70,7 @@ class GameController
   loadGame: ->
     savedState = JSON.parse localStorage.getItem "game-save"
     @game = (new Unserializer()).unserialize savedState
-    EventBus.trigger 'game/load'
+    EventBus.trigger 'game/load', @game
 
 
 module.exports = GameController

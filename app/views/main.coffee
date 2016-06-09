@@ -1,4 +1,5 @@
 EventBus = require 'util/event-bus.coffee'
+$ = require 'jquery'
 
 views = [
   require 'views/hud-view.coffee'
@@ -16,6 +17,15 @@ module.exports =
     @tryConnectionInterval = setInterval (->
       EventBus.trigger 'controller/Game/onViewConnect'
     ), 1000
+    EventBus.register 'game/load', @onLoad, @
+    @initialHtml = $('body').html()
+
+
+  onLoad: (data) ->
+    $('body').html @initialHtml
+    # need to remove event listeners...
+    onConnected(data)
+
 
 
   onConnected: (data) ->
