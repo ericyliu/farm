@@ -30,15 +30,9 @@ class Livable extends Base
     lifeStage: 'baby'
 
 
-  # this allows having derived data get sent over to the views
-  set: (key, value) ->
-    lifeStage = @getCurrentLifeStage()
-    super(key, value)
-
-
-
   update: ->
     updateHarvestables @harvestables
+    @getCurrentLifeStage()
 
 
   getHarvestsReady: ->
@@ -124,14 +118,19 @@ class Livable extends Base
   @return string - the current life stage of a livable
   ###
   getCurrentLifeStage: () ->
-    if not @isAlive() then return 'death'
-    age = @getAge()
-    reducer = (result, lifeStageLength, lifeStage) ->
-      if lifeStageLength <= age
-        return lifeStage
-      else
-        result
-    _.reduce @lifeStages, reducer, 'baby'
+    if not @isAlive()
+      lifeStage = 'death'
+    else
+      age = @getAge()
+      reducer = (result, lifeStageLength, lifeStage) ->
+        if lifeStageLength <= age
+          return lifeStage
+        else
+          result
+      lifeStage = _.reduce @lifeStages, reducer, 'baby'
+    if lifeStage != @lifeStage
+      @set 'lifeStage', lifeStage
+    lifeStage
 
 
   getRequiredNutrientIds: () ->

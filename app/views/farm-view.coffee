@@ -20,8 +20,7 @@ module.exports =
     'model/Farm/animalAdded': @addAnimal
     'model/Farm/expanded': @onFarmExpanded
     'model/Tile/attributesUpdated': @updateTile
-    'model/Crop/attributesUpdated': @updateLivable
-    'model/Animal/attributesUpdated': @updateLivable
+    'model/Livable/attributesUpdated': @updateLivable
     'model/Farm/cropAdded': @addCrop
     'model/Harvestable/attributesUpdated': @updateHarvestable
 
@@ -52,8 +51,9 @@ module.exports =
   updateLivable: (livable) ->
     _ @tiles
       .flatten()
-      .map (tile) -> if tile.crop.id = livable.id then updateAttributes livable, tile.crop
+      .map (tile) -> if tile.crop? and tile.crop.id = livable.id then updateAttributes livable, tile.crop
       .value()
+    @updateField @tiles
 
 
   addCrop: (data) ->
