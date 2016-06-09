@@ -4,7 +4,7 @@ Serializer = require 'util/serializer.coffee'
 module.exports =
 
   registeredEvents: {}
-  shouldDebug: true
+  shouldDebug: false
 
 
   register: (event, callback, context) ->

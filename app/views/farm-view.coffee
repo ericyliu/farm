@@ -45,6 +45,9 @@ module.exports =
     @penDom.append createAnimalDom animal
 
 
+  removeAnimal: (animal) ->
+    @penDom.find(".animal ##{animal.id}").remove()
+
 
   updateLivable: (livable) ->
     _ @tiles
