@@ -21,8 +21,8 @@ module.exports =
     @log "Triggering event: #{event}"
     @log data if data?
     serializedData = if data? then Serializer.serialize(data, shouldStripSubModels) else null
-    # unless @registeredEvents[event]?
-      # console.info "Triggering event that has no registered callbacks: #{event}"
+    unless @registeredEvents[event]?
+      console.info "Triggering event that has no registered callbacks: #{event}"
     # debugger
     _.map @registeredEvents[event], (callback) ->
       if serializedData? then callback (JSON.parse serializedData) else callback()
