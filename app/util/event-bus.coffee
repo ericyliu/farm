@@ -28,6 +28,9 @@ module.exports =
       if serializedData? then callback (JSON.parse serializedData) else callback()
 
 
+  clearListeners: () ->
+    @registeredEvents = {}
+
 
   debug: (shouldDebug) ->
     @shouldDebug = shouldDebug

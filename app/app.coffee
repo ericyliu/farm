@@ -7,6 +7,7 @@ window.peek = (thing) ->
 # Initialize View
 require('views/main.coffee').start()
 
+debugger
 
 # Initialize Game
 GameController = require 'controllers/game-controller.coffee'

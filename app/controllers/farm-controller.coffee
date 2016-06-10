@@ -6,7 +6,7 @@ EventBus = require 'util/event-bus.coffee'
 class FarmController
 
   constructor: (@gameController) ->
-    EventBus.registerMany @listeners(), @
+    @registerListeners()
 
 
   listeners: ->
@@ -14,6 +14,10 @@ class FarmController
     'action/fertilize': @onFertilize
     'action/feed': @onFeed
     'action/harvest': @onHarvest
+
+
+  registerListeners: () ->
+    EventBus.registerMany @listeners(), @
 
 
   onPlant: (data) ->

@@ -19,7 +19,7 @@ class GameController
       market: new MarketController @
     givePlayerStartingItems @game.player
     populateMarket @game
-    EventBus.registerMany @listeners(), @
+    @registerListeners()
 
 
   listeners: ->
@@ -27,6 +27,10 @@ class GameController
     'controller/Game/pause': => @paused = true
     'controller/Game/unpause': => @paused = false
     'controller/Game/onViewConnect': @onViewConnected
+
+
+  registerListeners: () ->
+    EventBus.registerMany @listeners(), @
 
 
   update: ->
@@ -68,9 +72,13 @@ class GameController
 
 
   loadGame: ->
+    EventBus.trigger 'game/load', @game
+    EventBus.clearListeners()
     savedState = JSON.parse localStorage.getItem "game-save"
     @game = (new Unserializer()).unserialize savedState
-    EventBus.trigger 'game/load', @game
+    @registerListeners()
+    _.map @controllers, (controller) -> controller.registerListeners()
+
 
 
 module.exports = GameController

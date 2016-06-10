@@ -4,12 +4,15 @@ DataService = require 'services/data-service.coffee'
 class MarketController
 
   constructor: (@gameController) ->
-    EventBus.registerMany @listeners(), @
-
+    @registerListeners()
 
   listeners: ->
     'controller/Market/buyListing': @buyListing
     'controller/Market/sellItem': @sellItem
+
+
+  registerListeners: () ->
+    EventBus.registerMany @listeners(), @
 
 
   buyListing: (listing) ->
