@@ -5,12 +5,9 @@ EventBus = require 'util/event-bus.coffee'
 
 TileMenuView =
 
-  start: (game) ->
+  start: ->
     @items = {}
-    _.map game.player.items, (item) =>
-      @items[item.id] = item
     EventBus.registerMany @listeners(), @
-    @setup()
 
 
   listeners: ->
@@ -21,6 +18,13 @@ TileMenuView =
     'model/Farm/cropAdded': @addCrop
     'model/Farm/cropUpdated': @updateCrop
     'model/Harvestable/attributesUpdated': @updateHarvestable
+
+
+  load: (game) ->
+    @items = {}
+    _.map game.player.items, (item) =>
+      @items[item.id] = item
+    @setup()
 
 
   addItem: (item) ->

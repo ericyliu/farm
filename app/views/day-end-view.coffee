@@ -4,13 +4,16 @@ EventBus = require 'util/event-bus.coffee'
 
 module.exports =
 
-  start: (game) ->
-    @time = game.timeElapsed
+  start: ->
     EventBus.registerMany @listeners(), @
 
 
   listeners: ->
     'controller/Game/dayEnded': @endDay
+
+
+  load: (game) ->
+    @time = game.timeElapsed
 
 
   endDay: (minutes) ->

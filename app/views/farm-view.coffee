@@ -4,14 +4,9 @@ EventBus = require 'util/event-bus.coffee'
 
 module.exports =
 
-  start: (game) ->
+  start: ->
     @fieldDom = $ '#Farm .field'
     @penDom = $ '#Farm .pen'
-    @tiles = game.player.farm.tiles
-    @animals = game.player.farm.animals
-    @animalTrough = game.player.farm.animalTrough
-    @updateField @tiles
-    @updatePen @animals
     EventBus.registerMany @listeners(), @
 
 
@@ -23,6 +18,14 @@ module.exports =
     'model/Livable/attributesUpdated': @updateLivable
     'model/Farm/cropAdded': @addCrop
     'model/Harvestable/attributesUpdated': @updateHarvestable
+
+
+  load: (game) ->
+    @tiles = game.player.farm.tiles
+    @animals = game.player.farm.animals
+    @animalTrough = game.player.farm.animalTrough
+    @updateField @tiles
+    @updatePen @animals
 
 
   updateField: (tiles) ->

@@ -5,6 +5,7 @@ EventBus = require 'util/event-bus.coffee'
 module.exports =
 
   start: (game) ->
+    EventBus.registerMany @listeners(), @
     playbackButtons = [
         label: '||'
         method: =>
@@ -37,16 +38,18 @@ module.exports =
         label: 'Save'
         method: => f.save()
     ]
-    @playSpeed = 1
-    setPlaybackInfoDom true, 1
     $('#Hud .right').append createButtonDoms playbackButtons
-    @updateAttributes game
-    EventBus.registerMany @listeners(), @
 
 
   listeners: ->
     'model/Game/attributesUpdated': @updateTime
     'model/Player/attributesUpdated': @updateMoney
+
+
+  load: (game) ->
+    @playSpeed = 1
+    setPlaybackInfoDom true, 1
+    @updateAttributes game
 
 
   endDay: ->

@@ -3,9 +3,8 @@ EventBus = require 'util/event-bus.coffee'
 
 module.exports =
 
-  start: (game) ->
+  start: ->
     @inventoryDom = $ '#Inventory'
-    @updateItems game.player.items
     EventBus.registerMany @listeners(), @
 
 
@@ -13,6 +12,10 @@ module.exports =
     'model/Player/itemAdded': @addItem
     'model/Player/itemRemoved': @removeItem
     'model/Item/attributesUpdated': @updateItem
+
+
+  load: (game) ->
+    @updateItems game.player.items
 
 
   updateItems: (items) ->

@@ -4,11 +4,9 @@ EventBus = require 'util/event-bus.coffee'
 
 module.exports =
 
-  start: (game) ->
+  start: ->
     @marketDom = $ '#Market'
     @marketDom.find('.close').on 'click', => $('#Market').hide()
-    @marketDom.find('table.buy').html createMarketBuyDom game.market.listings
-    @marketDom.find('table.sell').html createMarketSellDom game.player.items
     EventBus.registerMany @listeners(), @
 
 
@@ -19,6 +17,11 @@ module.exports =
     'model/Player/itemRemoved': @removeItem
     'model/Listing/attributesUpdated': @updateListing
     'model/Item/attributesUpdated': @updateItem
+
+
+  load: (game) ->
+    @marketDom.find('table.buy').html createMarketBuyDom game.market.listings
+    @marketDom.find('table.sell').html createMarketSellDom game.player.items
 
 
   addListing: (listing) ->
