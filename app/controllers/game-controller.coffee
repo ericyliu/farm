@@ -92,6 +92,8 @@ givePlayerStartingItems = (player) ->
     DataService.createItem 'goatManure', 5
     DataService.createItem 'wateringCan', 5
     DataService.createItem 'grass', 5
+    DataService.createItem 'turnipSeed', 5
+    DataService.createItem 'fumonoFertilizer', 10
   ]
   _.map startItems, (item) ->
     player.addItem item
