@@ -4,7 +4,8 @@ EventBus = require 'util/event-bus.coffee'
 module.exports =
 
   start: ->
-    @inventoryDom = $ '#Inventory'
+    @itemsDom = $ '#Inventory .items'
+    $('#Inventory a.btn.inventory-icon').click toggleInventory
     EventBus.registerMany @listeners(), @
 
 
@@ -19,20 +20,23 @@ module.exports =
 
 
   updateItems: (items) ->
-    @inventoryDom.html _.map items, (item) -> createItemDom item
+    @itemsDom.html _.map items, (item) -> createItemDom item
 
 
   addItem: (item) ->
-    @inventoryDom.append createItemDom item
+    @itemsDom.append createItemDom item
 
 
   removeItem: (item) ->
-    @inventoryDom.find(".item##{item.id}").remove()
+    @itemsDom.find(".item##{item.id}").remove()
 
 
   updateItem: (item) ->
-    @inventoryDom.find(".item##{item.id}").replaceWith createItemDom item
+    @itemsDom.find(".item##{item.id}").replaceWith createItemDom item
 
+
+toggleInventory = ->
+  $('#Inventory').hide()
 
 createItemDom = (item) ->
-  $ "<div class='item #{item.type}' id='#{item.id}'>#{item.type} - #{item.amount} - #{item.quality}</div>"
+  $ "<div class='item #{item.type}' id='#{item.id}'>#{item.type}, q#{item.quality} - x#{item.amount}</div>"

@@ -13,7 +13,7 @@ TileMenuView =
   listeners: ->
     'model/Player/itemAdded': @addItem
     'model/Player/itemRemoved': @removeItem
-    'model/Item/attributesUpdated': @updateItem
+    'model/Item/attributesUpdated': @addItem
     'model/Tile/attributesUpdated': @updateTile
     'model/Farm/cropAdded': @addCrop
     'model/Farm/cropUpdated': @updateCrop
@@ -34,11 +34,6 @@ TileMenuView =
 
   removeItem: (item) ->
     delete @items[item.id]
-    @update()
-
-
-  updateItem: (item) ->
-    updateAttributes @items[item.id], item
     @update()
 
 
@@ -94,10 +89,6 @@ TileMenuView =
   hideTileMenu: ->
     @open = false
     $('#Farm .tile-menu').css 'visibility', 'hidden'
-
-
-  addItem: (item) ->
-    @items[item.id] = item
 
 
 repositionMenu = (evt) ->

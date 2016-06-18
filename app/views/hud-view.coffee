@@ -35,8 +35,7 @@ module.exports =
         label: 'Load'
         method: => f.load()
     ]
-    $('#Hud a.btn.main-btn.settings-icon').click toggleSettings
-    $('#Hud .settings a.btn.main-btn.close-icon').click toggleSettings
+    setHudButtons()
     $('#Hud .settings .buttons').append createButtonDoms playbackButtons
 
 
@@ -52,10 +51,11 @@ module.exports =
 
 
   endDay: ->
+    toggleSettings()
     $('#DayEnd').show()
     $('#DayEnd .previous-day').html "Day - #{@day}, End"
     $('#DayEnd .next-day').html "Day - #{@day + 1}, Start"
-    setTimeout -> EventBus.trigger 'controller/Game/endDay'
+    setTimeout (-> EventBus.trigger 'controller/Game/endDay'), 100
 
 
   updateAttributes: (game) ->
@@ -74,8 +74,25 @@ module.exports =
      $('#Hud .status .money').html "#{player.money}"
 
 
+setHudButtons = ->
+  $('#Hud a.btn.main-btn.settings-icon').click toggleSettings
+  $('#Hud .settings a.btn.main-btn.close-icon').click toggleSettings
+  $('#Hud a.btn.main-btn.field-icon').click toggleFieldPen
+  $('#Hud a.btn.main-btn.pen-icon').click toggleFieldPen
+  $('#Hud a.btn.main-btn.inventory-icon').click toggleInventory
+
 toggleSettings = ->
   $('#Hud .settings').toggle()
+
+toggleFieldPen = ->
+  $('#Hud a.btn.main-btn.field-icon').toggle()
+  $('#Hud a.btn.main-btn.pen-icon').toggle()
+  $('#Farm .field').toggle()
+  $('#Farm .pen').toggle()
+
+toggleInventory = ->
+  $('#Inventory').toggle()
+
 
 
 setPlaybackInfoDom = (playing, speed) ->

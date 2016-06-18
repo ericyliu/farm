@@ -8,7 +8,6 @@ module.exports =
     @fieldDom = $ '#Farm .field'
     @penDom = $ '#Farm .pen'
     @show = 'farm'
-    registerFieldPenToggle()
     EventBus.registerMany @listeners(), @
 
 
@@ -88,24 +87,6 @@ module.exports =
     animalDom = $ "<div class='animal #{animal.type}' id='#{animal.id}'></div>"
     animalTrough = @animalTrough
     animalDom.on 'click', (evt) -> TileMenuView.openTileMenu evt, animalTrough
-
-
-
-registerFieldPenToggle = ->
-  $('#Farm a.btn.main-btn.field-icon').click -> toggleFieldPen 'farm'
-  $('#Farm a.btn.main-btn.pen-icon').click -> toggleFieldPen 'pen'
-
-toggleFieldPen = (show) ->
-  if show is 'farm'
-    $('#Farm a.btn.main-btn.field-icon').hide()
-    $('#Farm a.btn.main-btn.pen-icon').show()
-    $('#Farm .field').show()
-    $('#Farm .pen').hide()
-  else if show is 'pen'
-    $('#Farm a.btn.main-btn.field-icon').show()
-    $('#Farm a.btn.main-btn.pen-icon').hide()
-    $('#Farm .field').hide()
-    $('#Farm .pen').show()
 
 
 

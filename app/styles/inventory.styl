@@ -1,14 +1,43 @@
+@require 'mixins/helpers.styl'
+@require 'mixins/zindices.styl'
+
 .game .inventory
-  border 1px solid black
+  background-color alpha(black, .7)
   box-sizing border-box
   display none
-  flex-shrink 0
-  height 100%
-  overflow auto
-  padding 10px
-  width 200px
+  padding 70px 20px 100px
+  overlay()
+  z-index $menu-zindex
 
-  .item
-    border 1px solid black
-    height 50px
-    margin-bottom 10px
+  .items
+    background-color black
+    border-radius 10px
+    color white
+    box-sizing border-box
+    overflow auto
+    width 100%
+    height 100%
+    padding 10px
+
+    .item
+      padding 5px
+      margin-bottom 10px
+
+  .triangle
+    width 0
+    height 0
+    border-left 20px solid transparent
+    border-right 20px solid transparent
+    border-top 20px solid black
+    bottom 85px
+    right 27px
+    position absolute
+
+  a.btn.inventory-icon
+    background-defaults()
+    background-image url('assets/icons/inventory-white.png')
+    position absolute
+    bottom 10px
+    right 10px
+    width 70px
+    height 70px

@@ -2,16 +2,21 @@
 
 .day-end
   background-color black
+  box-sizing border-box
   display none
   overlay()
+  padding 20px
 
   .previous-day, .next-day
+    box-sizing border-box
     color white
     font-size 3rem
     font-weight bold
+    padding 20px
     position absolute
     text-align center
     top 50%
+    left 0
     transform translateY(-50%)
     transition opacity 2s
     width 100%
