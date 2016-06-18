@@ -107,5 +107,6 @@ createHeaderDom = ->
       <th>Amount</th>
       <th>Quality</th>
       <th>Price</th>
+      <th></th>
     </tr>
   """
