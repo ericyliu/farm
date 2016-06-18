@@ -1,48 +1,64 @@
+@require 'mixins/helpers.styl'
+@require 'mixins/zindices.styl'
+
 .market
-  background-color white
+  background-color alpha(black, .7)
+  color white
   display none
-  left 0
-  height 100%
-  position fixed
-  top 0
-  width 100%
-  z-index 100
+  overlay()
+  z-index $menu-zindex
+  padding 70px 20px 100px
 
-  h1
-    text-align center
-    height 50px
-    margin 0
-
-  .listings
+  .market-container
+    background-color black
+    border-radius 10px
     box-sizing border-box
-    height calc(100% - 50px)
+    height 100%
+    width 100%
+    overflow auto
     padding 10px
 
-    .container
+    h1
+      text-align center
+      height 50px
+      margin 0
+
+    .listings
       box-sizing border-box
-      float left
-      padding 5px
-      position relative
-      width 50%
 
-      h2
-        width 50%
+      .container
+        box-sizing border-box
 
-      .buy, .sell
-        border 1px solid black
-        overflow auto
-        width 100%
+        h2
+          width 50%
 
-        th
-          text-align left
+        .buy, .sell
+          color white
+          overflow auto
+          width 100%
 
-      .buy
-        margin-right 5px
+          th
+            text-align left
+            border-bottom 1px solid white
 
-      .sell
-        margin-left 5px
+          td
+            text-overflow ellipsis
 
-  .close
+  .triangle
+    width 0
+    height 0
+    border-left 20px solid transparent
+    border-right 20px solid transparent
+    border-top 20px solid black
+    bottom 85px
+    left calc(50% - 20px)
     position absolute
-    right 10px
-    top 10px
+
+  a.btn.market-icon
+    background-defaults()
+    background-image url('assets/icons/market-white.png')
+    position absolute
+    bottom 10px
+    right calc(50% - 35px)
+    width 70px
+    height 70px

@@ -6,7 +6,7 @@ module.exports =
 
   start: ->
     @marketDom = $ '#Market'
-    @marketDom.find('.close').on 'click', => $('#Market').hide()
+    @marketDom.find('a.btn.market-icon').on 'click', => $('#Market').hide()
     EventBus.registerMany @listeners(), @
 
 

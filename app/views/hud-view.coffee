@@ -71,24 +71,28 @@ module.exports =
 
 
   updateMoney: (player) ->
-     $('#Hud .status .money').html "#{player.money}"
+     $('#Hud .status .money').html "<span class='icon'></span>#{player.money}"
 
 
 setHudButtons = ->
-  $('#Hud a.btn.main-btn.settings-icon').click toggleSettings
-  $('#Hud .settings a.btn.main-btn.close-icon').click toggleSettings
-  $('#Hud a.btn.main-btn.field-icon').click toggleFieldPen
-  $('#Hud a.btn.main-btn.pen-icon').click toggleFieldPen
-  $('#Hud a.btn.main-btn.inventory-icon').click toggleInventory
+  $('#Hud .btn.main-btn.settings-icon').click toggleSettings
+  $('#Hud .settings .btn.main-btn.close-icon').click toggleSettings
+  $('#Hud .btn.main-btn.field-icon').click toggleFieldPen
+  $('#Hud .btn.main-btn.pen-icon').click toggleFieldPen
+  $('#Hud .btn.main-btn.market-icon').click toggleMarket
+  $('#Hud .btn.main-btn.inventory-icon').click toggleInventory
 
 toggleSettings = ->
   $('#Hud .settings').toggle()
 
 toggleFieldPen = ->
-  $('#Hud a.btn.main-btn.field-icon').toggle()
-  $('#Hud a.btn.main-btn.pen-icon').toggle()
+  $('#Hud .btn.main-btn.field-icon').toggle()
+  $('#Hud .btn.main-btn.pen-icon').toggle()
   $('#Farm .field').toggle()
   $('#Farm .pen').toggle()
+
+toggleMarket = ->
+  $('#Market').toggle()
 
 toggleInventory = ->
   $('#Inventory').toggle()

@@ -80,7 +80,7 @@ TileMenuView =
   openTileMenu: (evt, tile) ->
     @open = true
     @tile = tile
-    $('#Farm .tile-menu').css 'visibility', 'visible'
+    $('#Farm .tile-menu').show()
     menuContainerDom = $('#Farm .tile-menu .menu-container')
     menuContainerDom.html getMenuDom tile, @items
     repositionMenu evt
@@ -88,7 +88,7 @@ TileMenuView =
 
   hideTileMenu: ->
     @open = false
-    $('#Farm .tile-menu').css 'visibility', 'hidden'
+    $('#Farm .tile-menu').hide()
 
 
 repositionMenu = (evt) ->
