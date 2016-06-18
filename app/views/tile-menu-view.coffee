@@ -103,8 +103,8 @@ TileMenuView =
 repositionMenu = (evt) ->
   menuDom = $('#Farm .tile-menu .menu-container')
   menuDom.css
-    'top': _.min [evt.clientY, $(window).height() - menuDom.height() - 20]
-    'left': _.min [evt.clientX, $(window).width() - 220]
+    'top': _.min [evt.clientY, $(window).height() - menuDom.outerHeight() - 20]
+    'left': _.min [evt.clientX, $(window).width() - menuDom.outerWidth() - 20]
 
 getMenuDom = (tile, items) ->
   tileMenu = $ '<div class="menu"></div>'

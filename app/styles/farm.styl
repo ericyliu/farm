@@ -1,48 +1,40 @@
-.game .farm
-  flex-grow 1
-  height 100%
-  margin-right 15px
-  position relative
-  max-width calc(100% - 215px)
+@require 'mixins/helpers.styl'
+@require 'mixins/zindices.styl'
 
-  .pen, .field-container
-    border 1px solid black
+.game .farm
+  background-image url('assets/tiles/grass.png')
+  overlay()
 
   .pen
     box-sizing border-box
-    height 100px
+    display none
     margin-bottom 15px
     overflow-x auto
-    padding 10px
+    overlay()
+    padding 70px 10px
     white-space nowrap
-    width 100%
+    z-index $main-zindex
 
     .animal
-      border 1px solid black
       box-sizing border-box
       display inline-block
       height 80px
       margin-right 10px
       width 160px
 
-  .field-container
+  .field
     align-items center
-    background-color #33AA33
-    background-image url('assets/tiles/grass.png')
     box-sizing border-box
     display flex
-    flex-grow 1
-    flex-wrap wrap
-    height calc(100% - 118px)
     overflow auto
-    padding 50px
-    text-align center
-    width 100%
+    overlay()
+    z-index $main-zindex
 
     .scrollable
       margin auto
+      padding 50px
 
-    .field
+    .tiles
       display table
 
       .row
@@ -57,21 +49,32 @@
           min-height 50px
           min-width 50px
 
+  a.btn.main-btn
+    background-defaults()
+    position absolute
+    height 75px
+    width 75px
+    z-index $main-button-zindex
+
+    &.field-icon, &.pen-icon
+      bottom 10px
+      left 10px
+
+    &.field-icon
+      background-image url('assets/icons/field.png')
+      display none
+
+    &.pen-icon
+      background-image url('assets/icons/pen.png')
+
   .tile-menu
-    display flex
-    height 100%
-    left 0
-    position fixed
-    top 0
-    width 100%
+    overlay()
     visibility hidden
+    z-index $popup-zindex
 
     .background
-      background-color black
-      height 100%
-      opacity .5
-      position absolute
-      width 100%
+      background-color alpha(black, .7)
+      overlay()
 
     .menu-container
       background-color white

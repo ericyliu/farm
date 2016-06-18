@@ -1,21 +1,60 @@
+@require 'mixins/helpers.styl'
+@require 'mixins/zindices.styl'
+
 .hud
-  height 100%
-
-  .left, .center, .right
-    align-items center
-    display flex
-    height 100%
+  .status
     position absolute
-    width 100%
+    top 10px
+    left 10px
+    z-index $main-button-zindex
 
-  .left .money
-    margin-left 10px
+    .money
+      align-items center
+      display flex
+      font-size 1.3rem
 
-  .center
-    justify-content center
+      .icon
+        background-defaults()
+        background-image url('assets/icons/coin.png')
+        display inline-block
+        height 20px
+        width 20px
+        margin-right 5px
 
-  .right
-    justify-content flex-end
+  a.btn.main-btn
+    background-defaults()
+    display block
+    height 50px
+    width 50px
+    position absolute
+    top 10px
+    right 10px
+    z-index $main-button-zindex
 
-    .btn
-      margin-left 5px
+    &.settings-icon
+      background-image url('assets/icons/settings.png')
+
+  .settings
+    background-color alpha(black, .7)
+    color white
+    display none
+    overlay()
+    z-index $menu-zindex
+
+    .close-icon
+      background-image url('assets/icons/close.png')
+      z-index 1
+
+    .playback-info
+      position absolute
+      top 10px
+      left 10px
+
+    .buttons
+      align-items center
+      display flex
+      flex-direction column
+      font-size 1.5rem
+      justify-content center
+      overlay()
+

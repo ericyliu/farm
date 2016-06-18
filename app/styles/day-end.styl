@@ -1,11 +1,9 @@
+@require 'mixins/helpers.styl'
+
 .day-end
   background-color black
   display none
-  position fixed
-  bottom 0
-  left 0
-  right 0
-  top 0
+  overlay()
 
   .previous-day, .next-day
     color white

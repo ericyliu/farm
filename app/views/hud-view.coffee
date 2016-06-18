@@ -7,38 +7,37 @@ module.exports =
   start: (game) ->
     EventBus.registerMany @listeners(), @
     playbackButtons = [
-        label: '||'
+        label: 'Pause'
         method: =>
           window.Farm.gameController.togglePause true
           setPlaybackInfoDom false, @playSpeed
       ,
-        label: '>'
+        label: 'Play'
         method: =>
           window.Farm.gameController.togglePause false
           f.normalSpeed()
           setPlaybackInfoDom true, 1
           @playSpeed = 1
       ,
-        label: '>>'
+        label: 'Fast Forward'
         method: =>
           window.Farm.gameController.togglePause false
           @playSpeed *= 2
           f.fastForward @playSpeed
           setPlaybackInfoDom true, @playSpeed
       ,
-        label: 'Market'
-        method: => $('#Market').show()
-      ,
         label: 'End Day'
         method: => @endDay()
       ,
-        label: 'Load'
-        method: => f.load()
-      ,
         label: 'Save'
         method: => f.save()
+      ,
+        label: 'Load'
+        method: => f.load()
     ]
-    $('#Hud .right').append createButtonDoms playbackButtons
+    $('#Hud a.btn.main-btn.settings-icon').click toggleSettings
+    $('#Hud .settings a.btn.main-btn.close-icon').click toggleSettings
+    $('#Hud .settings .buttons').append createButtonDoms playbackButtons
 
 
   listeners: ->
@@ -60,7 +59,7 @@ module.exports =
 
 
   updateAttributes: (game) ->
-    $('#Hud .left').html [
+    $('#Hud .status').html [
       createTimeDom game.timeElapsed
       createMoneyDom game.player.money
     ]
@@ -68,18 +67,21 @@ module.exports =
 
   updateTime: (game) ->
     @day = Math.floor(Math.floor(game.timeElapsed / 60) / 24) + 1
-    $('#Hud .left .time').html "Time: #{formatTime game.timeElapsed}"
+    $('#Hud .status .time').html "#{formatTime game.timeElapsed}"
 
 
   updateMoney: (player) ->
-     $('#Hud .left .money').html "Gold: #{player.money}"
+     $('#Hud .status .money').html "#{player.money}"
 
+
+toggleSettings = ->
+  $('#Hud .settings').toggle()
 
 
 setPlaybackInfoDom = (playing, speed) ->
-  $('#Hud .right .playback-info').html $ """
-    <div class='play-status'>#{if playing then 'Playing' else 'Paused'}</div>
-    <div class='speed'>x#{speed}</div>
+  $('#Hud .settings .playback-info').html $ """
+    <span class='play-status'>#{if playing then 'Playing' else 'Paused'}</span>
+    <span class='speed'>x#{speed}</span>
   """
 
 createButtonDoms = (playbackButtons) ->
@@ -88,10 +90,10 @@ createButtonDoms = (playbackButtons) ->
       .on 'click', -> button.method()
 
 createTimeDom = (time) ->
-  $ "<div class='time'>Time: #{formatTime time}</div>"
+  $ "<div class='time'>#{formatTime time}</div>"
 
 createMoneyDom = (money) ->
-  $ "<div class='money'>Gold: #{money}</div>"
+  $ "<div class='money'><span class='icon'></span>#{money}</div>"
 
 formatTime = (minutes) ->
     minute = Math.floor minutes % 60
