@@ -109,13 +109,13 @@ getMenuDom = (tile, items) ->
   tileMenu.append _.flatten [statsMenu, cropMenu, plantMenu, fertilizerMenu, foodMenu]
 
 getStatsMenu = (tile) ->
-  statsMenuDom = $ '<div class="stats"><div>Stats:</div></div>'
+  statsMenuDom = $ '<div class="stats"><div class="label">Stats:</div></div>'
   statsMenuDom.append _.map tile.nutrients, (amount, nutrient) ->
     $ "<div class='stat #{nutrient}'>#{_.toUpper nutrient[0]} - #{amount}</div>"
 
 getCropMenu = (crop) ->
   cropDoms = [
-    $("<div>Crop: #{crop.type}</div>")
+    $("<div class='label harvests'>Crop: #{crop.type}</div>")
       .on 'click', -> console.log crop
   ]
   harvestableDoms = _.map crop.harvestables, (harvestable) ->
@@ -125,7 +125,7 @@ getCropMenu = (crop) ->
   _.concat cropDoms, harvestableDoms
 
 getPlantMenu = (tile, items) ->
-  plantMenuDom = [$ '<div>Plant</div>']
+  plantMenuDom = [$ '<div class="label">Plant</div>']
   plantables = _.filter items, (item) -> item.category == 'plantable'
   plantableDoms = _.map plantables, (item) ->
     $ "<div class='btn plant'>#{item.type} x#{item.amount}</div>"
@@ -133,7 +133,7 @@ getPlantMenu = (tile, items) ->
   _.concat plantMenuDom, plantableDoms
 
 getFertilizerMenu = (tile, items) ->
-  fertilizerMenuDom = [$ '<div>Fertilizers</div>']
+  fertilizerMenuDom = [$ '<div class="label">Fertilizers</div>']
   fertilizers = _.filter items, (item) -> item.category == 'fertilizer'
   fertilizerDoms = _.map fertilizers, (item) ->
     $ "<div class='btn fertilizer'>#{item.type} x#{item.amount}</div>"
@@ -141,7 +141,7 @@ getFertilizerMenu = (tile, items) ->
   _.concat fertilizerMenuDom, fertilizerDoms
 
 getFoodMenu = (tile, items) ->
-  foodMenuDom = [$ '<div>Food</div>']
+  foodMenuDom = [$ '<div class="label">Food</div>']
   foods = _.filter items, (item) -> item.category == 'food'
   foodDoms = _.map foods, (item) ->
     $ "<div class='btn fertilizer'>#{item.type} x#{item.amount}</div>"

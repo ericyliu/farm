@@ -59,10 +59,13 @@
       overlay()
 
     .menu-container
-      background-color white
+      background-color black
+      color white
+      overflow auto
       padding 15px
       position absolute
       width 200px
+      max-height 300px
 
       .menu
         .stats
@@ -71,6 +74,14 @@
           .stat
             display inline-block
             padding-right 5px
+
+        .harvests
+          margin-bottom 5px
+
+        .label
+          border-top 1px solid white
+          border-left 1px solid white
+          padding-left 10px
 
         .plant, .fertilizer
           box-sizing border-box
