@@ -55,7 +55,8 @@ module.exports =
   updateLivable: (livable) ->
     _ @tiles
       .flatten()
-      .map (tile) -> if tile.crop? and tile.crop.id = livable.id then updateAttributes livable, tile.crop
+      .filter (tile) -> tile.crop? and tile.crop.id == livable.id
+      .map (tile) -> updateAttributes livable, tile.crop
       .value()
     @updateField @tiles
 
