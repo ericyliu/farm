@@ -48,5 +48,23 @@ module.exports =
     category: 'fertilizer'
     nutrients: chimono: 3
 
+  ############## HARVEST #################
+
   grass:
     category: 'food'
+
+  turnip:
+    category: 'food'
+    price: 1
+
+  tomato:
+    category: 'food'
+    price: 1
+
+  carrot:
+    category: 'food'
+    price: 1
+
+  parsnip:
+    category: 'food'
+    price: 1

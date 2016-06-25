@@ -65,7 +65,6 @@ TileMenuView =
     @update()
 
 
-
   setup: ->
     @open = false
     $('#Farm .tile-menu .background').on 'click', @hideTileMenu
@@ -119,7 +118,7 @@ getCropMenu = (crop) ->
       .on 'click', -> console.log crop
   ]
   harvestableDoms = _.map crop.harvestables, (harvestable) ->
-    return unless harvestable.cooldown is 0
+    return unless harvestable.readyForHarvest
     $ "<div class='btn harvest'>#{harvestable.type} x#{harvestable.amount}</div>"
       .on 'click', -> harvest crop, harvestable
   _.concat cropDoms, harvestableDoms

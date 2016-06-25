@@ -1,6 +1,7 @@
 Base = require 'models/base.coffee'
 _ = require 'lodash'
 DayInTheLife = require 'models/day-in-the-life.coffee'
+Constants = require 'data/constants.coffee'
 
 class Livable extends Base
 
@@ -27,7 +28,7 @@ class Livable extends Base
     lifespan: [] # DayInTheLife[]
     todaysNutrientsGiven: {}
     wasKilled: false
-    lifeStage: 'baby'
+    lifeStage: Constants.lifeStage.baby
 
 
   update: ->
@@ -35,16 +36,15 @@ class Livable extends Base
     @getCurrentLifeStage()
 
 
-  getHarvestsReady: ->
-    _.filter @harvestables, (harvestable) -> harvestable.cooldown is 0
-
-
-  getHarvestOnDeath: ->
-    _.filter @harvestables, onDeath
+  kill: ->
+    @set 'wasKilled', true
+    @getCurrentLifeStage()
 
 
   harvest: (harvestable) ->
-    harvestable.set 'cooldown', harvestable.maxCooldown
+    harvestable.reset()
+    # muahahaha
+    if harvestable.doesKillOnHarvest() then @kill()
 
 
   ###
@@ -119,7 +119,7 @@ class Livable extends Base
   ###
   getCurrentLifeStage: () ->
     if not @isAlive()
-      lifeStage = 'death'
+      lifeStage = Constants.lifeStage.death
     else
       age = @getAge()
       reducer = (result, lifeStageLength, lifeStage) ->
@@ -127,9 +127,11 @@ class Livable extends Base
           return lifeStage
         else
           result
-      lifeStage = _.reduce @lifeStages, reducer, 'baby'
+      lifeStage = _.reduce @lifeStages, reducer, Constants.lifeStage.baby
     if lifeStage != @lifeStage
       @set 'lifeStage', lifeStage
+      _.map @harvestables, (harvestable) ->
+        harvestable.handleLivableLifeStageChange(lifeStage)
     lifeStage
 
 
@@ -139,8 +141,7 @@ class Livable extends Base
 
 updateHarvestables = (harvestables) ->
   _.map harvestables, (harvestable) ->
-    return unless harvestable?.maxCooldown and harvestable.cooldown > 0
-    harvestable.set 'cooldown', harvestable.cooldown - 1
+    harvestable.update()
 
 
 module.exports = Livable
