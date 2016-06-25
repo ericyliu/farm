@@ -1,7 +1,7 @@
 time = require 'services/time-service.coffee'
 
 module.exports =
-  grass:
+  grassCrop:
     dailyNutrientsNeeded:
       water: 1
       nitrogen: 1
@@ -15,7 +15,7 @@ module.exports =
       child: 1
       adult: 2
       death: 3
-  turnip:
+  turnipCrop:
     dailyNutrientsNeeded:
       water: 1
       fumono: 1
@@ -25,7 +25,7 @@ module.exports =
       child: 1
       adult: 4
       death: 6
-  tomato:
+  tomatoCrop:
     dailyNutrientsNeeded:
       water: 2
       kamono: 1
@@ -35,7 +35,7 @@ module.exports =
       child: 1
       adult: 4
       death: 6
-  carrot:
+  carrotCrop:
     dailyNutrientsNeeded:
       water: 2
       suimono: 1
@@ -45,7 +45,7 @@ module.exports =
       child: 1
       adult: 4
       death: 6
-  parsnip:
+  parsnipCrop:
     dailyNutrientsNeeded:
       water: 1
       chimono: 1

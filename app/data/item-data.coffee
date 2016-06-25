@@ -4,23 +4,23 @@ module.exports =
   ################ SEEDS ################
   grassSeed:
     category: 'plantable'
-    livable: 'grass'
+    livable: 'grassCrop'
 
   turnipSeed:
     category: 'plantable'
-    livable: 'turnip'
+    livable: 'turnipCrop'
 
   tomatoSeed:
     category: 'plantable'
-    livable: 'tomato'
+    livable: 'tomatoCrop'
 
   carrotSeed:
     category: 'plantable'
-    livable: 'carrot'
+    livable: 'carrotCrop'
 
   parsnipSeed:
     category: 'plantable'
-    livable: 'parsnip'
+    livable: 'parsnipCrop'
 
   ################ NUTRIENTS #############
   goatManure:
