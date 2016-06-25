@@ -8,52 +8,29 @@ death-color = rgba(120, 161, 31, 0.45)
   height 50px
   width 50px
 
+  &.life-stage-baby
+    border 3px solid lightblue
+  &.life-stage-child
+    border 3px solid lightgreen
+  &.life-stage-adult
+    border 3px solid green
+  &.life-stage-death
+    border 3px solid red
+
   &.grassCrop
-    &.life-stage-baby
-      background linear-gradient(baby-color, baby-color), url('assets/crops/grass.gif')
-    &.life-stage-child
-      background linear-gradient(baby-color, child-color), url('assets/crops/grass.gif')
-    &.life-stage-adult
-      background linear-gradient(baby-color, adult-color), url('assets/crops/grass.gif')
-    &.life-stage-death
-      background linear-gradient(baby-color, death-color), url('assets/crops/grass.gif')
+    background-image url('assets/crops/grass.gif')
 
   &.turnipCrop
-    &.life-stage-baby
-      background linear-gradient(baby-color, baby-color), url('assets/crops/turnip.png')
-    &.life-stage-child
-      background linear-gradient(baby-color, child-color), url('assets/crops/turnip.png')
-    &.life-stage-adult
-      background linear-gradient(baby-color, adult-color), url('assets/crops/turnip.png')
-    &.life-stage-death
-      background linear-gradient(baby-color, death-color), url('assets/crops/turnip.png')
+    background url('assets/crops/turnip.png')
+
+  &.pumpkinCrop
+    background-image url('assets/crops/pumpkin.png')
 
   &.tomatoCrop
-    &.life-stage-baby
-      background linear-gradient(baby-color, baby-color), url('assets/crops/tomato.png')
-    &.life-stage-child
-      background linear-gradient(baby-color, child-color), url('assets/crops/tomato.png')
-    &.life-stage-adult
-      background linear-gradient(baby-color, adult-color), url('assets/crops/tomato.png')
-    &.life-stage-death
-      background linear-gradient(baby-color, death-color), url('assets/crops/tomato.png')
+    background url('assets/crops/tomato.png')
 
   &.carrotCrop
-    &.life-stage-baby
-      background linear-gradient(baby-color, baby-color), url('assets/crops/carrot.png')
-    &.life-stage-child
-      background linear-gradient(baby-color, child-color), url('assets/crops/carrot.png')
-    &.life-stage-adult
-      background linear-gradient(baby-color, adult-color), url('assets/crops/carrot.png')
-    &.life-stage-death
-      background linear-gradient(baby-color, death-color), url('assets/crops/carrot.png')
+    background url('assets/crops/carrot.png')
 
   &.parsnipCrop
-    &.life-stage-baby
-      background linear-gradient(baby-color, baby-color), url('assets/crops/parsnip.png')
-    &.life-stage-child
-      background linear-gradient(baby-color, child-color), url('assets/crops/parsnip.png')
-    &.life-stage-adult
-      background linear-gradient(baby-color, adult-color), url('assets/crops/parsnip.png')
-    &.life-stage-death
-      background linear-gradient(baby-color, death-color), url('assets/crops/parsnip.png')
+    background url('assets/crops/parsnip.png')
