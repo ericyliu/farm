@@ -31,5 +31,11 @@
   "dependencies": {
     "jquery": "^2.2.4",
     "lodash": "^4.13.1"
+  },
+  "coffeelintConfig": {
+    "max_line_length": {
+      "value": 160,
+      "level": "ignore"
+    }
   }
 }
