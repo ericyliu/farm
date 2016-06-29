@@ -2,10 +2,12 @@ _ = require 'lodash'
 DataService = require 'services/data-service.coffee'
 Tile = require 'models/tile.coffee'
 EventBus = require 'util/event-bus.coffee'
+SpreaderPlantController = require 'controllers/spreader-plant-controller.coffee'
 
 class FarmController
 
   constructor: (@gameController) ->
+    @spreaderPlantController = new SpreaderPlantController @gameController
     @registerListeners()
 
 
@@ -131,6 +133,12 @@ class FarmController
   handleLivableDays: (livables) ->
     _.map livables, (livable) ->
       livable.handleDay()
+    @handleSpreaderPlantDays(livables)
+
+
+  handleSpreaderPlantDays: (livables) ->
+    spreaderCrops = _.filter livables, (livable) -> livable.isSpreaderCrop
+    @spreaderPlantController.handleSpreaderPlantDays spreaderCrops
 
 
 cropsFromTiles = (tiles) ->

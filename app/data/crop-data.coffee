@@ -25,6 +25,17 @@ module.exports =
       child: 1
       adult: 4
       death: 6
+  pumpkinCrop:
+    dailyNutrientsNeeded:
+      water: 1
+      fumono: 1
+    harvestables:
+      pumpkin: amount: 1
+    lifeStage:
+      child: 2
+      adult: 6
+      death: 10
+    specialType: 'spreaderCrop'
   tomatoCrop:
     dailyNutrientsNeeded:
       water: 2

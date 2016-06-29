@@ -1,17 +1,18 @@
 _ = require 'lodash'
-Harvestable = require '../models/harvestable.coffee'
-Livable = require '../models/livable.coffee'
-Item = require '../models/item.coffee'
-MarketListing = require '../models/market-listing.coffee'
+Harvestable = require 'models/harvestable.coffee'
+Livable = require 'models/livable.coffee'
+SpreaderCrop = require 'models/spreader-crop.coffee'
+Item = require 'models/item.coffee'
+MarketListing = require 'models/market-listing.coffee'
 
 
 data =
-  animals: require '../data/animal-data.coffee'
-  crops: require '../data/crop-data.coffee'
-  items: require '../data/item-data.coffee'
-  farm: require '../data/farm-data.coffee'
+  animals: require 'data/animal-data.coffee'
+  crops: require 'data/crop-data.coffee'
+  items: require 'data/item-data.coffee'
+  farm: require 'data/farm-data.coffee'
 
-create = (id, type) ->
+createLivable = (id, type) ->
   return unless data[type]?[id]?
   stats = data[type][id]
   harvestables = _.map stats.harvestables, (harvestable, id) ->
@@ -22,18 +23,23 @@ create = (id, type) ->
       cooldown: harvestable.cooldown
       onDeath: onDeath
   lifeStages = stats.lifeStages
+  if type is 'crops'
+    if stats.specialType is 'spreaderCrop'
+      return new SpreaderCrop
+        type: id
+        dailyNutrientsNeeded: stats.dailyNutrientsNeeded
+        harvestables: harvestables
+        lifeStages: lifeStages
   new Livable
     type: id
     dailyNutrientsNeeded: stats.dailyNutrientsNeeded
     harvestables: harvestables
     lifeStages: lifeStages
 
+DataService =
+  createAnimal: (id) -> createLivable id, 'animals'
 
-module.exports =
-
-  createAnimal: (id) -> create id, 'animals'
-
-  createCrop: (id) -> create id, 'crops'
+  createCrop: (id) -> createLivable id, 'crops'
 
   createItem: (id, amount, quality) -> new Item (
     type: id
@@ -63,3 +69,5 @@ module.exports =
   getFood: (item) -> "#{item.type}": 1
 
   getPrice: (item) -> (data.items[item.type].price or 1) * item.amount
+
+module.exports = DataService

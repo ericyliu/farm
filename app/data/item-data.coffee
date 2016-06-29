@@ -10,6 +10,10 @@ module.exports =
     category: 'plantable'
     livable: 'turnipCrop'
 
+  pumpkinSeed:
+    category: 'plantable'
+    livable: 'pumpkinCrop'
+
   tomatoSeed:
     category: 'plantable'
     livable: 'tomatoCrop'
@@ -54,6 +58,10 @@ module.exports =
     category: 'food'
 
   turnip:
+    category: 'food'
+    price: 1
+
+  pumpkin:
     category: 'food'
     price: 1
 

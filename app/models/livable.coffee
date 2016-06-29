@@ -66,7 +66,7 @@ class Livable extends Base
       nutrientsGiven = allNutrientsGiven[nutrientId] ? 0
       if not @todaysNutrientsGiven[nutrientId]? then @todaysNutrientsGiven[nutrientId] = 0
       @todaysNutrientsGiven[nutrientId] += nutrientsGiven
-      @set 'todaysNutrientsGiven', @todaysNutrientsGiven
+    @set 'todaysNutrientsGiven', @todaysNutrientsGiven
 
   ###
   @retrun {sting nutrientType: int amount} the nutrient that the plant wants for the day
