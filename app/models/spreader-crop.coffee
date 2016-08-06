@@ -21,20 +21,22 @@ class SpreaderCrop extends Livable
     if not @isAlive()
       return []
     self = @
-    distanceFromTile = 1
+    maxDistanceFromTile = 1
     tilesToPlant = []
     tiles.forEach (tileRow, rowIndex) ->
       tileRow.forEach (tile, colIndex) ->
         tile = tiles[rowIndex][colIndex]
-        if tileIsDistanceAwayFromCoordinate tile, distanceFromTile, thisCropCoordinate, tiles
+        closeEnough = getTileDistanceAwayFromCoordinate(tile, thisCropCoordinate, tiles) <= maxDistanceFromTile
+        tileIsWorthy = Math.random() < 0.5
+        if closeEnough and tileIsWorthy
           tilesToPlant.push({tile: tile, type: self.type})
     return tilesToPlant
 
-tileIsDistanceAwayFromCoordinate = (tile, distance, coordinate, allTiles) ->
+getTileDistanceAwayFromCoordinate = (tile, coordinate, allTiles) ->
   tileCoordinates = getTileCoordinate tile, allTiles
-  rowInRange = Math.abs(tileCoordinates.rowIndex - coordinate.rowIndex) <= distance
-  colInRange = Math.abs(tileCoordinates.colIndex - coordinate.colIndex) <= distance
-  return rowInRange and colInRange
+  rowDistance = Math.abs(tileCoordinates.rowIndex - coordinate.rowIndex)
+  colDistance = Math.abs(tileCoordinates.colIndex - coordinate.colIndex)
+  Math.max(rowDistance, colDistance)
 
 getTileCoordinate = (tile, allTiles) ->
   coordinate = null
