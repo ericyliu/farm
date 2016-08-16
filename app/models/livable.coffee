@@ -29,6 +29,7 @@ class Livable extends Base
     todaysNutrientsGiven: {}
     wasKilled: false
     lifeStage: Constants.lifeStage.baby
+    abilities: []
 
 
   update: ->
@@ -55,7 +56,6 @@ class Livable extends Base
     if not @isAlive() then return
     @lifespan.push (new DayInTheLife required_nutrients: @dailyNutrientsNeeded, given_nutrients: @todaysNutrientsGiven)
     @set 'todaysNutrientsGiven', {}
-
 
   ###
   @param {string nutrientType: int amount} allNutrientGiven - the nutrient given to an animal.

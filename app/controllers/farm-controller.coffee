@@ -7,7 +7,6 @@ SpreaderPlantController = require 'controllers/spreader-plant-controller.coffee'
 class FarmController
 
   constructor: (@gameController) ->
-    @spreaderPlantController = new SpreaderPlantController @gameController
     @registerListeners()
 
 
@@ -133,12 +132,10 @@ class FarmController
   handleLivableDays: (livables) ->
     _.map livables, (livable) ->
       livable.handleDay()
-    @handleSpreaderPlantDays(livables)
 
-
-  handleSpreaderPlantDays: (livables) ->
-    spreaderCrops = _.filter livables, (livable) -> livable.isSpreaderCrop
-    @spreaderPlantController.handleSpreaderPlantDays spreaderCrops
+    spreaderCrops = _.filter livables, (livable) ->
+      livable.abilities.spreader_crop?
+    SpreaderPlantController.handleDays(spreaderCrops, @getTiles())
 
 
 cropsFromTiles = (tiles) ->

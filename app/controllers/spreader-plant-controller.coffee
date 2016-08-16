@@ -2,16 +2,11 @@ _ = require 'lodash'
 DataService = require 'services/data-service.coffee'
 EventBus = require 'util/event-bus.coffee'
 
-class SpreaderPlantController
-
-  constructor: (@gameController) ->
-
-
-  handleSpreaderPlantDays: (spreaderPlants) ->
-    tiles = @getTiles()
+module.exports =
+  handleDays: (spreaderPlants, tiles) ->
     _ spreaderPlants
       .map (plant) ->
-        plant.handleSpreaderDay tiles, getCropCoordinate(plant, tiles)
+        handleDay tiles, getCropCoordinate(plant, tiles), plant
       .flatten()
       .map (tileGroup) ->
         # any conflict resolution for spreader crops would happen here
@@ -22,9 +17,34 @@ class SpreaderPlantController
           EventBus.trigger 'model/Farm/cropAdded', tile: tile, crop: crop
       .value()
 
+# returns {tile: Tile, type: livableType} to indicate which tiles should get crops planted
+handleDay = (tiles, cropCoordinate, crop) ->
+  if not crop.isAlive()
+    return []
+  maxDistanceFromTile = 1
+  tilesToPlant = []
+  tiles.forEach (tileRow, rowIndex) ->
+    tileRow.forEach (tile, colIndex) ->
+      tile = tiles[rowIndex][colIndex]
+      closeEnough = getTileDistanceAwayFromCoordinate(tile, cropCoordinate, tiles) <= maxDistanceFromTile
+      tileIsWorthy = Math.random() < 0.5
+      if closeEnough and tileIsWorthy
+        tilesToPlant.push({tile: tile, type: crop.type})
+  return tilesToPlant
 
-  getTiles: () ->
-    @gameController.game.player.farm.tiles
+getTileDistanceAwayFromCoordinate = (tile, coordinate, allTiles) ->
+  tileCoordinates = getTileCoordinate tile, allTiles
+  rowDistance = Math.abs(tileCoordinates.rowIndex - coordinate.rowIndex)
+  colDistance = Math.abs(tileCoordinates.colIndex - coordinate.colIndex)
+  Math.max(rowDistance, colDistance)
+
+getTileCoordinate = (tile, allTiles) ->
+  coordinate = null
+  allTiles.forEach (tileRow, rowIndex) ->
+    tileRow.forEach (needleTile, colIndex) ->
+      coordinate = rowIndex: rowIndex, colIndex: colIndex if tile is needleTile
+  if coordinate then return coordinate else throw new Error "Cannot find tile in farm"
+
 
 getCropCoordinate = (crop, tiles) ->
   coordinates = null
@@ -36,6 +56,3 @@ getCropCoordinate = (crop, tiles) ->
   if not coordinates
     throw new Error "Could not find crop in tiles"
   return coordinates
-
-
-module.exports = SpreaderPlantController

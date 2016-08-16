@@ -35,7 +35,8 @@ module.exports =
       child: 2
       adult: 6
       death: 10
-    specialType: 'spreaderCrop'
+    abilities:
+      spreader_crop: {}
   tomatoCrop:
     dailyNutrientsNeeded:
       water: 2

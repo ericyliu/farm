@@ -1,7 +1,6 @@
 _ = require 'lodash'
 Harvestable = require 'models/harvestable.coffee'
 Livable = require 'models/livable.coffee'
-SpreaderCrop = require 'models/spreader-crop.coffee'
 Item = require 'models/item.coffee'
 MarketListing = require 'models/market-listing.coffee'
 
@@ -23,18 +22,12 @@ createLivable = (id, type) ->
       cooldown: harvestable.cooldown
       onDeath: onDeath
   lifeStages = stats.lifeStages
-  if type is 'crops'
-    if stats.specialType is 'spreaderCrop'
-      return new SpreaderCrop
-        type: id
-        dailyNutrientsNeeded: stats.dailyNutrientsNeeded
-        harvestables: harvestables
-        lifeStages: lifeStages
   new Livable
     type: id
     dailyNutrientsNeeded: stats.dailyNutrientsNeeded
     harvestables: harvestables
     lifeStages: lifeStages
+    abilities: data[type][id].abilities
 
 DataService =
   createAnimal: (id) -> createLivable id, 'animals'
