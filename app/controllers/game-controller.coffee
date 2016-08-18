@@ -79,8 +79,8 @@ module.exports = GameController
 
 
 createStartingFarm = ->
-  _.map _.range(3), ->
-    _.map _.range(3), ->
+  _.map _.range(5), ->
+    _.map _.range(5), ->
       new Tile()
 
 givePlayerStartingItems = (player) ->
