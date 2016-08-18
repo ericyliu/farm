@@ -3,6 +3,7 @@ DataService = require 'services/data-service.coffee'
 Tile = require 'models/tile.coffee'
 EventBus = require 'util/event-bus.coffee'
 SpreaderPlantController = require 'controllers/spreader-plant-controller.coffee'
+NutrientPlantController = require 'controllers/nutrient-plant-controller.coffee'
 
 class FarmController
 
@@ -147,6 +148,10 @@ class FarmController
     spreaderCrops = _.filter livables, (livable) ->
       livable.abilities.spreader_crop?
     SpreaderPlantController.handleDays(spreaderCrops, @getTiles())
+
+    nutrientCrops = _.filter livables, (livable) ->
+      livable.abilities.nutrient_crop?
+    NutrientPlantController.handleDays(nutrientCrops, @getTiles())
 
 
 cropsFromTiles = (tiles) ->

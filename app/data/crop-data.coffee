@@ -67,3 +67,15 @@ module.exports =
       child: 1
       adult: 4
       death: 6
+  soybeanCrop:
+    dailyNutrientsNeeded:
+      water: 1
+      fumono: 1
+    harvestables:
+      soybean: amount: 3
+    lifeStages:
+      child: 1
+      adult: 4
+      death: 6
+    abilities:
+      nutrient_crop: {}

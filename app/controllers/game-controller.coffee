@@ -94,6 +94,7 @@ givePlayerStartingItems = (player) ->
     DataService.createItem 'grass', 5
     DataService.createItem 'turnipSeed', 5
     DataService.createItem 'pumpkinSeed', 5
+    DataService.createItem 'soybeanSeed', 5
     DataService.createItem 'fumonoFertilizer', 10
     DataService.createItem 'kamonoFertilizer', 10
     DataService.createItem 'suimonoFertilizer', 10

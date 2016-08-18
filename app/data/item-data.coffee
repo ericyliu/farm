@@ -14,6 +14,10 @@ module.exports =
     category: 'plantable'
     livable: 'pumpkinCrop'
 
+  soybeanSeed:
+    category: 'plantable'
+    livable: 'soybeanCrop'
+
   tomatoSeed:
     category: 'plantable'
     livable: 'tomatoCrop'
@@ -74,5 +78,9 @@ module.exports =
     price: 1
 
   parsnip:
+    category: 'food'
+    price: 1
+
+  soybean:
     category: 'food'
     price: 1
