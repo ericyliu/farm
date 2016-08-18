@@ -98,6 +98,7 @@ givePlayerStartingItems = (player) ->
     DataService.createItem 'fumonoFertilizer', 10
     DataService.createItem 'kamonoFertilizer', 10
     DataService.createItem 'suimonoFertilizer', 10
+    DataService.createItem 'chimonoFertilizer', 10
   ]
   _.map startItems, (item) ->
     player.addItem item
