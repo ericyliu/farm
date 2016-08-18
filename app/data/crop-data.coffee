@@ -36,7 +36,8 @@ module.exports =
       adult: 6
       death: 10
     abilities:
-      spreader_crop: {}
+      spreader_crop:
+        percent_chance: .2
   tomatoCrop:
     dailyNutrientsNeeded:
       water: 2

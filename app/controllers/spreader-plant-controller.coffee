@@ -27,8 +27,7 @@ handleDay = (tiles, cropCoordinate, crop) ->
     tileRow.forEach (tile, colIndex) ->
       tile = tiles[rowIndex][colIndex]
       closeEnough = getTileDistanceAwayFromCoordinate(tile, cropCoordinate, tiles) <= maxDistanceFromTile
-      tileIsWorthy = Math.random() < 0.5
-      if closeEnough and tileIsWorthy
+      if closeEnough and Math.random() < crop.abilities.spreader_crop.percent_chance
         tilesToPlant.push({tile: tile, type: crop.type})
   return tilesToPlant
 
