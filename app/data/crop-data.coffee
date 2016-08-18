@@ -78,4 +78,6 @@ module.exports =
       adult: 4
       death: 6
     abilities:
-      nutrient_crop: {}
+      nutrient_crop:
+        nutrient: 'fumono'
+        percent_chance: .3

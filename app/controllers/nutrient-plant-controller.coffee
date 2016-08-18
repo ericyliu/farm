@@ -13,7 +13,7 @@ module.exports =
         crop = DataService.createCrop tileGroup.type
         tile = tileGroup.tile
         if not tile.crop?
-          tile.addNutrient 1, 'fumono'
+          tile.addNutrient 1, tileGroup.nutrient
       .value()
 
 # returns {tile: Tile, type: livableType} to indicate which tiles should get crops planted
@@ -26,9 +26,9 @@ handleDay = (tiles, cropCoordinate, crop) ->
     tileRow.forEach (tile, colIndex) ->
       tile = tiles[rowIndex][colIndex]
       closeEnough = getTileDistanceAwayFromCoordinate(tile, cropCoordinate, tiles) <= maxDistanceFromTile
-      tileIsWorthy = Math.random() < 0.5
-      if closeEnough and tileIsWorthy
-        tilesToFertilze.push({tile: tile, nutrient: 'fumono'})
+      if closeEnough and Math.random() < crop.abilities.nutrient_crop.percent_chance
+        nutrient = crop.abilities.nutrient_crop.nutrient
+        tilesToFertilze.push({tile: tile, nutrient: nutrient})
   return tilesToFertilze
 
 getTileDistanceAwayFromCoordinate = (tile, coordinate, allTiles) ->
