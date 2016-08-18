@@ -46,6 +46,7 @@ module.exports =
     tiles = _.concat _.flatten(@tiles), @animalTrough
     _.map tiles, (tile) ->
       if tile.id == updatedTile.id then updateAttributes updatedTile, tile
+    @fieldDom.find(".tiles .tile##{updatedTile.id}").replaceWith createTileDom updatedTile
 
 
   addAnimal: (animal) ->
@@ -97,6 +98,7 @@ createFieldRowDom = (row) ->
 createTileDom = (tile) ->
   tileDom = $ "<div class='tile' id='#{tile.id}'>"
   tileDom.append createCropDom tile.crop if tile.crop?
+  tileDom.append $ '<div class="water">' if tile.nutrients?.water > 0
   tileDom.on 'click', (evt) -> TileMenuView.openTileMenu evt, tile
   tileDom
 
