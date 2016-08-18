@@ -12,8 +12,7 @@ module.exports =
         # any conflict resolution for spreader crops would happen here
         crop = DataService.createCrop tileGroup.type
         tile = tileGroup.tile
-        if not tile.crop?
-          tile.addNutrient 1, tileGroup.nutrient
+        tile.addNutrient 1, tileGroup.nutrient
       .value()
 
 # returns {tile: Tile, type: livableType} to indicate which tiles should get crops planted
