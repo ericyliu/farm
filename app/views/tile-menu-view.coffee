@@ -100,7 +100,7 @@ getMenuDom = (tile, items) ->
   tileMenu = $ '<div class="menu"></div>'
   statsMenu = getStatsMenu tile
   if tile.crop
-    cropMenu = getCropMenu tile.crop
+    cropMenu = getCropMenu tile
   else
     plantMenu = getPlantMenu tile, items
   fertilizerMenu = getFertilizerMenu tile, items
@@ -112,16 +112,19 @@ getStatsMenu = (tile) ->
   statsMenuDom.append _.map tile.nutrients, (amount, nutrient) ->
     $ "<div class='stat #{nutrient}'>#{_.toUpper nutrient[0]} - #{amount}</div>"
 
-getCropMenu = (crop) ->
+getCropMenu = (tile) ->
+  crop = tile.crop
+  cropDomContainer = $('<div class="label harvests"></div>')
   cropDoms = [
-    $("<div class='label harvests'>Crop: #{crop.type}</div>")
-      .on 'click', -> console.log crop
+    $("<div>Crop: #{crop.type}</div>").on 'click', -> console.log crop
+    $('<div class="remove">x</div>').on 'click', -> remove tile
   ]
+  cropDomContainer.append cropDoms
   harvestableDoms = _.map crop.harvestables, (harvestable) ->
     return unless harvestable.readyForHarvest
     $ "<div class='btn harvest'>#{harvestable.type} x#{harvestable.amount}</div>"
       .on 'click', -> harvest crop, harvestable
-  _.concat cropDoms, harvestableDoms
+  _.concat cropDomContainer, harvestableDoms
 
 getPlantMenu = (tile, items) ->
   plantMenuDom = [$ '<div class="label">Plant</div>']
@@ -148,16 +151,19 @@ getFoodMenu = (tile, items) ->
   _.concat foodMenuDom, foodDoms
 
 harvest = (crop, harvestable) ->
-  EventBus.trigger('action/harvest', {livableId: crop.id, harvestableId: harvestable.id})
+  EventBus.trigger 'action/harvest', livableId: crop.id, harvestableId: harvestable.id
 
 plant = (tile, item) ->
-  EventBus.trigger('action/plant', {tileId: tile.id, itemId: item.id})
+  EventBus.trigger 'action/plant', tileId: tile.id, itemId: item.id
+
+remove = (tile) ->
+  EventBus.trigger 'action/remove', tileId: tile.id
 
 fertilize = (tile, item) ->
-  EventBus.trigger('action/fertilize', {tileId: tile.id, itemId: item.id})
+  EventBus.trigger 'action/fertilize', tileId: tile.id, itemId: item.id
 
 feed = (tile, item) ->
-  EventBus.trigger('action/feed', {tileId: tile.id, itemId: item.id})
+  EventBus.trigger 'action/feed', tileId: tile.id, itemId: item.id
 
 updateAttributes = (updatedObject, oldObject) ->
   _.map updatedObject, (value, key) ->

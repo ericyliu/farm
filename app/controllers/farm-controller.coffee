@@ -15,6 +15,7 @@ class FarmController
     'action/fertilize': @onFertilize
     'action/feed': @onFeed
     'action/harvest': @onHarvest
+    'action/remove': @onRemove
 
 
   registerListeners: () ->
@@ -25,6 +26,11 @@ class FarmController
     tile = @getTileWithId data.tileId
     plant = @getItemWithId data.itemId
     @plant tile, plant
+
+
+  onRemove: (data) ->
+    tile = @getTileWithId data.tileId
+    @removeCrop tile
 
 
   onFertilize: (data) ->
@@ -66,6 +72,11 @@ class FarmController
   harvest: (livable, harvestable) ->
     livable.harvest harvestable
     @gameController.game.player.addItem DataService.createItem harvestable.type, harvestable.amount
+
+
+  removeCrop: (tile, livable) ->
+    tile.set 'crop', undefined
+    EventBus.trigger 'model/Farm/cropAdded', tile: tile, crop: undefined
 
 
   getTileWithId: (tileId) ->
