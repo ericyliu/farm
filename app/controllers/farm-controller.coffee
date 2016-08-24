@@ -8,9 +8,10 @@ NutrientPlantController = require 'controllers/nutrient-plant-controller.coffee'
 class FarmController
 
 
-  abilityHandlers:
-    'spreader_crop': SpreaderPlantController.handleDay
-    'nutrient_crop': NutrientPlantController.handleDay
+  abilityHandlers: [
+    SpreaderPlantController.handleDays
+    NutrientPlantController.handleDays
+  ]
 
 
   constructor: (@gameController) ->
@@ -148,9 +149,9 @@ class FarmController
 
 
   handleLivableDays: (livables) ->
-    _.map livables, (livable) =>
+    _.map livables, (livable) ->
       livable.handleDay()
-    _.map @abilityHandlers, (handler) ->
+    _.map @abilityHandlers, (handler) =>
       handler livables, @getTiles()
 
 

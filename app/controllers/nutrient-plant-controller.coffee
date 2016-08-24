@@ -4,7 +4,7 @@ EventBus = require 'util/event-bus.coffee'
 
 module.exports =
   handleDays: (livables, tiles) ->
-    nutrientPlants = _ filter livables, (livable) -> livable.abilities.spreader_crop?
+    nutrientPlants = _.filter livables, (livable) -> livable.abilities.nutrient_crop?
     _ nutrientPlants
       .map (plant) ->
         handleDay tiles, getCropCoordinate(plant, tiles), plant
