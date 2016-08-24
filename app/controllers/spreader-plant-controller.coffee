@@ -3,7 +3,8 @@ DataService = require 'services/data-service.coffee'
 EventBus = require 'util/event-bus.coffee'
 
 module.exports =
-  handleDays: (spreaderPlants, tiles) ->
+  handleDays: (livables, tiles) ->
+    spreaderPlants = _ filter livables, (livable) -> livable.abilities.spreader_crop?
     _ spreaderPlants
       .map (plant) ->
         handleDay tiles, getCropCoordinate(plant, tiles), plant
