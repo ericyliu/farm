@@ -34,12 +34,13 @@ DataService =
 
   createCrop: (id) -> createLivable id, 'crops'
 
-  createItem: (id, amount, quality) -> new Item (
+  createItem: (id, amount, quality, lifespan) -> new Item (
     type: id
     amount: amount
     quality: quality
     price: data.items[id].price
     category: data.items[id].category
+    lifespan: lifespan
   )
 
   createExpandFarmListing: (farm) ->

@@ -30,9 +30,9 @@ class Player extends Base
   removeItem: (item, amount) ->
     itemToRemove = @items[item.type]
     if not itemToRemove?
-      throw "Removing non-existent item #{item.type}"
+      throw new Exception("Removing non-existent item #{item.type}")
     else if itemToRemove.amount < amount
-      throw "Removing more of an item than exists #{item.type}"
+      throw new Exception("Removing more of an item than exists #{item.type}")
     if not amount? or itemToRemove.amount is amount
       delete @items[item.type]
       EventBus.trigger 'model/Player/itemRemoved', item

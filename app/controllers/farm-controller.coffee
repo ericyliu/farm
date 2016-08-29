@@ -4,6 +4,7 @@ Tile = require 'models/tile.coffee'
 EventBus = require 'util/event-bus.coffee'
 SpreaderPlantController = require 'controllers/spreader-plant-controller.coffee'
 NutrientPlantController = require 'controllers/nutrient-plant-controller.coffee'
+CropQualityService = require 'services/crop-quality-service.coffee'
 
 class FarmController
 
@@ -78,8 +79,10 @@ class FarmController
 
 
   harvest: (livable, harvestable) ->
+    lifespan = _.cloneDeep(livable.lifespan)
+    quality = CropQualityService.calculateCropQuality(lifespan)
+    @gameController.game.player.addItem DataService.createItem harvestable.type, harvestable.amount, quality, lifespan
     livable.harvest harvestable
-    @gameController.game.player.addItem DataService.createItem harvestable.type, harvestable.amount
 
 
   removeCrop: (tile, livable) ->
