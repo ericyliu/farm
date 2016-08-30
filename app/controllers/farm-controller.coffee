@@ -80,7 +80,7 @@ class FarmController
 
   harvest: (livable, harvestable) ->
     lifespan = _.cloneDeep(livable.lifespan)
-    quality = CropQualityService.calculateCropQuality(lifespan)
+    quality = CropQualityService.calculateCropQuality(lifespan, livable.type)
     @gameController.game.player.addItem DataService.createItem harvestable.type, harvestable.amount, quality, lifespan
     livable.harvest harvestable
 

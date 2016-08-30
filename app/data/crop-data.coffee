@@ -1,10 +1,12 @@
 time = require 'services/time-service.coffee'
 
+# a lifestage means the age at which a crop reaches a certain lifestage in absolute days
+
 module.exports =
   grassCrop:
     dailyNutrientsNeeded:
       water: 1
-      nitrogen: 1
+      fumono: 1
     harvestables:
       grass: amount: 1
       grassSeed: amount: 2
