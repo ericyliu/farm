@@ -11,14 +11,16 @@ class Item extends Base
     super(options)
 
 
+  # twhyte probably need to refactor. item should probably store type, then
+  # a json blob of attributes
   spec: () ->
     _className: 'Item'
 
     type: null
-    amount: 1
-    quality: 5
-    price: 1
+    quality: null
+    price: null
     category: 'unspecified_category'
+    lifespan: null
     #private
 
 

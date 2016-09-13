@@ -34,14 +34,30 @@ DataService =
 
   createCrop: (id) -> createLivable id, 'crops'
 
-  createItem: (id, amount, quality, lifespan) -> new Item (
+  createItem: (id) -> new Item (
     type: id
-    amount: amount
+    category: data.items[id].category
+  )
+
+  createItems: (id, amount) ->
+    items = []
+    for n in [0..amount]
+      items.push(this.createItem(id))
+    return items
+
+  createHarvestedCrop: (id, quality, lifespan) -> new Item (
+    type: id
     quality: quality
     price: data.items[id].price
     category: data.items[id].category
     lifespan: lifespan
   )
+
+  createHarvestedCrops: (id, quality, lifespan, amount) ->
+    crops = []
+    for n in [1..amount]
+      crops.push(this.createHarvestedCrop(id, quality, lifespan))
+    return crops
 
   createExpandFarmListing: (farm) ->
     price = data.farm.expandPrices[_.size _.flatten farm.tiles]
