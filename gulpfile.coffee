@@ -50,7 +50,15 @@ gulp.task 'compile:js', ->
       .pipe map (file, callback) ->
         # gutil.log file.path
         filePath = file.path
-        fileName = (filePath.split '/models/')[1]
+        splitFilePath = filePath.split '/models/'
+        # to deal with fucking windows paths
+        if splitFilePath.length == 1
+            # this was a windows path with backslashes
+          splitFilePath = filePath.split '\\models\\'
+        fileName = splitFilePath[1]
+        gutil.log(filePath)
+        gutil.log(splitFilePath)
+        gutil.log(fileName)
         file = (fileName.split '.')[0]
         files.push file
         # gutil.log files
@@ -62,7 +70,7 @@ gulp.task 'compile:js', ->
     formatted = _.map files, (file) ->
       split = _.map (file.split "-"), (i) ->
         i[0].toUpperCase() + i.substring(1)
-      split.join("");
+      split.join("")
     zipped = _.zip formatted, requirePaths
     classMap = _.map zipped, (pair) ->
       "  '#{pair[0]}': require \'#{pair[1]}\'"
