@@ -55,7 +55,7 @@ module.exports =
     $('#DayEnd').show()
     $('#DayEnd .previous-day').html "Day - #{@day}, End"
     $('#DayEnd .next-day').html "Day - #{@day + 1}, Start"
-    setTimeout (-> EventBus.trigger 'controller/Game/endDay'), 100
+    setTimeout (-> EventBus.trigger 'fontroller/Game/endDay'), 100
 
 
   updateAttributes: (game) ->
@@ -71,7 +71,7 @@ module.exports =
 
 
   updateMoney: (player) ->
-     $('#Hud .status .money').html "<span class='icon'></span>#{player.money}"
+    $('#Hud .status .money').html "<span class='icon'></span>#{player.money}"
 
 
 setHudButtons = ->
@@ -97,8 +97,6 @@ toggleMarket = ->
 toggleInventory = ->
   $('#Inventory').toggle()
 
-
-
 setPlaybackInfoDom = (playing, speed) ->
   $('#Hud .settings .playback-info').html $ """
     <span class='play-status'>#{if playing then 'Playing' else 'Paused'}</span>
@@ -117,13 +115,13 @@ createMoneyDom = (money) ->
   $ "<div class='money'><span class='icon'></span>#{money}</div>"
 
 formatTime = (minutes) ->
-    minute = Math.floor minutes % 60
-    hour = Math.floor(minutes / 60) % 24
-    ampm = if hour < 12 then 'am' else 'pm'
-    hour = hour - 12 if hour >= 12
-    hour = 12 if hour is 0
-    day = Math.floor(Math.floor(minutes / 60) / 24) + 1
+  minute = Math.floor minutes % 60
+  hour = Math.floor(minutes / 60) % 24
+  ampm = if hour < 12 then 'am' else 'pm'
+  hour = hour - 12 if hour >= 12
+  hour = 12 if hour is 0
+  day = Math.floor(Math.floor(minutes / 60) / 24) + 1
 
-    minuteString = "#{minute}"
-    minuteString = "0#{minute}" if minute < 10
-    "Day #{day} - #{hour}:#{minuteString} #{ampm}"
+  minuteString = "#{minute}"
+  minuteString = "0#{minute}" if minute < 10
+  "Day #{day} - #{hour}:#{minuteString} #{ampm}"

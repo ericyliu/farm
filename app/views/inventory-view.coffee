@@ -39,5 +39,5 @@ toggleInventory = ->
   $('#Inventory').hide()
 
 createItemDom = (item) ->
-  qualityString = item.quality ? "quality#{item.quality}" : ""
+  qualityString = if item.quality? then "quality#{item.quality}" else ""
   $ "<div class='item #{item.type}' id='#{item.id}'>#{item.type}. #{qualityString}</div>"
