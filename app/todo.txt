@@ -1,0 +1,9 @@
+BLOCKING FOR MVP
+- make a competition system where you submit your crops
+- make a crop type that can give nutrients
+- make it possible to water/fertilize crops in bulk
+
+
+
+SHOULD DO
+- group items in inventory and in the shop

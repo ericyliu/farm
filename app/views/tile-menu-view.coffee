@@ -102,9 +102,9 @@ getMenuDom = (tile, items) ->
   if tile.crop
     cropMenu = getCropMenu tile
   else
-    plantMenu = getPlantMenu tile, items
-  fertilizerMenu = getFertilizerMenu tile, items
-  foodMenu = getFoodMenu tile, items
+    plantMenu = getPlantMenu tile, groupItemsByType(items)
+  fertilizerMenu = getFertilizerMenu tile, groupItemsByType(items)
+  foodMenu = getFoodMenu tile, groupItemsByType(items)
   tileMenu.append _.flatten [statsMenu, cropMenu, plantMenu, fertilizerMenu, foodMenu]
 
 getStatsMenu = (tile) ->
@@ -126,28 +126,31 @@ getCropMenu = (tile) ->
       .on 'click', -> harvest crop, harvestable
   _.concat cropDomContainer, harvestableDoms
 
-getPlantMenu = (tile, items) ->
+getPlantMenu = (tile, item_groups) ->
   plantMenuDom = [$ '<div class="label">Plant</div>']
-  plantables = _.filter items, (item) -> item.category == 'plantable'
-  plantableDoms = _.map plantables, (item) ->
-    $ "<div class='btn plant'>#{item.type}</div>"
-      .on 'click', -> plant tile, item
+  plantable_groups = _.filter item_groups, (item_group) -> item_group[0].category == 'plantable'
+  plantableDoms = _.map plantable_groups, (plantable_group) ->
+    plantable = plantable_group[0]
+    $ "<div class='btn plant'>#{plantable.type} x #{plantable_group.length}</div>"
+      .on 'click', -> plant tile, plantable
   _.concat plantMenuDom, plantableDoms
 
-getFertilizerMenu = (tile, items) ->
+getFertilizerMenu = (tile, item_groups) ->
   fertilizerMenuDom = [$ '<div class="label">Fertilizers</div>']
-  fertilizers = _.filter items, (item) -> item.category == 'fertilizer'
-  fertilizerDoms = _.map fertilizers, (item) ->
-    $ "<div class='btn fertilizer'>#{item.type}</div>"
-      .on 'click', -> fertilize tile, item
+  fertilizer_groups = _.filter item_groups, (item_group) ->
+    item_group[0].category == 'fertilizer'
+  fertilizerDoms = _.map fertilizer_groups, (fertilizer_group) ->
+    $ "<div class='btn fertilizer'>#{fertilizer_group[0].type} x #{fertilizer_group.length}</div>"
+      .on 'click', -> fertilize tile, fertilizer_group[0]
   _.concat fertilizerMenuDom, fertilizerDoms
 
-getFoodMenu = (tile, items) ->
+getFoodMenu = (tile, item_groups) ->
   foodMenuDom = [$ '<div class="label">Food</div>']
-  foods = _.filter items, (item) -> item.category == 'food'
-  foodDoms = _.map foods, (item) ->
-    $ "<div class='btn fertilizer'>#{item.type}</div>"
-      .on 'click', -> feed tile, item
+  food_groups = _.filter item_groups, (item_group) -> item_group[0].category == 'food'
+  foodDoms = _.map food_groups, (food_group) ->
+    food = food_group[0]
+    $ "<div class='btn fertilizer'>#{food.type} x #{food_group.length}</div>"
+      .on 'click', -> feed tile, food
   _.concat foodMenuDom, foodDoms
 
 harvest = (crop, harvestable) ->
@@ -168,5 +171,13 @@ feed = (tile, item) ->
 updateAttributes = (updatedObject, oldObject) ->
   _.map updatedObject, (value, key) ->
     oldObject[key] = value
+
+groupItemsByType = (items) ->
+  reducer = (result, item) ->
+    if not result[item.type]
+      result[item.type] = []
+    result[item.type].push item
+    return result
+  return _.reduce items, reducer, {}
 
 module.exports = TileMenuView

@@ -55,7 +55,7 @@ module.exports =
     $('#DayEnd').show()
     $('#DayEnd .previous-day').html "Day - #{@day}, End"
     $('#DayEnd .next-day').html "Day - #{@day + 1}, Start"
-    setTimeout (-> EventBus.trigger 'fontroller/Game/endDay'), 100
+    setTimeout (-> EventBus.trigger 'controller/Game/endDay'), 100
 
 
   updateAttributes: (game) ->
