@@ -5,12 +5,11 @@ mochaEnv:
 # Default options to pass to mocha (can be overridden by command line options)
 mochaOptions:
   colors: true
-  compilers: 'coffee:coffee-script/register'
   reporter: dot
 
 # Path patten used for finding tests (see https://github.com/isaacs/minimatch)
-testFilePattern: 'spec/tests/*-spec.coffee'
+testFilePattern: 'spec/tests/*-spec.js'
 
 # Files to include before all tests
 testHelpers:
-  - spec/spec_helper.coffee
+  - spec/spec_helper.js

@@ -1,0 +1,9 @@
+let chai = require('chai');
+let sinon = require('sinon');
+chai.use(require('sinon-chai'));
+
+global.chai = chai;
+global.expect = chai.expect;
+global.sinon = sinon;
+
+process.env.NODE_ENV = 'test';
