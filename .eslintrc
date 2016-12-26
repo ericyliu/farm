@@ -1,0 +1,50 @@
+{
+    "env": {
+        "amd": true,
+        "browser": true,
+        "jquery": true,
+        "mocha": true
+    },
+    "globals": {
+        // for tests
+        "sinon": false,
+        "assert": false,
+        "expect": false,
+
+        "module": false
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "array-bracket-spacing": ["error", "always"],
+        "comma-dangle": 2,
+        "indent": ["error", 2, { "SwitchCase": 1 }],
+        "jsx-quotes": ["error", "prefer-single"],
+        "keyword-spacing": ["error", { "before": true, "after": true }],
+        "no-use-before-define": ["error", "nofunc"],
+        "object-curly-spacing": ["error", "always"],
+        "quote-props": ["error", "as-needed", { "keywords": true }],
+        "quotes": [2, "single", { "avoidEscape": true }],
+        "react/jsx-curly-spacing": [2, "always"],
+        "react/jsx-max-props-per-line": [1, { "maximum": 3 }],
+        "react/jsx-space-before-closing": 2,
+        "react/jsx-uses-react": 2,
+        "react/jsx-uses-vars": 2,
+        "react/prop-types": 1,
+        "react/react-in-jsx-scope": 2,
+        "semi": ["error", "always"],
+        "space-in-parens": ["error", "never"],
+        "space-infix-ops": ["error", { "int32Hint": true }],
+        "strict": [2, "never"]
+    }
+}
