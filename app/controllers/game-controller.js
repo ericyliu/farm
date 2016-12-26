@@ -82,7 +82,7 @@ class GameController {
 
 
   loadGame() {
-    let savedState = JSON.parse(localStorage.getItem("game-save"));
+    let savedState = JSON.parse(localStorage.getItem('game-save'));
     this.game = (new Unserializer()).unserialize(savedState);
     console.log(this.game);
     return EventBus.trigger('controller/Game/gameLoaded', this.game);
@@ -100,7 +100,7 @@ let createStartingFarm = () =>
 ;
 
 var givePlayerStartingItems = function(player) {
-  player.farm.animals = [DataService.createAnimal('goat')];
+  player.farm.animals = [ DataService.createAnimal('goat') ];
   player.farm.tiles = createStartingFarm();
   player.money = 100;
   let startItems = _.flatten([
@@ -123,7 +123,7 @@ var isEndOfDay = game => game.timeElapsed !== 0 && game.timeElapsed % (60 * 24) 
 
 var populateMarket = game =>
   game.market.addListings([
-    new MarketListing({item: DataService.createItem('grassSeed', 3), price: 10}),
+    new MarketListing({ item: DataService.createItem('grassSeed', 3), price: 10 }),
     new MarketListing(DataService.createExpandFarmListing(game.player.farm))
   ])
 ;

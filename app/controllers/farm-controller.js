@@ -1,22 +1,11 @@
 let _ = require('lodash');
 let DataService = require('services/data-service.js');
-let Tile = require('models/tile.js');
 let EventBus = require('util/event-bus.js');
 let SpreaderPlantController = require('controllers/spreader-plant-controller.js');
 let NutrientPlantController = require('controllers/nutrient-plant-controller.js');
 let CropQualityService = require('services/crop-quality-service.js');
 
 class FarmController {
-  static initClass() {
-  
-  
-    this.prototype.abilityHandlers = [
-      SpreaderPlantController.handleDays,
-      NutrientPlantController.handleDays
-    ];
-  }
-
-
   constructor(gameController) {
     this.gameController = gameController;
     this.registerListeners();
@@ -41,8 +30,9 @@ class FarmController {
 
   onPlant(data) {
     let tile = this.getTileWithId(data.tileId);
-    let plant = this.getItemWithId(data.itemId);
-    return this.plant(tile, plant);
+    let item = this.getItemWithId(data.itemId);
+    let crop = DataService.itemToCrop(item);
+    return this.plant(tile, item, crop);
   }
 
 
@@ -73,11 +63,10 @@ class FarmController {
   }
 
 
-  plant(tile, item) {
-    let crop = DataService.itemToCrop(item);
+  plant(tile, item, crop) {
     tile.set('crop', crop);
-    EventBus.trigger('model/Farm/cropAdded', {tile, crop});
-    return this.gameController.game.player.removeItem(item, 1);
+    EventBus.trigger('model/Farm/cropAdded', { tile, crop });
+    this.gameController.game.player.removeItem(item, 1);
   }
 
 
@@ -105,12 +94,12 @@ class FarmController {
 
   removeCrop(tile, livable) {
     tile.set('crop', undefined);
-    return EventBus.trigger('model/Farm/cropAdded', {tile, crop: undefined});
+    return EventBus.trigger('model/Farm/cropAdded', { tile, crop: undefined });
   }
 
 
   getTileWithId(tileId) {
-    let tiles = _.flatten(this.gameController.game.player.farm.tiles);
+    let tiles = _.flatten(this.gameController.getFarm().tiles);
     let allTiles = _.concat(tiles, this.gameController.getFarm().animalTrough);
     return _.find(allTiles, tile => tile.id === tileId);
   }
@@ -151,7 +140,7 @@ class FarmController {
         let desiredNutrients = crop.getDesiredNutrients();
         let suppliedNutrients = tile.takeNutrients(desiredNutrients);
         return crop.giveNutrients(suppliedNutrients);
-    })
+      })
       .value();
   }
 
@@ -164,7 +153,7 @@ class FarmController {
         let desiredNutrients = animal.getDesiredNutrients();
         let suppliedNutrients = animalTrough.takeNutrients(desiredNutrients);
         return animal.giveNutrients(suppliedNutrients);
-    })
+      })
       .value();
   }
 
@@ -181,29 +170,32 @@ class FarmController {
 
   handleLivableDays(livables) {
     _.map(livables, livable => livable.handleDay());
-    return _.map(this.abilityHandlers, handler => {
+    let abilityHandlers = [
+      SpreaderPlantController.handleDays,
+      NutrientPlantController.handleDays
+    ];
+
+    return _.map(abilityHandlers, handler => {
       return handler(livables, this.getTiles());
-    }
-    );
+    });
   }
 }
-FarmController.initClass();
 
 
-var cropsFromTiles = tiles =>
-  _.chain(tiles)
+function cropsFromTiles(tiles) {
+  return _.chain(tiles)
     .flatten()
     .map(tile => tile.crop)
-    .value()
-;
+    .value();
+}
 
 
-var updateLivables = livables =>
-  _.chain(livables)
+function updateLivables(livables) {
+  return _.chain(livables)
     .filter()
     .map(livable => livable.update())
-    .value()
-;
+    .value();
+}
 
 
 module.exports = FarmController;

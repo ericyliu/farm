@@ -1,16 +1,16 @@
 let _ = require('lodash');
 let Serializer = require('util/serializer.js');
 
+let registeredEvents = {};
+let shouldDebug = false;
+let globalListener = null;
+
 module.exports = {
-
-  registeredEvents: {},
-  shouldDebug: false,
-
 
   register(event, callback, context) {
     this.log(`Registering callback: ${callback} under event ${event}`);
-    if (this.registeredEvents[event] == null) { this.registeredEvents[event] = []; }
-    return this.registeredEvents[event].push(_.bind(callback, context));
+    if (registeredEvents[event] == null) { registeredEvents[event] = []; }
+    return registeredEvents[event].push(_.bind(callback, context));
   },
 
 
@@ -21,29 +21,43 @@ module.exports = {
 
   trigger(event, data, shouldStripSubModels) {
     this.log(`Triggering event: ${event}`);
+    if (globalListener) {
+      globalListener(event, data);
+    }
     if (data != null) { this.log(data); }
     let serializedData = (data != null) ? Serializer.serialize(data, shouldStripSubModels) : null;
-    if (this.registeredEvents[event] == null) {
-      console.info(`Triggering event that has no registered callbacks: ${event}`);
+    if (registeredEvents[event] == null) {
+      this.log(`Triggering event that has no registered callbacks: ${event}`);
     }
     // debugger
-    return _.map(this.registeredEvents[event], function(callback) {
+    return _.map(registeredEvents[event], function(callback) {
       if (serializedData != null) { return callback((JSON.parse(serializedData))); } else { return callback(); }
     });
   },
 
 
+  /**
+   * Really only used for testing. will give all information about an event
+   */
+  setGlobalListener(globalListenerArg) {
+    globalListener = globalListenerArg;
+  },
+
+  clearRegisteredEvents() {
+    registeredEvents = {};
+  },
+
   clearListeners() {
-    return this.registeredEvents = {};
+    return registeredEvents = {};
   },
 
 
-  debug(shouldDebug) {
-    return this.shouldDebug = shouldDebug;
+  debug(shouldDebugArg) {
+    return shouldDebug = shouldDebugArg;
   },
 
 
   log(message) {
-    if (this.shouldDebug) { return console.log(message); }
+    if (shouldDebug) { return console.log(message); }
   }
 };

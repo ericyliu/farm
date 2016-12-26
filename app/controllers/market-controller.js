@@ -22,8 +22,8 @@ class MarketController {
 
 
   buyListing(listing) {
-    let { player } = this.gameController.game;
-    let { market } = this.gameController.game;
+    let player = this.gameController.game.player;
+    let market = this.gameController.game.market;
     if (player.money < listing.price) { return; }
     if (listing.type === 'item') {
       player.addItem(listing.item);

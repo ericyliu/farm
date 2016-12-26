@@ -42,7 +42,7 @@ class Player extends Base {
       throw new Error(`Removing non-existent item ${item.type}`);
     }
     delete this.items[item.id];
-    return EventBus.trigger('model/Player/itemRemoved', item);
+    EventBus.trigger('model/Player/itemRemoved', item);
   }
 }
 

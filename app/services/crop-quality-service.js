@@ -21,7 +21,7 @@ module.exports = {
   }
 };
 
-var scoreDay = function(dayInTheLife) {
+function scoreDay(dayInTheLife) {
   let requiredNutrients = dayInTheLife.required_nutrients;
   let givenNutrients = dayInTheLife.given_nutrients;
   let totalNutrientScore = 0;
@@ -33,10 +33,10 @@ var scoreDay = function(dayInTheLife) {
   });
   // the total day score is the average of each of the nutrient scores
   return totalNutrientScore / _.size(requiredNutrients);
-};
+}
 
 // the closer given nutrients are to the ideal amount, the better the score
-var nutrientFunction = function(idealNutrientAmount, nutrientAmount) {
+function nutrientFunction(idealNutrientAmount, nutrientAmount) {
   let leftSideFun = (idealNutrientAmount, nutrientAmount) => nutrientAmount / idealNutrientAmount;
   let rightSideFun = function(idealNutrientAmount, nutrientAmount) {
     let slope = -1 / idealNutrientAmount;
@@ -46,16 +46,16 @@ var nutrientFunction = function(idealNutrientAmount, nutrientAmount) {
   // 2x idealNutrientAmount because thats where the function result becomes 0
   // needs to change if the formula changes
   if (nutrientAmount < 0 || nutrientAmount > 2 * idealNutrientAmount) {
-    throw new Error("Nutrient amount is invalid");
+    throw new Error('Nutrient amount is invalid');
   }
   if (nutrientAmount < idealNutrientAmount) {
     return leftSideFun(idealNutrientAmount, nutrientAmount);
   } else {
     return rightSideFun(idealNutrientAmount, nutrientAmount);
   }
-};
+}
 
-var ageFunction = function(lifespan, ageOfDeath) {
+function ageFunction(lifespan, ageOfDeath) {
   let age = lifespan.lenth;
   if (age < 0 || lifespan > ageOfDeath) {
     throw new Error('This crop has an invalid age');
@@ -63,4 +63,4 @@ var ageFunction = function(lifespan, ageOfDeath) {
   // we dont want to divide by ageOfDeath, because then getting a perfect score
   // would require having the plant be dead which doesnt make sense
   if (ageOfDeath === 1) { return 1; } else { return lifespan.length / (ageOfDeath - 1); }
-};
+}
